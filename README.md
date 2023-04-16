@@ -1,8 +1,9 @@
-# gbadev-jp
+# gbadev-ja
 
 - [GBA開発Wiki](http://akkera102.sakura.ne.jp/gbadev/)
 
-GBA開発Wikiは、GameBoyAdvanceについての技術資料を個人的に収集しているページです。 
+GBA開発Wikiは、GameBoyAdvanceについての技術資料を個人的に収集しているページです。
+
 このリポジトリはドキュメント、チュートリアル保管庫となります。
 
 >**Warning**  
