@@ -1,4 +1,4 @@
-# gbadev_ja
+# gbadev-jp
 
 - [GBAŠJ”­Wiki](http://akkera102.sakura.ne.jp/gbadev/)
 
