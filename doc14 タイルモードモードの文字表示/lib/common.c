@@ -293,7 +293,7 @@ IWRAM_CODE char* _SprintfNumCol(s32 val, s32 base, char* s, s32 col, char colChr
 	s32 c = Mod(val, base);
 	val = Div(val, base);
 
-	if(val > 0 || col > 1)
+	if(col > 1)
 	{
 		s = _SprintfNumCol(val, base, s, col-1, colChr, FALSE);
 	}
@@ -312,14 +312,15 @@ IWRAM_CODE char* _SprintfNumCol(s32 val, s32 base, char* s, s32 col, char colChr
 //---------------------------------------------------------------------------
 IWRAM_CODE char* _SprintfHexCol(u32 val, char* s, s32 col, char colChr, bool isTop, char hex)
 {
-	if(val >= 0x10 || col > 1)
+	u32 c = val & 0xf;
+	val = val >> 4;
+
+	if(col > 1)
 	{
-		s = _SprintfHexCol(val >> 4, s, col-1, colChr, FALSE, hex);
+		s = _SprintfHexCol(val, s, col-1, colChr, FALSE, hex);
 	}
 
-	u32 c = val & 0xf;
-
-	if(c != 0 || isTop == TRUE)
+	if(c != 0 || val != 0 || isTop == TRUE)
 	{
 		*s++ = (c>9) ? c-10+hex : c+'0';
 	}

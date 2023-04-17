@@ -20,7 +20,7 @@ Discarded input sections
  .text          0x00000000        0x0 obj/common.o
  .data          0x00000000        0x0 obj/common.o
  .bss           0x00000000        0x0 obj/common.o
- .iwram         0x00000000      0x640 obj/common.o
+ .iwram         0x00000000      0x5c4 obj/common.o
  .rodata        0x00000000      0x108 obj/common.o
  .text          0x00000000        0x0 obj/gbfs.o
  .data          0x00000000        0x0 obj/gbfs.o
