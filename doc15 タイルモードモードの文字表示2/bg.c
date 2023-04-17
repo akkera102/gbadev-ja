@@ -30,7 +30,7 @@ EWRAM_CODE void BgInitLcd()
 {
 	const u32 mapBase[]  = { 29, 30, 31,  0 };
 	const u32 tileBase[] = {  0,  1,  3,  0 };
-	s32 i;
+	volatile s32 i;
 
 	for(i=0; i<BG_MAX_CNT; i++)
 	{
@@ -60,7 +60,7 @@ EWRAM_CODE void BgInitLcd()
 // ASCIIフォントを設定します
 EWRAM_CODE void Bg0Init()
 {
-	s32 i;
+	volatile s32 i;
 
 	for(i=0; i<4096; i++)
 	{
@@ -76,7 +76,7 @@ EWRAM_CODE void Bg0Init()
 // みかちゃんフォントを設定します
 EWRAM_CODE void Bg1Init()
 {
-	s32 i;
+	volatile s32 i;
 
 	for(i=0; i<32*32; i++)
 	{
