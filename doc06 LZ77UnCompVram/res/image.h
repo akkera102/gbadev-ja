@@ -7,7 +7,7 @@
 //	+ bitmap lz77 compressed
 //	Total size: 16968 = 16968
 //
-//	Time-stamp: 2023-04-14, 23:26:42
+//	Time-stamp: 2023-04-18, 09:03:40
 //	Exported by Cearn's GBA Image Transmogrifier, v0.9.2
 //	( http://www.coranac.com/projects/#grit )
 //

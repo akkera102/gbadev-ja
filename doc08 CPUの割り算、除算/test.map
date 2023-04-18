@@ -25,12 +25,6 @@ Discarded input sections
  .ewram         0x00000000       0xc8 obj/gbfs.o
  .iwram         0x00000000      0x1c0 obj/gbfs.o
  .comment       0x00000000       0x24 obj/gbfs.o
- .text          0x00000000        0x0 obj/mt19937ar.o
- .data          0x00000000        0x2 obj/mt19937ar.o
- .bss           0x00000000      0x9c0 obj/mt19937ar.o
- .iwram         0x00000000      0x1a8 obj/mt19937ar.o
- .rodata        0x00000000        0x8 obj/mt19937ar.o
- .comment       0x00000000       0x24 obj/mt19937ar.o
  .text          0x00000000        0x0 obj/sys_arm.o
  .data          0x00000000        0x0 obj/sys_arm.o
  .bss           0x00000000        0x0 obj/sys_arm.o
@@ -408,15 +402,13 @@ Linker script and memory map
  .ARM.attributes
                 0x0000005e       0x2a obj/gbfs.o
  .ARM.attributes
-                0x00000088       0x2a obj/mt19937ar.o
+                0x00000088       0x2a obj/sys_arm.o
  .ARM.attributes
-                0x000000b2       0x2a obj/sys_arm.o
+                0x000000b2       0x2a obj/main.o
  .ARM.attributes
-                0x000000dc       0x2a obj/main.o
+                0x000000dc       0x1c c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a(_divsi3.o)
  .ARM.attributes
-                0x00000106       0x1c c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a(_divsi3.o)
- .ARM.attributes
-                0x00000122       0x1c c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a(_dvmd_tls.o)
+                0x000000f8       0x1c c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a(_dvmd_tls.o)
 
 /DISCARD/
  *(.note.GNU-stack)
@@ -424,7 +416,6 @@ LOAD obj/crt0.o
 LOAD obj/div.o
 LOAD obj/common.o
 LOAD obj/gbfs.o
-LOAD obj/mt19937ar.o
 LOAD obj/sys_arm.o
 LOAD obj/main.o
 LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libstdc++.a
