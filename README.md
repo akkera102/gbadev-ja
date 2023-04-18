@@ -1,6 +1,6 @@
 # gbadev-ja
 
-- [GBA開発Wiki](工事中)
+- GBA開発Wiki(工事中)
 
 GBA開発Wikiは、GameBoyAdvanceについての技術資料を個人的に収集しているページです。
 
