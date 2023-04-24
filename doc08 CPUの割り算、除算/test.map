@@ -419,7 +419,6 @@ LOAD obj/gbfs.o
 LOAD obj/sys_arm.o
 LOAD obj/main.o
 LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libstdc++.a
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libstdc++.a
 LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libm.a
 START GROUP
 LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a

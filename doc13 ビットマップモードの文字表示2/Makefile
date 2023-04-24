@@ -50,7 +50,7 @@ NMFILE      = $(NAME).nm
 TARGET_ELF	= $(NAME).elf
 TARGET_BIN	= $(NAME).gba
 
-LDFLAGS		= -Map $(MAPFILE) -Wall -lstdc++ -mthumb-interwork -specs=gba.specs -nostartfiles
+LDFLAGS		= -Map $(MAPFILE) -Wall -mthumb-interwork -specs=gba.specs -nostartfiles -nostdlib
 
 #=============================================================================
 

@@ -457,13 +457,5 @@ LOAD obj/bg.o
 LOAD obj/irq.arm.o
 LOAD obj/key.o
 LOAD obj/main.o
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libstdc++.a
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libstdc++.a
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libm.a
-START GROUP
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0\libgcc.a
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libc.a
-LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/12.2.0/../../../../arm-none-eabi/lib\libsysbase.a
-END GROUP
 OUTPUT(test.elf elf32-littlearm)
 LOAD linker stubs
