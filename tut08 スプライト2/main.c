@@ -8,6 +8,14 @@ void WaitForVsync(void)
 	while(*(vu16*)0x4000006 <  160) {};
 }
 //---------------------------------------------------------------------------
+void SpriteSetPalNo(u32 num, u32 palNo)
+{
+	OBJATTR* sp = (OBJATTR*)OAM + num;
+
+	sp->attr2 &= 0x0fff;
+	sp->attr2 |= (palNo << 12);
+}
+//---------------------------------------------------------------------------
 void SpriteMove(u32 num, s32 x, s32 y)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
@@ -47,52 +55,52 @@ void SpriteInit(void)
 //---------------------------------------------------------------------------
 int main(void)
 {
-	SetMode(MODE_0 | OBJ_ENABLE | OBJ_2D_MAP);
+	SetMode(MODE_0 | OBJ_ENABLE | OBJ_1D_MAP);
 
 	u16* oam = OBJ_BASE_ADR;	// キャラクタデータ
 	u16* pal = OBJ_COLORS;		// パレットデータ
 	u32 i;
 
-	for(i=0; i<spr1TilesLen/2; i++)
+
+	// キャラクタの格納
+	for(i=0; i<sprTilesLen/2; i++)
 	{
-		oam[i] = spr1Tiles[i];
+		oam[i] = sprTiles[i];
 	}
 
+	// パレットの格納
 	for(i=0; i<16; i++)
 	{
-		pal[i] = spr1Pal[i];
+		pal[i]    = sprPal[i];
+		pal[i+16] = sprPal[i];
+		pal[i+32] = sprPal[i];
 	}
+
+	// 一部の色を書き換えます
+	pal[16*1 + 2] = RGB5(0,31,0);
+	pal[16*2 + 2] = RGB5(0,0,31);
 
 	SpriteInit();
 
-	s16 x = 0;
-	s16 y = 0;
-	u16 s = 0;
+	// スプライト0（パレット0）
+	SpriteSetSize (0, OBJ_SIZE(Sprite_16x16), OBJ_SQUARE, OBJ_16_COLOR);
+	SpriteSetChr  (0, 0);
+	SpriteMove    (0, 20, 20);
 
-	SpriteSetSize(0, OBJ_SIZE(s), OBJ_SQUARE, OBJ_16_COLOR);
-	SpriteSetChr (0, 1);
-	SpriteMove   (0, x, y);
+	// スプライト1（パレット1）
+	SpriteSetSize (1, OBJ_SIZE(Sprite_16x16), OBJ_SQUARE, OBJ_16_COLOR);
+	SpriteSetChr  (1, 0);
+	SpriteMove    (1, 40, 20);
+	SpriteSetPalNo(1, 1);
+
+	// スプライト2（パレット2）
+	SpriteSetSize (2, OBJ_SIZE(Sprite_16x16), OBJ_SQUARE, OBJ_16_COLOR);
+	SpriteSetChr  (2, 0);
+	SpriteMove    (2, 60, 20);
+	SpriteSetPalNo(2, 2);
 
 	for(;;)
 	{
 		WaitForVsync();
-
-		SpriteMove(0, x, y);
-
-		u16 key = ~(REG_KEYINPUT);
-
-		if(key & KEY_UP)    y--;
-		if(key & KEY_DOWN)  y++;
-		if(key & KEY_RIGHT) x++;
-		if(key & KEY_LEFT)  x--;
-
-		// フレーム単位で形状を変更
-		SpriteSetSize(0, OBJ_SIZE(s>>4), OBJ_SQUARE, OBJ_16_COLOR);
-		s++;
-
-		if((s>>4) > 3)
-		{
-			s=0;
-		}
 	}
 }
