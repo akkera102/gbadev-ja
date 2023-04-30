@@ -39,6 +39,7 @@ int main(void)
 		BgCreateWindowCircleDma(x0, y0, rr);
 
 		_Sprintf(str, "%d %d | %d", x0, y0, rr);
+		BgAsciiDrawStr(0, 1, "              ");
 		BgAsciiDrawStr(1, 1, str);
 	}
 }

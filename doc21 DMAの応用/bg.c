@@ -4,6 +4,7 @@
 
 //bg0 ASCII
 //bg1 mask
+//bg2 stage
 
 //---------------------------------------------------------------------------
 ST_BG Bg[BG_MAX_CNT];
@@ -27,16 +28,10 @@ EWRAM_CODE void BgInit()
 	REG_BG2HOFS = 120;
 	REG_BG2VOFS = 64;
 
-	REG_WIN0H = 0;
-	REG_WIN0V = SCREEN_HEIGHT;
-
-#define WIN_BUILD(low, high)	( ((high)<<8) | (low) )
-#define WIN_BG0			0x0001	//!< Windowed bg 0
-#define WIN_BG1			0x0002	//!< Windowed bg 1
-#define WIN_BG2			0x0004	//!< Windowed bg 2
-
-	REG_WININ  = WIN_BUILD(WIN_BG0 | WIN_BG2, 0);
-	REG_WINOUT = WIN_BUILD(WIN_BG0 | WIN_BG1, 0);
+	REG_WIN0H  = 0;
+	REG_WIN0V  = SCREEN_HEIGHT;
+	REG_WININ  = WIN_0_BG0 | WIN_0_BG2;
+	REG_WINOUT = WIN_0_BG0 | WIN_0_BG1;
 }
 //---------------------------------------------------------------------------
 EWRAM_CODE void BgInitLcd()
@@ -149,50 +144,97 @@ EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
 *	Bresenham's circle routine (of course); the clipping code is not
 *	optional.
 *
-*	\param winh	Pointer to array to receive the offsets.
 *	\param x0	X-coord of circle center.
 *	\param y0	Y-coord of circle center.
 *	\param rr	Circle radius.
 */
-EWRAM_CODE void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr)
+
+u16 BgWinh[SCREEN_HEIGHT+1] ALIGN(4);
+
+IWRAM_CODE void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr)
 {
-	u16 g_winh[SCREEN_HEIGHT+1];
+	// Zero clear
+	for(vs32 i=0; i<SCREEN_HEIGHT+1; i++)
+	{
+		BgWinh[i] = 0;
+	}
 
-	int x=0, y= rr, d= 1-rr;
+
+	s32 x=0, y=rr, d=1-rr;
 	u32 tmp;
-
-	// clear the whole array first.
-	memset16(winh, 0, SCREEN_HEIGHT+1);
 
 	while(y >= x)
 	{
 		// Side octs
-		tmp  = clamp(x0+y, 0, SCREEN_WIDTH+1);
-		tmp += clamp(x0-y, 0, SCREEN_WIDTH+1)<<8;
-		
-		if(IN_RANGE(y0-x, 0, SCREEN_HEIGHT))		// o4, o7
-			winh[y0-x]= tmp;
-		if(IN_RANGE(y0+x, 0, SCREEN_HEIGHT))		// o0, o3
-			winh[y0+x]= tmp;
+		tmp  = BgClamp(x0 + y, 0, SCREEN_WIDTH+1);
+		tmp += BgClamp(x0 - y, 0, SCREEN_WIDTH+1) << 8;
+
+		// o4, o7
+		if(BgInRange(y0-x, 0, SCREEN_HEIGHT))
+		{
+			BgWinh[y0 - x]= tmp;
+		}
+
+		// o0, o3
+		if(BgInRange(y0+x, 0, SCREEN_HEIGHT))
+		{
+			BgWinh[y0 + x]= tmp;
+		}
 
 		// Change in y: top/bottom octs
-		if(d >= 0)		
+		if(d >= 0)
 		{
-			tmp  = clamp(x0+x, 0, SCREEN_WIDTH+1);
-			tmp += clamp(x0-x, 0, SCREEN_WIDTH+1)<<8;
-			
-			if(IN_RANGE(y0-y, 0, SCREEN_HEIGHT))	// o5, o6
-				winh[y0-y]= tmp;
-			if(IN_RANGE(y0+y, 0, SCREEN_HEIGHT))	// o1, o2
-				winh[y0+y]= tmp;
+			tmp  = BgClamp(x0 + x, 0, SCREEN_WIDTH+1);
+			tmp += BgClamp(x0 - x, 0, SCREEN_WIDTH+1) << 8;
 
-			d -= 2*(--y);
+			// o5, o6
+			if(BgInRange(y0-y, 0, SCREEN_HEIGHT))
+			{
+				BgWinh[y0 - y]= tmp;
+			}
+
+			// o1, o2
+			if(BgInRange(y0+y, 0, SCREEN_HEIGHT))
+			{
+				BgWinh[y0 + y]= tmp;
+			}
+
+			d -= 2 * (--y);
 		}
-		d += 2*(x++)+3;
+
+		d += 2 * (x++) + 3;
 	}
-	winh[SCREEN_HEIGHT]= winh[0];
 
-	// Init win-circle HDMA
-	DMA_TRANSFER(&REG_WIN0H, &g_winh[1], 1, 3, DMA_HDMA);
+/*
+	for(vs32 i=0; i<SCREEN_HEIGHT+1; i++)
+	{
+		TRACE("%d: %4x\n", i, BgWinh[i]);
+	}
+	for(;;){}
+*/
 
+	REG_DMA3CNT = 0;
+	REG_DMA3SAD = (u32)&BgWinh[1];
+	REG_DMA3DAD = (u32)&REG_WIN0H;
+	REG_DMA3CNT = 1 | (DMA_DST_RELOAD | DMA_REPEAT | DMA_HBLANK | DMA_ENABLE);
+}
+//---------------------------------------------------------------------------
+IWRAM_CODE s32 BgClamp(s32 val, s32 min, s32 max)
+{
+	if(val < min)
+	{
+		return min;
+    }
+
+	if(val > max)
+	{
+		return max;
+	}
+
+	return val;
+}
+//---------------------------------------------------------------------------
+IWRAM_CODE bool BgInRange(s32 x, s32 min, s32 max)
+{
+	return ((x)>=(min)) && ((x)<(max)) ? TRUE : FALSE;
 }

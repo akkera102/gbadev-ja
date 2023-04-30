@@ -75,85 +75,85 @@ Linker script and memory map
  *(.plt)
                 0x080001f8                        . = ALIGN (0x4)
 
-.text           0x080001f8       0xe0
+.text           0x080001f8      0x104
  *(EXCLUDE_FILE(*.iwram*) .text*)
- .text.startup  0x080001f8       0xe0 obj/main.o
+ .text.startup  0x080001f8      0x104 obj/main.o
                 0x080001f8                main
  *(.gnu.linkonce.t.*)
  *(.text.*personality*)
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x080002d8        0x0 linker stubs
+ .glue_7t       0x080002fc        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x080002d8        0x0 linker stubs
+ .glue_7        0x080002fc        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x080002d8        0x0 linker stubs
-                0x080002d8                        . = ALIGN (0x4)
-                0x080002d8                        __text_end = .
+ .vfp11_veneer  0x080002fc        0x0 linker stubs
+                0x080002fc                        . = ALIGN (0x4)
+                0x080002fc                        __text_end = .
 
-.v4_bx          0x080002d8        0x0
- .v4_bx         0x080002d8        0x0 linker stubs
+.v4_bx          0x080002fc        0x0
+ .v4_bx         0x080002fc        0x0 linker stubs
 
-.iplt           0x080002d8        0x0
- .iplt          0x080002d8        0x0 obj/crt0.o
+.iplt           0x080002fc        0x0
+ .iplt          0x080002fc        0x0 obj/crt0.o
 
-.fini           0x080002d8        0x0
+.fini           0x080002fc        0x0
  *(.fini)
-                0x080002d8                        . = ALIGN (0x4)
+                0x080002fc                        . = ALIGN (0x4)
 
-.rodata         0x080002d8     0x2194
+.rodata         0x080002fc     0x21a4
  *(.rodata)
- .rodata        0x080002d8     0x1420 obj/brin.o
-                0x080002d8                brinTiles
-                0x080006d8                brinMap
-                0x080016d8                brinPal
- .rodata        0x080016f8      0xc20 obj/font_ascii.o
-                0x080016f8                font_asciiTiles
-                0x080022f8                font_asciiPal
- .rodata        0x08002318      0x108 obj/common.o
- .rodata        0x08002420       0x40 obj/bg.o
+ .rodata        0x080002fc     0x1420 obj/brin.o
+                0x080002fc                brinTiles
+                0x080006fc                brinMap
+                0x080016fc                brinPal
+ .rodata        0x0800171c      0xc20 obj/font_ascii.o
+                0x0800171c                font_asciiTiles
+                0x0800231c                font_asciiPal
+ .rodata        0x0800233c      0x108 obj/common.o
+ .rodata        0x08002444       0x40 obj/bg.o
  *all.rodata*(*)
  *(.roda)
  *(.rodata.*)
  .rodata.str1.4
-                0x08002460        0xb obj/main.o
+                0x08002484       0x1b obj/main.o
  *(.gnu.linkonce.r*)
-                0x0800246c                        . = ALIGN (0x4)
- *fill*         0x0800246b        0x1 ff
+                0x080024a0                        . = ALIGN (0x4)
+ *fill*         0x0800249f        0x1 ff
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0800246c                        __exidx_start = .
+                0x080024a0                        __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x0800246c                        __exidx_end = .
+                0x080024a0                        __exidx_end = .
 
-.ctors          0x0800246c        0x0
+.ctors          0x080024a0        0x0
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT_BY_NAME(.ctors.*))
  *(.ctors)
-                0x0800246c                        . = ALIGN (0x4)
+                0x080024a0                        . = ALIGN (0x4)
 
-.dtors          0x0800246c        0x0
+.dtors          0x080024a0        0x0
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
-                0x0800246c                        . = ALIGN (0x4)
+                0x080024a0                        . = ALIGN (0x4)
 
-.eh_frame       0x0800246c        0x0
+.eh_frame       0x080024a0        0x0
  *(.eh_frame)
-                0x0800246c                        . = ALIGN (0x4)
+                0x080024a0                        . = ALIGN (0x4)
 
 .gcc_except_table
-                0x0800246c        0x0
+                0x080024a0        0x0
  *(.gcc_except_table)
-                0x0800246c                        . = ALIGN (0x4)
-                0x0800246c                        __iwram_lma = .
+                0x080024a0                        . = ALIGN (0x4)
+                0x080024a0                        __iwram_lma = .
 
-.iwram          0x03000000      0x6a8 load address 0x0800246c
+.iwram          0x03000000      0x800 load address 0x080024a0
                 0x03000000                        __iwram_start__ = ABSOLUTE (.)
  *(.iwram .iwram*)
  .iwram         0x03000000       0x10 obj/div.o
@@ -171,135 +171,141 @@ Linker script and memory map
                 0x03000594                _SprintfString
                 0x030005a8                SystemError
                 0x030005c4                mappylog
- .iwram         0x030005d4       0x40 obj/irq.arm.o
-                0x030005d4                IrqHandler
- .iwram         0x03000614       0x94 obj/key.o
-                0x03000614                KeyExec
-                0x03000678                KeyGetCnt
-                0x03000684                KeyGetTrg
-                0x03000690                KeyGetOff
-                0x0300069c                KeyGetRep
+ .iwram         0x030005d4      0x158 obj/bg.o
+                0x030005d4                BgCreateWindowCircleDma
+                0x030006f8                BgClamp
+                0x0300070c                BgInRange
+ .iwram         0x0300072c       0x40 obj/irq.arm.o
+                0x0300072c                IrqHandler
+ .iwram         0x0300076c       0x94 obj/key.o
+                0x0300076c                KeyExec
+                0x030007d0                KeyGetCnt
+                0x030007dc                KeyGetTrg
+                0x030007e8                KeyGetOff
+                0x030007f4                KeyGetRep
  *iwram.*(.text* .data*)
-                0x030006a8                        . = ALIGN (0x4)
-                0x030006a8                        __iwram_end__ = ABSOLUTE (.)
-                0x08002b14                        __data_lma = (__iwram_lma + SIZEOF (.iwram))
+                0x03000800                        . = ALIGN (0x4)
+                0x03000800                        __iwram_end__ = ABSOLUTE (.)
+                0x08002ca0                        __data_lma = (__iwram_lma + SIZEOF (.iwram))
 
-.bss            0x030006a8       0x4c
-                0x030006a8                        __bss_start = ABSOLUTE (.)
-                0x030006a8                        __bss_start__ = ABSOLUTE (.)
+.bss            0x03000800      0x190
+                0x03000800                        __bss_start = ABSOLUTE (.)
+                0x03000800                        __bss_start__ = ABSOLUTE (.)
  *(.dynbss)
  *(.gnu.linkonce.b*)
  *(.bss*)
- .bss           0x030006a8       0x40 obj/bg.o
-                0x030006a8                Bg
- .bss           0x030006e8        0xa obj/key.o
-                0x030006e8                Key
+ .bss           0x03000800      0x182 obj/bg.o
+                0x03000800                Bg
+                0x03000840                BgWinh
+ *fill*         0x03000982        0x2 
+ .bss           0x03000984        0xa obj/key.o
+                0x03000984                Key
  *(COMMON)
-                0x030006f4                        . = ALIGN (0x4)
- *fill*         0x030006f2        0x2 
-                0x030006f4                        __bss_end__ = ABSOLUTE (.)
+                0x03000990                        . = ALIGN (0x4)
+ *fill*         0x0300098e        0x2 
+                0x03000990                        __bss_end__ = ABSOLUTE (.)
 
-.data           0x030006f4        0x0 load address 0x08002b14
-                0x030006f4                        __data_start__ = ABSOLUTE (.)
+.data           0x03000990        0x0 load address 0x08002ca0
+                0x03000990                        __data_start__ = ABSOLUTE (.)
  *(.data*)
  *(.gnu.linkonce.d*)
-                0x030006f4                        . = ALIGN (0x4)
-                0x08002b14                        __preinit_lma = (__data_lma + SIZEOF (.data))
+                0x03000990                        . = ALIGN (0x4)
+                0x08002ca0                        __preinit_lma = (__data_lma + SIZEOF (.data))
 
-.igot.plt       0x030006a8        0x0 load address 0x08002b14
- .igot.plt      0x030006a8        0x0 obj/crt0.o
+.igot.plt       0x03000800        0x0 load address 0x08002ca0
+ .igot.plt      0x03000800        0x0 obj/crt0.o
 
-.preinit_array  0x030006f4        0x0 load address 0x08002b14
-                0x030006f4                        __preinit_array_start = ABSOLUTE (.)
+.preinit_array  0x03000990        0x0 load address 0x08002ca0
+                0x03000990                        __preinit_array_start = ABSOLUTE (.)
  *(.preinit_array)
-                0x030006f4                        __preinit_array_end = ABSOLUTE (.)
-                0x08002b14                        __init_lma = (__preinit_lma + SIZEOF (.preinit_array))
+                0x03000990                        __preinit_array_end = ABSOLUTE (.)
+                0x08002ca0                        __init_lma = (__preinit_lma + SIZEOF (.preinit_array))
 
-.init_array     0x030006f4        0x0 load address 0x08002b14
-                0x030006f4                        __init_array_start = ABSOLUTE (.)
+.init_array     0x03000990        0x0 load address 0x08002ca0
+                0x03000990                        __init_array_start = ABSOLUTE (.)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array)
-                0x030006f4                        __init_array_end = ABSOLUTE (.)
-                0x08002b14                        __fini_lma = (__init_lma + SIZEOF (.init_array))
+                0x03000990                        __init_array_end = ABSOLUTE (.)
+                0x08002ca0                        __fini_lma = (__init_lma + SIZEOF (.init_array))
 
-.fini_array     0x030006f4        0x0 load address 0x08002b14
-                0x030006f4                        __fini_array_start = ABSOLUTE (.)
+.fini_array     0x03000990        0x0 load address 0x08002ca0
+                0x03000990                        __fini_array_start = ABSOLUTE (.)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array)
-                0x030006f4                        __fini_array_end = ABSOLUTE (.)
-                0x08002b14                        __jcr_lma = (__fini_lma + SIZEOF (.fini_array))
+                0x03000990                        __fini_array_end = ABSOLUTE (.)
+                0x08002ca0                        __jcr_lma = (__fini_lma + SIZEOF (.fini_array))
 
 .jcr
  *(.jcr)
-                0x030006f4                        __data_end__ = ABSOLUTE (.)
-                0x08002b14                        __iwram_overlay_lma = (__jcr_lma + SIZEOF (.jcr))
-                0x030006f4                        __iwram_overlay_start = .
+                0x03000990                        __data_end__ = ABSOLUTE (.)
+                0x08002ca0                        __iwram_overlay_lma = (__jcr_lma + SIZEOF (.jcr))
+                0x03000990                        __iwram_overlay_start = .
 
-.iwram0         0x030006f4        0x0 load address 0x08002b14
+.iwram0         0x03000990        0x0 load address 0x08002ca0
  *(.iwram0)
-                0x030006f4                        . = ALIGN (0x4)
-                0x08002b14                        PROVIDE (__load_start_iwram0 = LOADADDR (.iwram0))
-                0x08002b14                        PROVIDE (__load_stop_iwram0 = (LOADADDR (.iwram0) + SIZEOF (.iwram0)))
+                0x03000990                        . = ALIGN (0x4)
+                0x08002ca0                        PROVIDE (__load_start_iwram0 = LOADADDR (.iwram0))
+                0x08002ca0                        PROVIDE (__load_stop_iwram0 = (LOADADDR (.iwram0) + SIZEOF (.iwram0)))
 
-.iwram1         0x030006f4        0x0
+.iwram1         0x03000990        0x0
  *(.iwram1)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram1 = LOADADDR (.iwram1))
                 [!provide]                        PROVIDE (__load_stop_iwram1 = (LOADADDR (.iwram1) + SIZEOF (.iwram1)))
 
-.iwram2         0x030006f4        0x0
+.iwram2         0x03000990        0x0
  *(.iwram2)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram2 = LOADADDR (.iwram2))
                 [!provide]                        PROVIDE (__load_stop_iwram2 = (LOADADDR (.iwram2) + SIZEOF (.iwram2)))
 
-.iwram3         0x030006f4        0x0
+.iwram3         0x03000990        0x0
  *(.iwram3)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram3 = LOADADDR (.iwram3))
                 [!provide]                        PROVIDE (__load_stop_iwram3 = (LOADADDR (.iwram3) + SIZEOF (.iwram3)))
 
-.iwram4         0x030006f4        0x0
+.iwram4         0x03000990        0x0
  *(.iwram4)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram4 = LOADADDR (.iwram4))
                 [!provide]                        PROVIDE (__load_stop_iwram4 = (LOADADDR (.iwram4) + SIZEOF (.iwram4)))
 
-.iwram5         0x030006f4        0x0
+.iwram5         0x03000990        0x0
  *(.iwram5)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram5 = LOADADDR (.iwram5))
                 [!provide]                        PROVIDE (__load_stop_iwram5 = (LOADADDR (.iwram5) + SIZEOF (.iwram5)))
 
-.iwram6         0x030006f4        0x0
+.iwram6         0x03000990        0x0
  *(.iwram6)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram6 = LOADADDR (.iwram6))
                 [!provide]                        PROVIDE (__load_stop_iwram6 = (LOADADDR (.iwram6) + SIZEOF (.iwram6)))
 
-.iwram7         0x030006f4        0x0
+.iwram7         0x03000990        0x0
  *(.iwram7)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram7 = LOADADDR (.iwram7))
                 [!provide]                        PROVIDE (__load_stop_iwram7 = (LOADADDR (.iwram7) + SIZEOF (.iwram7)))
 
-.iwram8         0x030006f4        0x0
+.iwram8         0x03000990        0x0
  *(.iwram8)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram8 = LOADADDR (.iwram8))
                 [!provide]                        PROVIDE (__load_stop_iwram8 = (LOADADDR (.iwram8) + SIZEOF (.iwram8)))
 
-.iwram9         0x030006f4        0x0
+.iwram9         0x03000990        0x0
  *(.iwram9)
-                0x030006f4                        . = ALIGN (0x4)
+                0x03000990                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram9 = LOADADDR (.iwram9))
                 [!provide]                        PROVIDE (__load_stop_iwram9 = (LOADADDR (.iwram9) + SIZEOF (.iwram9)))
-                0x030006f4                        __iwram_overlay_end = .
-                0x08002b14                        __ewram_lma = (__iwram_overlay_lma + (__iwram_overlay_end - __iwram_overlay_start))
-                0x030006f4                        __iheap_start = .
+                0x03000990                        __iwram_overlay_end = .
+                0x08002ca0                        __ewram_lma = (__iwram_overlay_lma + (__iwram_overlay_end - __iwram_overlay_start))
+                0x03000990                        __iheap_start = .
                 0x02000000                        __ewram_start = ORIGIN (ewram)
 
-.ewram          0x02000000      0x5cc load address 0x08002b14
+.ewram          0x02000000      0x5cc load address 0x08002ca0
  *(.ewram*)
  .ewram         0x02000000      0x178 obj/common.o
                 0x02000000                _Strlen
@@ -324,7 +330,7 @@ Linker script and memory map
                 0x020005ac                KeyInit
                 0x020005cc                        . = ALIGN (0x4)
                 0x020005cc                        __ewram_end = ABSOLUTE (.)
-                0x080030e0                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
+                0x0800326c                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
 
 .sbss           0x020005cc        0x0
                 0x020005cc                        __sbss_start__ = ABSOLUTE (.)
@@ -334,13 +340,13 @@ Linker script and memory map
                 0x020005cc                        __end__ = ABSOLUTE (.)
                 0x020005cc                        __eheap_start = ABSOLUTE (.)
 
-.pad            0x020005cc        0x8 load address 0x080030e0
+.pad            0x020005cc        0x8 load address 0x0800326c
                 0x020005cc        0x4 LONG 0x52416b64
                 0x020005d0        0x4 LONG 0x4d
                 0x020005d4                        . = ALIGN (0x4)
-                0x080030e8                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
+                0x08003274                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
 
-.rel.dyn        0x020005d4        0x0 load address 0x080030e8
+.rel.dyn        0x020005d4        0x0 load address 0x08003274
  .rel.iplt      0x020005d4        0x0 obj/crt0.o
 
 .stab
