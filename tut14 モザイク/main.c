@@ -18,8 +18,8 @@ int main(void)
 	REG_DMA3DAD = (u32)VRAM;
 	REG_DMA3CNT = (u32)(240*160) | (DMA_SRC_INC | DMA_DST_INC | DMA16 | DMA_ENABLE);
 
-	s16 cx = 5;
-	s16 cy = 5;
+	s32 cx = 5;
+	s32 cy = 5;
 	u16 cnt;
 
 	for(;;)
