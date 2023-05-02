@@ -24,7 +24,7 @@ int main(void)
 
 	for(;;)
 	{
-	    VBlankIntrWait();
+		VBlankIntrWait();
 
 		REG_MOSAIC = MOSAIC_BG_H(cx) | MOSAIC_BG_V(cy);
 

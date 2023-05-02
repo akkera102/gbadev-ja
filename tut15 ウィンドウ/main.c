@@ -21,7 +21,7 @@ int main(void)
 
 	for(;;)
 	{
-	    VBlankIntrWait();
+		VBlankIntrWait();
 
 		KeyExec();
 		cnt = KeyGetCnt();
