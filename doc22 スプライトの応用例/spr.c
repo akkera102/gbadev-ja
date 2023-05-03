@@ -11,18 +11,22 @@ EWRAM_CODE void SprInit(void)
 		SprSetXy(i, 240, 160);
 	}
 
-	// mode3
-	u16* oam = BITMAP_OBJ_BASE_ADR;
+	u16* oam = OBJ_BASE_ADR;
 	u16* pal = OBJ_COLORS;
 
-	for(i=0; i<spr_slimeTilesLen/2; i++)
+	for(i=0; i<metr0TilesLen/2; i++)
 	{
-		oam[i] = spr_slimeTiles[i];
+		oam[i] = metr0Tiles[i];
 	}
 
-	for(i=0; i<spr_slimePalLen/2; i++)
+	for(i=0; i<metr0PalLen/2; i++)
 	{
-		pal[i] = spr_slimePal[i];
+		pal[i] = metr0Pal[i];
+	}
+
+	for(i=0; i<metr0PalLen/2; i++)
+	{
+		pal[16+i] = metr1Pal[i];
 	}
 }
 //---------------------------------------------------------------------------
@@ -32,7 +36,7 @@ EWRAM_CODE void SprSetSize(u32 num, u32 size, u32 form, u32 col)
 
 	sp->attr0 &= 0x1fff;
 	sp->attr1 &= 0x3fff;
-	sp->attr0 |= col  | form;
+	sp->attr0 |= col | form;
 	sp->attr1 |= size;
 }
 //---------------------------------------------------------------------------
@@ -57,39 +61,50 @@ EWRAM_CODE void SprSetChr(u32 num, u32 ch)
 	sp->attr2 |= ch;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetScale(u32 num, u32 xsc, u32 ysc)
+EWRAM_CODE void SprSetScaleRot(u32 num, s16 pa, s16 pb, s16 pc, s16 pd)
 {
 	OBJAFFINE* rot = (OBJAFFINE*)OAM + num;
 
-	rot->pa = Div(256 * 100, xsc);
-	rot->pb = 0;
-	rot->pc = 0;
-	rot->pd = Div(256 * 100, ysc);
+	rot->pa = pa;
+	rot->pb = pb;
+	rot->pc = pc;
+	rot->pd = pd;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetPalNo(u32 num, u32 palNo)
+EWRAM_CODE void SprSetPal(u32 num, u32 pal)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
 	sp->attr2 &= 0x0fff;
-	sp->attr2 |= (palNo << 12);
+	sp->attr2 |= (pal << 12);
 }
 //---------------------------------------------------------------------------
-/*
-	SprSetRotateFlag
-	スプライトの拡大縮小回転機能に関する設定
-	no 　　　　　・・・　使用するスプライトRotateパラメータの番号
-	double_flag　・・・　描画領域を２倍使用できるようにするか
-	                     0なら通常の描画領域、SP_SIZE_DOUBLEなら２倍
-*/
-EWRAM_CODE void SprSetRotateFlag(u32 num, u32 no, u32 double_flag)
+EWRAM_CODE void SprSetRotScale(u32 num, u32 no, u32 isFlag)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
-	sp->attr0 |= OBJ_ROT_SCALE_ON;
-
+	sp->attr0 &= 0xfeff;
 	sp->attr1 &= 0xC1ff;
+
+	if(isFlag == FALSE)
+	{
+		return;
+	}
+
+	sp->attr0 |= OBJ_ROT_SCALE_ON;
 	sp->attr1 |= OBJ_ROT_SCALE(no);
+}
+//---------------------------------------------------------------------------
+EWRAM_CODE void SprSetDubleFlag(u32 num, u32 no, u32 isFlag)
+{
+	OBJATTR* sp = (OBJATTR*)OAM + num;
+
 	sp->attr0 &= 0xfdff;
-	sp->attr0 |= double_flag;
+
+	if(isFlag == FALSE)
+	{
+		return;
+	}
+
+	sp->attr0 |= OBJ_DOUBLE;
 }

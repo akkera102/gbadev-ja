@@ -304,7 +304,7 @@ Linker script and memory map
                 0x03000944                        __iheap_start = .
                 0x02000000                        __ewram_start = ORIGIN (ewram)
 
-.ewram          0x02000000      0x41c load address 0x0800340c
+.ewram          0x02000000      0x414 load address 0x0800340c
  *(.ewram*)
  .ewram         0x02000000      0x178 obj/common.o
                 0x02000000                _Strlen
@@ -321,34 +321,34 @@ Linker script and memory map
                 0x020001b0                IrqInit
  .ewram         0x020001f8       0x20 obj/key.o
                 0x020001f8                KeyInit
- .ewram         0x02000218      0x204 obj/spr.o
+ .ewram         0x02000218      0x1fc obj/spr.o
                 0x02000218                SprInit
-                0x02000310                SprSetSize
-                0x02000338                SprSetXy
-                0x0200037c                SprSetChr
-                0x02000394                SprSetScale
-                0x020003cc                SprSetPalNo
-                0x020003e4                SprSetRotateFlag
-                0x0200041c                        . = ALIGN (0x4)
-                0x0200041c                        __ewram_end = ABSOLUTE (.)
-                0x08003828                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
+                0x02000308                SprSetSize
+                0x02000330                SprSetXy
+                0x02000374                SprSetChr
+                0x0200038c                SprSetScale
+                0x020003c4                SprSetPalNo
+                0x020003dc                SprSetRotateFlag
+                0x02000414                        . = ALIGN (0x4)
+                0x02000414                        __ewram_end = ABSOLUTE (.)
+                0x08003820                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
 
-.sbss           0x0200041c        0x0
-                0x0200041c                        __sbss_start__ = ABSOLUTE (.)
+.sbss           0x02000414        0x0
+                0x02000414                        __sbss_start__ = ABSOLUTE (.)
  *(.sbss*)
+                0x02000414                        . = ALIGN (0x4)
+                0x02000414                        __sbss_end__ = ABSOLUTE (.)
+                0x02000414                        __end__ = ABSOLUTE (.)
+                0x02000414                        __eheap_start = ABSOLUTE (.)
+
+.pad            0x02000414        0x8 load address 0x08003820
+                0x02000414        0x4 LONG 0x52416b64
+                0x02000418        0x4 LONG 0x4d
                 0x0200041c                        . = ALIGN (0x4)
-                0x0200041c                        __sbss_end__ = ABSOLUTE (.)
-                0x0200041c                        __end__ = ABSOLUTE (.)
-                0x0200041c                        __eheap_start = ABSOLUTE (.)
+                0x08003828                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
 
-.pad            0x0200041c        0x8 load address 0x08003828
-                0x0200041c        0x4 LONG 0x52416b64
-                0x02000420        0x4 LONG 0x4d
-                0x02000424                        . = ALIGN (0x4)
-                0x08003830                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
-
-.rel.dyn        0x02000424        0x0 load address 0x08003830
- .rel.iplt      0x02000424        0x0 obj/crt0.o
+.rel.dyn        0x0200041c        0x0 load address 0x08003828
+ .rel.iplt      0x0200041c        0x0 obj/crt0.o
 
 .stab
  *(.stab)
