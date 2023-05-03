@@ -30,7 +30,7 @@ int main(void)
 	s16 tc = pc;
 	s16 td = pd;
 
-	s32 dir = 0;
+	s32 angle = 0;
 	bool isDouble = FALSE;
 
 	// metro
@@ -78,7 +78,7 @@ int main(void)
 			pc = 0x0000;
 			pd = 0x0100;
 
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 			isDouble = FALSE;
 
 			continue;
@@ -102,7 +102,7 @@ int main(void)
 		if((cnt & KEY_A) && (cnt & KEY_SELECT))
 		{
 			pa += 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -110,7 +110,7 @@ int main(void)
 		if(cnt & KEY_A)
 		{
 			pa -= 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -119,7 +119,7 @@ int main(void)
 		if((cnt & KEY_B) && (cnt & KEY_SELECT))
 		{
 			pd += 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -127,7 +127,7 @@ int main(void)
 		if(cnt & KEY_B)
 		{
 			pd -= 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -137,7 +137,7 @@ int main(void)
 		if(cnt & KEY_LEFT)
 		{
 			pb -= 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -146,7 +146,7 @@ int main(void)
 		if(cnt & KEY_RIGHT)
 		{
 			pb += 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -155,7 +155,7 @@ int main(void)
 		if(cnt & KEY_UP)
 		{
 			pc += 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -164,7 +164,7 @@ int main(void)
 		if(cnt & KEY_DOWN)
 		{
 			pc -= 4;
-			ta = pa; tb = pb; tc = pc; td = pd; dir = 0;
+			ta = pa; tb = pb; tc = pc; td = pd; angle = 0;
 
 			continue;
 		}
@@ -173,10 +173,10 @@ int main(void)
 		// L: Rotates left
 		if(cnt & KEY_L)
 		{
-			dir += 128;
+			angle += 128;
 
-			s32 ss = MathSin(dir) >> 4;
-			s32 cc = MathCos(dir) >> 4;
+			s32 ss = MathSin(angle) >> 4;
+			s32 cc = MathCos(angle) >> 4;
 
 			s32 sa =  cc;
 			s32 sb = -ss;
@@ -194,10 +194,10 @@ int main(void)
 		// R Rotates right
 		if(cnt & KEY_R)
 		{
-			dir -= 128;
+			angle -= 128;
 
-			s32 ss = MathSin(dir) >> 4;
-			s32 cc = MathCos(dir) >> 4;
+			s32 ss = MathSin(angle) >> 4;
+			s32 cc = MathCos(angle) >> 4;
 
 			s32 sa =  cc;
 			s32 sb = -ss;
