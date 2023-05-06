@@ -55,13 +55,13 @@ int main(void)
 	{
 		VBlankIntrWait();
 
+		RotateBG2(angle);
+
 		angle++;
 
 		if(angle > 360)
 		{
 			angle = 0;
 		}
-
-		RotateBG2(angle);
 	}
 }
