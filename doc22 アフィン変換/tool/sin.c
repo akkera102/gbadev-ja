@@ -26,6 +26,12 @@ int main()
 			fputs("\n\t", fp);
 		}
 
+		// 2023/05/09 fixed. i==128 is cos(0). hw:0xffff -> 0x1000.
+		if(i == 128)
+		{
+			hw = 0x1000;
+		}
+
 		fprintf(fp, "0x%04X, ", hw);
 	}
 	fputs("\n};\n", fp);

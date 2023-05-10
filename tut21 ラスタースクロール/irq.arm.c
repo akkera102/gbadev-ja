@@ -3,9 +3,9 @@
 
 //---------------------------------------------------------------------------
 // main.c
-extern vs32 shakeAngle;
-extern vs32 shakeCycle;
-extern vs32 shakeCx;
+extern vs32 shakeAngle;		// ‰¡—h‚ê‚Ì1üŠú“à‚ÌˆÊ’u
+extern vs32 shakeCycle;		// ‰¡—h‚ê‚ÌüŠú
+extern vs32 shakeCx;		// ‰¡U‚ê‚Ì•
 
 
 //---------------------------------------------------------------------------
