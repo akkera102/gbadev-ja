@@ -155,34 +155,33 @@ int main(void)
 		}
 
 
-		// LEFT: Shear x--
+		// LEFT: Shear x down
 		if(cnt & KEY_LEFT)
 		{
 			tb -= 4;
 			continue;
 		}
 
-		// RIGHT: Shear x++
+		// RIGHT: Shear x up
 		if(cnt & KEY_RIGHT)
 		{
 			tb += 4;
 			continue;
 		}
 
-		// UP: Shear y++
-		if(cnt & KEY_UP)
-		{
-			tc += 4;
-			continue;
-		}
-
-		// DOWN: Shear y--
+		// DOWN: Shear y down
 		if(cnt & KEY_DOWN)
 		{
 			tc -= 4;
 			continue;
 		}
 
+		// UP: Shear y up
+		if(cnt & KEY_UP)
+		{
+			tc += 4;
+			continue;
+		}
 
 		// L: Rotates left
 		if(cnt & KEY_L)
