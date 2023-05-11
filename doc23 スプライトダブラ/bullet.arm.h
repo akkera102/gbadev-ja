@@ -8,7 +8,7 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 #define BULLET_MAX_CHR_CNT			384
-#define BULLET_MAX_IDX_CNT			((160+8)/8)
+#define BULLET_MAX_IDX_CNT			21			// (ècâÊñ 160+îÒï\é¶8) / 8
 
 #define INT2FIX(A)					((A)<<7)
 #define FIX2INT(A)					((A)>>7)

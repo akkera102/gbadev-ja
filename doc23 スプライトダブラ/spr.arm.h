@@ -9,7 +9,7 @@ extern "C" {
 #include "bullet.arm.h"
 
 //---------------------------------------------------------------------------
-#define SPR_MAX_RASTER_CNT				128
+#define SPR_MAX_OAM_CNT					128
 #define SPR_MAX_ITEM_CNT				BULLET_MAX_CHR_CNT		// bullet.h
 #define SPR_MAX_IDX_CNT					BULLET_MAX_IDX_CNT
 
@@ -23,13 +23,15 @@ typedef struct {
 
 
 typedef struct {
-	s16 vCnt;
-	s16 sprCnt;
-	u16 pat;
-	u32 zero;
+	s16 vCnt;						// VCOUNT用インデックス
+	s16 oamCnt;						// VCOUNT用OAMの転送開始位置
 
-	s16 idx[SPR_MAX_IDX_CNT];
-	s16 idxCnt[SPR_MAX_IDX_CNT];
+	u16 chrNo;						// キャラクターナンバー
+
+	s16 idx[SPR_MAX_IDX_CNT];		// 8ライン毎のitemバッファ開始位置インデックス
+	s16 idxCnt[SPR_MAX_IDX_CNT];	// 8ライン毎の弾数
+
+	u32 zero ALIGN(4);				// ゼロクリア用
 
 	ST_SPR_ITEM item[SPR_MAX_ITEM_CNT] ALIGN(4);
 

@@ -27,8 +27,10 @@ IWRAM_CODE void BulletExec(void)
 		Bullet.chr[i].x += Bullet.chr[i].mx;
 		Bullet.chr[i].y += Bullet.chr[i].my;
 
+		s32 xx = FIX2INT(Bullet.chr[i].x);
+		s32 yy = FIX2INT(Bullet.chr[i].y);
 
-		if(FIX2INT(Bullet.chr[i].x) <= -8 || FIX2INT(Bullet.chr[i].x) >= 240)
+		if(xx <= -8 || xx >= 240 || yy <= -8 || yy >= 160)
 		{
 			Bullet.chr[i].is = FALSE;
 			Bullet.maxCnt--;
@@ -36,15 +38,7 @@ IWRAM_CODE void BulletExec(void)
 			continue;
 		}
 
-		if(FIX2INT(Bullet.chr[i].y) <= -8 || FIX2INT(Bullet.chr[i].y) >= 160)
-		{
-			Bullet.chr[i].is = FALSE;
-			Bullet.maxCnt--;
-
-			continue;
-		}
-
-		s32 idx = (FIX2INT(Bullet.chr[i].y) + 8) / 8;
+		s32 idx = (yy + 8) / 8;
 		Bullet.idxCnt[idx]++;
 	}
 }
@@ -73,17 +67,16 @@ IWRAM_CODE void BulletReg(s32 x, s32 y)
 //---------------------------------------------------------------------------
 IWRAM_CODE s16 BulletRnd(void)
 {
-Re:
 	s16 r = (s16)RndU32();
 
-	if(r >= 0 && r <  128)
+	// Å’áŒÀ‚ÌˆÚ“®—Ê‚ð’²®
+	if(r & 0x8000)
 	{
-		goto Re;
+		r -= 128;
 	}
-
-	if(r <= 0 && r > -128)
+	else
 	{
-		goto Re;
+		r += 128;
 	}
 
 	return FIX2INT(r);

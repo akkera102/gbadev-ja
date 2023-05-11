@@ -29,8 +29,6 @@ int main(void)
 		BgAsciiDrawPrintf(23, 0, "%3d", BulletGetMaxCnt());
 
 		BulletExec();
-
-		SprInitItem();
 		SprExec();
 
 		KeyExec();

@@ -9,7 +9,7 @@ ST_SPR Spr;
 // VCOUNT割り込みライン
 const s32 SprVmap[SPR_MAX_IDX_CNT] = 
 {
-	218, //  0
+	218, //  0   218 = 228 - 8 - 2
 	226, //  1
 	  6, //  2
 	 14, //  3
@@ -54,8 +54,7 @@ EWRAM_CODE void SprInit(void)
 //---------------------------------------------------------------------------
 EWRAM_CODE void SprInitItem(void)
 {
-	// OAM buffer zero clear
-
+	// 0クリア OAM buffer 
 	REG_DMA0SAD = (u32)&Spr.zero;
 	REG_DMA0DAD = (u32)&Spr.item;
 	REG_DMA0CNT = (u32)sizeof(Spr.item)/4 | (DMA_SRC_FIXED | DMA_DST_INC | DMA32 | DMA_ENABLE);
@@ -63,23 +62,27 @@ EWRAM_CODE void SprInitItem(void)
 //---------------------------------------------------------------------------
 IWRAM_CODE void SprExec(void)
 {
-	s32 i, max, cnt = 0; 
+	SprInitItem();
+
+	s32 i, cnt = 0; 
 	ST_SPR_ITEM* pW[SPR_MAX_IDX_CNT];
 
 	for(i=0; i<SPR_MAX_IDX_CNT; i++)
 	{
-		// y8ラインの弾数を取得
+		// 8ラインごとの弾数を取得
 		Spr.idxCnt[i] = BulletGetIdxCnt(i);
 
-		// VCOUNT用のバッファ位置を格納、ワークポインタを格納
+		// 各VCOUNTでDMA転送するバッファ位置を格納
 		Spr.idx[i] = cnt;
+
+		// ソートで使うワークポインタを格納
 		pW[i] = &Spr.item[cnt];
 
 		cnt += Spr.idxCnt[i];
 	}
 
-	// ソート
-	max = BulletGetMaxCnt();
+	// 8ライン単位にソート
+	s32 max = BulletGetMaxCnt();
 
 	BulletSeekInit();
 
@@ -91,65 +94,75 @@ IWRAM_CODE void SprExec(void)
 
 		pW[y8]->attr0 = OBJ_16_COLOR | OBJ_SQUARE | (y & 0x00ff);
 		pW[y8]->attr1 = OBJ_SIZE(0)  | (x & 0x01ff);
-		pW[y8]->attr2 = (1+Spr.pat);
+		pW[y8]->attr2 = (1+Spr.chrNo);
 		pW[y8]++;
 
 		BulletSeekNext();
 	}
 
 	// スプライトアニメーション
-	Spr.pat++;
-	Spr.pat &= 0x03;
+	Spr.chrNo++;
+	Spr.chrNo &= 0x03;
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE void SprVBlank(void)
 {
-	Spr.vCnt = 0;
-	Spr.sprCnt = 0;
-
-	// OAM zero clear
+	// 0クリア OAM 
 	REG_DMA0SAD = (u32)&Spr.zero;
 	REG_DMA0DAD = (u32)OAM;
 	REG_DMA0CNT = (u32)128*2 | (DMA_SRC_FIXED | DMA_DST_INC | DMA32 | DMA_ENABLE);
 
+
+	Spr.vCnt = 0;
+	Spr.oamCnt = 0;
 
 	REG_DISPSTAT = (REG_DISPSTAT & STAT_MASK) | LCDC_VCNT | VCOUNT(SprVmap[Spr.vCnt]);
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE void SprVCount(void)
 {
-	s32 idxCnt = Spr.idxCnt[Spr.vCnt];
-	s32 allCnt = Spr.sprCnt + idxCnt;
+	s32 idx = Spr.idx[Spr.vCnt];		// 転送するSpr.itemのインデックス
+	s32 cnt = Spr.idxCnt[Spr.vCnt];		// 転送する数
+	s32 all = Spr.oamCnt + cnt;			// OAMインデックス + 転送する数
 
-	OBJATTR* pM = (OBJATTR*)&Spr.item;;
-	OBJATTR* pO = (OBJATTR*)OAM;
+	// DMA転送元、転送先
+	OBJATTR* pS = (OBJATTR*)&Spr.item;
+	OBJATTR* pD = (OBJATTR*)OAM;
 
-	s32 sad1 = Spr.idx[Spr.vCnt];
-	s32 dad1 = Spr.sprCnt;
-	s32 cnt1 = (allCnt >= SPR_MAX_RASTER_CNT) ? (SPR_MAX_RASTER_CNT - 1) - idxCnt : idxCnt;
+	s32 sad0 = idx;
+	s32 dad0 = Spr.oamCnt;
+	s32 cnt0 = cnt;
 
-	s32 sad2 = allCnt & (SPR_MAX_RASTER_CNT - 1);
-	s32 dad2 = 0;
-	s32 cnt2 = (allCnt >= SPR_MAX_RASTER_CNT) ? allCnt - SPR_MAX_RASTER_CNT : 0;
+	s32 sad1 = 0;
+	s32 dad1 = 0;
+	s32 cnt1 = 0;
+
+    if(all >= SPR_MAX_OAM_CNT)
+	{
+		cnt0  = all - SPR_MAX_OAM_CNT;
+		cnt1  = cnt - cnt0;
+		sad1  = idx + cnt0;
+    }
+
+	if(cnt0 != 0)
+	{
+		REG_DMA0SAD = (u32)&pS[sad0];
+		REG_DMA0DAD = (u32)&pD[dad0];
+		REG_DMA0CNT = (u32)cnt0*2 | (DMA_SRC_INC | DMA_DST_INC | DMA32 | DMA_ENABLE);
+	}
 
 	if(cnt1 != 0)
 	{
-		REG_DMA0SAD = (u32)&pM[sad1];
-		REG_DMA0DAD = (u32)&pO[dad1];
-		REG_DMA0CNT = (u32)cnt1*2 | (DMA_SRC_INC | DMA_DST_INC | DMA32 | DMA_ENABLE);
+		REG_DMA1SAD = (u32)&pS[sad1];
+		REG_DMA1DAD = (u32)&pD[dad1];
+		REG_DMA1CNT = (u32)cnt1*2 | (DMA_SRC_INC | DMA_DST_INC | DMA32 | DMA_ENABLE);
 	}
 
-	if(cnt2 != 0)
-	{
-		REG_DMA1SAD = (u32)&pM[sad2];
-		REG_DMA1DAD = (u32)&pO[dad2];
-		REG_DMA1CNT = (u32)cnt2*2 | (DMA_SRC_INC | DMA_DST_INC | DMA32 | DMA_ENABLE);
-	}
-
-	Spr.sprCnt += idxCnt;
-	Spr.sprCnt &= (SPR_MAX_RASTER_CNT - 1);
+	Spr.oamCnt += cnt;
+	Spr.oamCnt &= (SPR_MAX_OAM_CNT - 1);
 
 
+	// 次のVCOUNTを設定
 	if(Spr.vCnt < SPR_MAX_IDX_CNT)
 	{
 		Spr.vCnt++;

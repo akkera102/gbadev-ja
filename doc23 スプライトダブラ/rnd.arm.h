@@ -11,8 +11,8 @@ extern "C" {
 
 
 //---------------------------------------------------------------------------
-IWRAM_CODE void RndInit(void);
-IWRAM_CODE void RndInit2(u32 s);
+EWRAM_CODE void RndInit(void);
+EWRAM_CODE void RndInit2(u32 s);
 IWRAM_CODE u32  RndU32(void);
 
 

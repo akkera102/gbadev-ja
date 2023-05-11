@@ -27,8 +27,8 @@ EWRAM_CODE void Bg1Init(void);
 EWRAM_CODE void Bg2Init(void);
 EWRAM_CODE void Bg3Init(void);
 
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s);
-EWRAM_CODE void BgAsciiDrawPrintf(s32 sx, s32 sy, char* format, ...);
+IWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s);
+IWRAM_CODE void BgAsciiDrawPrintf(s32 sx, s32 sy, char* format, ...);
 
 
 #ifdef __cplusplus

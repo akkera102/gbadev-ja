@@ -85,7 +85,7 @@ EWRAM_CODE void Bg3Init()
 	// EMPTY
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
+IWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
 {
 	u16* map = &Bg[0].mapBaseAdr[x + y * 32];
 
@@ -95,7 +95,7 @@ EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgAsciiDrawPrintf(s32 sx, s32 sy, char* format, ...)
+IWRAM_CODE void BgAsciiDrawPrintf(s32 sx, s32 sy, char* format, ...)
 {
 	char s[100] ALIGN(4);
 
