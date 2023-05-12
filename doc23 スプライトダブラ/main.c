@@ -24,10 +24,12 @@ int main(void)
 
 		for(s32 i=0; i<20; i++)
 		{
-			BgAsciiDrawPrintf(23, i, "%3d", BulletGetIdxCnt(i));
-			BgAsciiDrawPrintf(26, i, "%3d", BulletGetIdxCnt(20+i));
+			BgAsciiDrawPrintf(20, i, "%3d", BulletGetIdxCnt(i));
+			BgAsciiDrawPrintf(23, i, "%3d", BulletGetIdxCnt(20+i));
 		}
-		BgAsciiDrawPrintf(20, 0, "%3d", BulletGetMaxCnt());
+		BgAsciiDrawPrintf(26, 0, "%3d", BulletGetIdxCnt(40));
+		BgAsciiDrawPrintf(26, 1, "%3d", BulletGetIdxCnt(41));
+		BgAsciiDrawPrintf(17, 0, "%3d", BulletGetMaxCnt());
 
 
 		BulletExec();
