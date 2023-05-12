@@ -7,51 +7,55 @@
 ST_SPR Spr;
 
 // VCOUNT割り込みライン
-const s32 SprVmap[SPR_MAX_IDX_CNT+1] = 
+s32 SprVmap[SPR_MAX_IDX_CNT+1] = 
 {
-	222,	// 0		222 = 228 - 4 - 2（予備）
-	226,	// 1
-	2,		// 2
-	6,		// 3
-	10,		// 4
-	14,		// 5
-	18,		// 6
-	22,		// 7
-	26,		// 8
-	30,		// 9
-	34,		// 10
-	38,		// 11
-	42,		// 12
-	46,		// 13
-	50,		// 14
-	54,		// 15
-	58,		// 16
-	62,		// 17
-	66,		// 18
-	70,		// 19
-	74,		// 20
-	78,		// 21
-	82,		// 22
-	86,		// 23
-	90,		// 24
-	94,		// 25
-	98,		// 26
-	102,	// 27
-	106,	// 28
-	110,	// 29
-	114,	// 30
-	118,	// 31
-	122,	// 32
-	126,	// 33
-	130,	// 34
-	134,	// 35
-	138,	// 36
-	142,	// 37
-	146,	// 38
-	150,	// 39
-	154,	// 40
-	0,		// 41		vblank待ち用
+	218,	// 0		218 = 228 - 8 - 4
+	222,	// 1
+	226,	// 2
+	0,		// 3
+	4,		// 4
+	8,		// 5
+	12,		// 6
+	16,		// 7
+	20,		// 8
+	24,		// 9
+	28,		// 10
+	32,		// 11
+	36,		// 12
+	40,		// 13
+	44,		// 14
+	48,		// 15
+	52,		// 16
+	56,		// 17
+	60,		// 18
+	64,		// 19
+	68,		// 20
+	72,		// 21
+	76,		// 22
+	80,		// 23
+	84,		// 24
+	88,		// 25
+	92,		// 26
+	96,		// 27
+	100,	// 28
+	104,	// 29
+	108,	// 30
+	112,	// 31
+	116,	// 32
+	120,	// 33
+	124,	// 34
+	128,	// 35
+	132,	// 36
+	136,	// 37
+	140,	// 38
+	144,	// 39
+	148,	// 40
+	152,	// 41
+	0,		// vblank待ち用
 };
+
+// 例外参照
+extern ST_BULLET Bullet;
 
 //---------------------------------------------------------------------------
 EWRAM_CODE void SprInit(void)
@@ -90,20 +94,17 @@ IWRAM_CODE void SprExec(void)
 
 	for(i=0; i<SPR_MAX_IDX_CNT; i++)
 	{
-		// 4ラインごとの弾数を取得
-		Spr.idxCnt[i] = BulletGetIdxCnt(i);
-
 		// 各VCOUNTでDMA転送するバッファ位置を格納
 		Spr.idx[i] = cnt;
 
 		// ソートで使うワークポインタを格納
 		pW[i] = &Spr.item[cnt];
 
-		cnt += Spr.idxCnt[i];
+		cnt += Bullet.idxCnt[i];
 	}
 
-	// 弾情報ポインタを取得（高速化の為、モジュール化度外視）
-	ST_BULLET_CHR* pS = BulletGetChrPointer();
+	// 弾情報ポインタを取得
+	ST_BULLET_CHR* pS = (ST_BULLET_CHR*)&Bullet.chr;
 
 	// 最初の弾情報を取得
 	while(pS->is == FALSE)
@@ -112,13 +113,13 @@ IWRAM_CODE void SprExec(void)
 	}
 
 	// ソート開始
-	s32 max = BulletGetMaxCnt();
+	s32 max = Bullet.maxCnt;
 
 	for(i=0; i<max; i++)
 	{
 		s32 x  = FIX2INT(pS->x);
 		s32 y  = FIX2INT(pS->y);
-		u32 y4 = (y + 4) / 4;
+		u32 y4 = (y + 8) / 4;
 
 		pW[y4]->attr0 = OBJ_16_COLOR | OBJ_SQUARE | (y & 0x00ff);
 		pW[y4]->attr1 = OBJ_SIZE(0)  | (x & 0x01ff);
@@ -154,7 +155,7 @@ IWRAM_CODE void SprVBlank(void)
 IWRAM_CODE void SprVCount(void)
 {
 	s32 idx = Spr.idx[Spr.vCnt];		// 転送するSpr.itemのインデックス
-	s32 cnt = Spr.idxCnt[Spr.vCnt];		// 転送する数
+	s32 cnt = Bullet.idxCnt[Spr.vCnt];	// 転送する数
 	s32 all = Spr.oamCnt + cnt;			// OAMインデックス + 転送する数
 
 	s32 sad0 = idx;

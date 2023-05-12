@@ -8,7 +8,7 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 #define BULLET_MAX_CHR_CNT			512
-#define BULLET_MAX_IDX_CNT			41			// (ècâÊñ 160+îÒï\é¶4) / 4
+#define BULLET_MAX_IDX_CNT			42			// (ècâÊñ 160+îÒï\é¶8) / 4
 
 #define INT2FIX(A)					((A)<<7)
 #define FIX2INT(A)					((A)>>7)
@@ -39,7 +39,6 @@ IWRAM_CODE void BulletExec(void);
 IWRAM_CODE void BulletReg(s32 x, s32 y);
 IWRAM_CODE s16  BulletRnd(void);
 
-IWRAM_CODE ST_BULLET_CHR* BulletGetChrPointer(void);
 IWRAM_CODE s16  BulletGetMaxCnt(void);
 IWRAM_CODE s16  BulletGetIdxCnt(s32 i);
 

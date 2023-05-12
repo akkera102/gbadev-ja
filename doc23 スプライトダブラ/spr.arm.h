@@ -26,10 +26,9 @@ typedef struct {
 	s16 vCnt;						// VCOUNT用インデックス
 	s16 oamCnt;						// VCOUNT用OAMの転送開始位置
 
-	u16 chrNo;						// キャラクターナンバー
+	u16 chrNo;						// スプライトキャラクタ
 
 	s16 idx[SPR_MAX_IDX_CNT];		// 4ライン毎のitemバッファ開始位置インデックス
-	s16 idxCnt[SPR_MAX_IDX_CNT];	// 4ライン毎の弾数
 
 	u32 zero ALIGN(4);				// DMAゼロクリア用
 
