@@ -1,10 +1,5 @@
 #include "irq.arm.h"
 #include "spr.arm.h"
-#include "main.h"
-
-//---------------------------------------------------------------------------
-// main.c
-extern ST_MAIN Main;
 
 
 //---------------------------------------------------------------------------
@@ -26,16 +21,6 @@ IWRAM_CODE void IrqHandler(void)
 
 	if(flag & IRQ_VBLANK)
 	{
-		Main.frameCount++;
-		Main.fpsTimer++;
-
-		if(Main.fpsTimer == 60)
-		{
-			Main.fps = Main.fpsCount;
-			Main.fpsTimer = 0;
-			Main.fpsCount = 0;
-		}
-
 		SprVBlank();
 
 		REG_IRQ_WAITFLAGS |= IRQ_VBLANK;
