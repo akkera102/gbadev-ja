@@ -7,7 +7,7 @@ extern "C" {
 #include "lib/gba.h"
 
 //---------------------------------------------------------------------------
-#define BULLET_MAX_CHR_CNT			384
+#define BULLET_MAX_CHR_CNT			512
 #define BULLET_MAX_IDX_CNT			21			// (縦画面160+非表示8) / 8
 
 #define INT2FIX(A)					((A)<<7)
@@ -25,8 +25,6 @@ typedef struct {
 } ST_BULLET_CHR;
 
 typedef struct {
-	s16  seek;
-
 	s16  maxCnt;								// 最大数
 	s16  idxCnt[BULLET_MAX_IDX_CNT];			// yラインを21分割したカウント数
 
@@ -41,11 +39,7 @@ IWRAM_CODE void BulletExec(void);
 IWRAM_CODE void BulletReg(s32 x, s32 y);
 IWRAM_CODE s16  BulletRnd(void);
 
-IWRAM_CODE void BulletSeekInit(void);
-IWRAM_CODE void BulletSeekNext(void);
-IWRAM_CODE s16  BulletSeekX(void);
-IWRAM_CODE s16  BulletSeekY(void);
-
+IWRAM_CODE ST_BULLET_CHR* BulletGetChrPointer(void);
 IWRAM_CODE s16  BulletGetMaxCnt(void);
 IWRAM_CODE s16  BulletGetIdxCnt(s32 i);
 

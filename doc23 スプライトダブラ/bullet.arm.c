@@ -70,48 +70,21 @@ IWRAM_CODE s16 BulletRnd(void)
 	s16 r = (s16)RndU32();
 
 	// Å’áŒÀ‚ÌˆÚ“®—Ê‚ð’²®
-	if(r & 0x8000)
+	if(r < 0)
 	{
-		r -= 128;
+		r -= 256;
 	}
 	else
 	{
-		r += 128;
+		r += 256;
 	}
 
 	return FIX2INT(r);
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void BulletSeekInit(void)
+IWRAM_CODE ST_BULLET_CHR* BulletGetChrPointer(void)
 {
-	Bullet.seek = 0;
-
-	if(Bullet.chr[Bullet.seek].is == TRUE)
-	{
-		return;
-	}
-
-	BulletSeekNext();
-}
-//---------------------------------------------------------------------------
-IWRAM_CODE void BulletSeekNext(void)
-{
-	Bullet.seek++;
-
-	while(Bullet.chr[Bullet.seek].is == FALSE)
-	{
-		Bullet.seek++;
-	}
-}
-//---------------------------------------------------------------------------
-IWRAM_CODE s16 BulletSeekX(void)
-{
-	return FIX2INT(Bullet.chr[Bullet.seek].x);
-}
-//---------------------------------------------------------------------------
-IWRAM_CODE s16 BulletSeekY(void)
-{
-	return FIX2INT(Bullet.chr[Bullet.seek].y);
+	return (ST_BULLET_CHR*)&Bullet.chr;
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE s16 BulletGetMaxCnt(void)

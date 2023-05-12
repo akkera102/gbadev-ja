@@ -39,9 +39,8 @@ typedef struct {
 
 //---------------------------------------------------------------------------
 EWRAM_CODE void SprInit(void);
-EWRAM_CODE void SprInitItem(void);
+IWRAM_CODE void SprInitItem(void);
 IWRAM_CODE void SprExec(void);
-EWRAM_CODE void SprSetXy(u32 num, s32 x, s32 y);
 
 IWRAM_CODE void SprVBlank(void);
 IWRAM_CODE void SprVCount(void);

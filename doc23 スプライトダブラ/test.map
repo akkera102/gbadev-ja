@@ -40,7 +40,6 @@ Discarded input sections
  .data          0x00000000        0x0 obj/key.o
  .text          0x00000000        0x0 obj/main.o
  .data          0x00000000        0x0 obj/main.o
- .bss           0x00000000        0x0 obj/main.o
  .text          0x00000000        0x0 obj/rnd.arm.o
  .text          0x00000000        0x0 obj/spr.arm.o
  .data          0x00000000        0x0 obj/spr.arm.o
@@ -80,86 +79,87 @@ Linker script and memory map
  *(.plt)
                 0x080001f8                        . = ALIGN (0x4)
 
-.text           0x080001f8      0x130
+.text           0x080001f8      0x1a0
  *(EXCLUDE_FILE(*.iwram*) .text*)
- .text.startup  0x080001f8      0x130 obj/main.o
+ .text.startup  0x080001f8      0x1a0 obj/main.o
                 0x080001f8                main
  *(.gnu.linkonce.t.*)
  *(.text.*personality*)
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x08000328        0x0 linker stubs
+ .glue_7t       0x08000398        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x08000328        0x0 linker stubs
+ .glue_7        0x08000398        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x08000328        0x0 linker stubs
-                0x08000328                        . = ALIGN (0x4)
-                0x08000328                        __text_end = .
+ .vfp11_veneer  0x08000398        0x0 linker stubs
+                0x08000398                        . = ALIGN (0x4)
+                0x08000398                        __text_end = .
 
-.v4_bx          0x08000328        0x0
- .v4_bx         0x08000328        0x0 linker stubs
+.v4_bx          0x08000398        0x0
+ .v4_bx         0x08000398        0x0 linker stubs
 
-.iplt           0x08000328        0x0
- .iplt          0x08000328        0x0 obj/crt0.o
+.iplt           0x08000398        0x0
+ .iplt          0x08000398        0x0 obj/crt0.o
 
-.fini           0x08000328        0x0
+.fini           0x08000398        0x0
  *(.fini)
-                0x08000328                        . = ALIGN (0x4)
+                0x08000398                        . = ALIGN (0x4)
 
-.rodata         0x08000328      0xe48
+.rodata         0x08000398      0xe70
  *(.rodata)
- .rodata        0x08000328      0xc20 obj/font_ascii.o
-                0x08000328                font_asciiTiles
-                0x08000f28                font_asciiPal
- .rodata        0x08000f48       0xa0 obj/spr_bullet_small.o
-                0x08000f48                spr_bullet_smallTiles
-                0x08000fc8                spr_bullet_smallPal
- .rodata        0x08000fe8      0x108 obj/common.o
- .rodata        0x080010f0       0x20 obj/bg.o
- .rodata        0x08001110        0x8 obj/rnd.arm.o
- .rodata        0x08001118       0x54 obj/spr.arm.o
-                0x08001118                SprVmap
+ .rodata        0x08000398      0xc20 obj/font_ascii.o
+                0x08000398                font_asciiTiles
+                0x08000f98                font_asciiPal
+ .rodata        0x08000fb8       0xa0 obj/spr_bullet_small.o
+                0x08000fb8                spr_bullet_smallTiles
+                0x08001038                spr_bullet_smallPal
+ .rodata        0x08001058      0x108 obj/common.o
+ .rodata        0x08001160       0x20 obj/bg.o
+ .rodata        0x08001180        0x8 obj/rnd.arm.o
+ .rodata        0x08001188       0x58 obj/spr.arm.o
+                0x08001188                SprVmap
  *all.rodata*(*)
  *(.roda)
  *(.rodata.*)
  .rodata.str1.4
-                0x0800116c        0x4 obj/main.o
+                0x080011e0       0x27 obj/main.o
  *(.gnu.linkonce.r*)
-                0x08001170                        . = ALIGN (0x4)
+                0x08001208                        . = ALIGN (0x4)
+ *fill*         0x08001207        0x1 ff
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08001170                        __exidx_start = .
+                0x08001208                        __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x08001170                        __exidx_end = .
+                0x08001208                        __exidx_end = .
 
-.ctors          0x08001170        0x0
+.ctors          0x08001208        0x0
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT_BY_NAME(.ctors.*))
  *(.ctors)
-                0x08001170                        . = ALIGN (0x4)
+                0x08001208                        . = ALIGN (0x4)
 
-.dtors          0x08001170        0x0
+.dtors          0x08001208        0x0
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
-                0x08001170                        . = ALIGN (0x4)
+                0x08001208                        . = ALIGN (0x4)
 
-.eh_frame       0x08001170        0x0
+.eh_frame       0x08001208        0x0
  *(.eh_frame)
-                0x08001170                        . = ALIGN (0x4)
+                0x08001208                        . = ALIGN (0x4)
 
 .gcc_except_table
-                0x08001170        0x0
+                0x08001208        0x0
  *(.gcc_except_table)
-                0x08001170                        . = ALIGN (0x4)
-                0x08001170                        __iwram_lma = .
+                0x08001208                        . = ALIGN (0x4)
+                0x08001208                        __iwram_lma = .
 
-.iwram          0x03000000      0xe94 load address 0x08001170
+.iwram          0x03000000      0xdd8 load address 0x08001208
                 0x03000000                        __iwram_start__ = ABSOLUTE (.)
  *(.iwram .iwram*)
  .iwram         0x03000000       0x10 obj/div.o
@@ -180,158 +180,157 @@ Linker script and memory map
  .iwram         0x030005d4       0x78 obj/bg.o
                 0x030005d4                BgAsciiDrawStr
                 0x030005fc                BgAsciiDrawPrintf
- .iwram         0x0300064c      0x324 obj/bullet.arm.o
+ .iwram         0x0300064c      0x224 obj/bullet.arm.o
                 0x0300064c                BulletExec
-                0x03000734                BulletReg
-                0x03000808                BulletRnd
-                0x0300083c                BulletSeekInit
-                0x030008a0                BulletSeekNext
-                0x0300090c                BulletSeekX
-                0x0300092c                BulletSeekY
-                0x0300094c                BulletGetMaxCnt
-                0x0300095c                BulletGetIdxCnt
- .iwram         0x03000970       0x80 obj/irq.arm.o
-                0x03000970                IrqHandler
- .iwram         0x030009f0       0x94 obj/key.o
-                0x030009f0                KeyExec
-                0x03000a54                KeyGetCnt
-                0x03000a60                KeyGetTrg
-                0x03000a6c                KeyGetOff
-                0x03000a78                KeyGetRep
- .iwram         0x03000a84      0x170 obj/rnd.arm.o
-                0x03000a84                RndU32
- .iwram         0x03000bf4      0x2a0 obj/spr.arm.o
-                0x03000bf4                SprExec
-                0x03000d3c                SprVBlank
-                0x03000d8c                SprVCount
+                0x03000738                BulletReg
+                0x0300080c                BulletRnd
+                0x03000840                BulletGetChrPointer
+                0x0300084c                BulletGetMaxCnt
+                0x0300085c                BulletGetIdxCnt
+ .iwram         0x03000870       0xb4 obj/irq.arm.o
+                0x03000870                IrqHandler
+ .iwram         0x03000924       0x94 obj/key.o
+                0x03000924                KeyExec
+                0x03000988                KeyGetCnt
+                0x03000994                KeyGetTrg
+                0x030009a0                KeyGetOff
+                0x030009ac                KeyGetRep
+ .iwram         0x030009b8      0x170 obj/rnd.arm.o
+                0x030009b8                RndU32
+ .iwram         0x03000b28      0x2b0 obj/spr.arm.o
+                0x03000b28                SprInitItem
+                0x03000b50                SprExec
+                0x03000c98                SprVBlank
+                0x03000cdc                SprVCount
  *iwram.*(.text* .data*)
-                0x03000e94                        . = ALIGN (0x4)
-                0x03000e94                        __iwram_end__ = ABSOLUTE (.)
-                0x08002004                        __data_lma = (__iwram_lma + SIZEOF (.iwram))
+                0x03000dd8                        . = ALIGN (0x4)
+                0x03000dd8                        __iwram_end__ = ABSOLUTE (.)
+                0x08001fe0                        __data_lma = (__iwram_lma + SIZEOF (.iwram))
 
-.bss            0x03000e94     0x259c
-                0x03000e94                        __bss_start = ABSOLUTE (.)
-                0x03000e94                        __bss_start__ = ABSOLUTE (.)
+.bss            0x03000dd8     0x2ea8
+                0x03000dd8                        __bss_start = ABSOLUTE (.)
+                0x03000dd8                        __bss_start__ = ABSOLUTE (.)
  *(.dynbss)
  *(.gnu.linkonce.b*)
  *(.bss*)
- .bss           0x03000e94       0x40 obj/bg.o
-                0x03000e94                Bg
- .bss           0x03000ed4      0xf2e obj/bullet.arm.o
-                0x03000ed4                Bullet
- *fill*         0x03001e02        0x2 
- .bss           0x03001e04        0xa obj/key.o
-                0x03001e04                Key
- *fill*         0x03001e0e        0x2 
- .bss           0x03001e10      0x9c0 obj/rnd.arm.o
- .bss           0x030027d0      0xc60 obj/spr.arm.o
-                0x030027d0                Spr
+ .bss           0x03000dd8       0x40 obj/bg.o
+                0x03000dd8                Bg
+ .bss           0x03000e18     0x142c obj/bullet.arm.o
+                0x03000e18                Bullet
+ .bss           0x03002244        0xa obj/key.o
+                0x03002244                Key
+ *fill*         0x0300224e        0x2 
+ .bss           0x03002250       0x10 obj/main.o
+                0x03002250                Main
+ .bss           0x03002260      0x9c0 obj/rnd.arm.o
+ .bss           0x03002c20     0x1060 obj/spr.arm.o
+                0x03002c20                Spr
  *(COMMON)
-                0x03003430                        . = ALIGN (0x4)
-                0x03003430                        __bss_end__ = ABSOLUTE (.)
+                0x03003c80                        . = ALIGN (0x4)
+                0x03003c80                        __bss_end__ = ABSOLUTE (.)
 
-.data           0x03003430        0x4 load address 0x08002004
-                0x03003430                        __data_start__ = ABSOLUTE (.)
+.data           0x03003c80        0x4 load address 0x08001fe0
+                0x03003c80                        __data_start__ = ABSOLUTE (.)
  *(.data*)
- .data          0x03003430        0x4 obj/rnd.arm.o
+ .data          0x03003c80        0x4 obj/rnd.arm.o
  *(.gnu.linkonce.d*)
-                0x03003434                        . = ALIGN (0x4)
-                0x08002008                        __preinit_lma = (__data_lma + SIZEOF (.data))
+                0x03003c84                        . = ALIGN (0x4)
+                0x08001fe4                        __preinit_lma = (__data_lma + SIZEOF (.data))
 
-.igot.plt       0x03003434        0x0 load address 0x08002008
- .igot.plt      0x03003434        0x0 obj/crt0.o
+.igot.plt       0x03003c84        0x0 load address 0x08001fe4
+ .igot.plt      0x03003c84        0x0 obj/crt0.o
 
-.preinit_array  0x03003434        0x0 load address 0x08002008
-                0x03003434                        __preinit_array_start = ABSOLUTE (.)
+.preinit_array  0x03003c84        0x0 load address 0x08001fe4
+                0x03003c84                        __preinit_array_start = ABSOLUTE (.)
  *(.preinit_array)
-                0x03003434                        __preinit_array_end = ABSOLUTE (.)
-                0x08002008                        __init_lma = (__preinit_lma + SIZEOF (.preinit_array))
+                0x03003c84                        __preinit_array_end = ABSOLUTE (.)
+                0x08001fe4                        __init_lma = (__preinit_lma + SIZEOF (.preinit_array))
 
-.init_array     0x03003434        0x0 load address 0x08002008
-                0x03003434                        __init_array_start = ABSOLUTE (.)
+.init_array     0x03003c84        0x0 load address 0x08001fe4
+                0x03003c84                        __init_array_start = ABSOLUTE (.)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array)
-                0x03003434                        __init_array_end = ABSOLUTE (.)
-                0x08002008                        __fini_lma = (__init_lma + SIZEOF (.init_array))
+                0x03003c84                        __init_array_end = ABSOLUTE (.)
+                0x08001fe4                        __fini_lma = (__init_lma + SIZEOF (.init_array))
 
-.fini_array     0x03003434        0x0 load address 0x08002008
-                0x03003434                        __fini_array_start = ABSOLUTE (.)
+.fini_array     0x03003c84        0x0 load address 0x08001fe4
+                0x03003c84                        __fini_array_start = ABSOLUTE (.)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array)
-                0x03003434                        __fini_array_end = ABSOLUTE (.)
-                0x08002008                        __jcr_lma = (__fini_lma + SIZEOF (.fini_array))
+                0x03003c84                        __fini_array_end = ABSOLUTE (.)
+                0x08001fe4                        __jcr_lma = (__fini_lma + SIZEOF (.fini_array))
 
 .jcr
  *(.jcr)
-                0x03003434                        __data_end__ = ABSOLUTE (.)
-                0x08002008                        __iwram_overlay_lma = (__jcr_lma + SIZEOF (.jcr))
-                0x03003434                        __iwram_overlay_start = .
+                0x03003c84                        __data_end__ = ABSOLUTE (.)
+                0x08001fe4                        __iwram_overlay_lma = (__jcr_lma + SIZEOF (.jcr))
+                0x03003c84                        __iwram_overlay_start = .
 
-.iwram0         0x03003434        0x0 load address 0x08002008
+.iwram0         0x03003c84        0x0 load address 0x08001fe4
  *(.iwram0)
-                0x03003434                        . = ALIGN (0x4)
-                0x08002008                        PROVIDE (__load_start_iwram0 = LOADADDR (.iwram0))
-                0x08002008                        PROVIDE (__load_stop_iwram0 = (LOADADDR (.iwram0) + SIZEOF (.iwram0)))
+                0x03003c84                        . = ALIGN (0x4)
+                0x08001fe4                        PROVIDE (__load_start_iwram0 = LOADADDR (.iwram0))
+                0x08001fe4                        PROVIDE (__load_stop_iwram0 = (LOADADDR (.iwram0) + SIZEOF (.iwram0)))
 
-.iwram1         0x03003434        0x0
+.iwram1         0x03003c84        0x0
  *(.iwram1)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram1 = LOADADDR (.iwram1))
                 [!provide]                        PROVIDE (__load_stop_iwram1 = (LOADADDR (.iwram1) + SIZEOF (.iwram1)))
 
-.iwram2         0x03003434        0x0
+.iwram2         0x03003c84        0x0
  *(.iwram2)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram2 = LOADADDR (.iwram2))
                 [!provide]                        PROVIDE (__load_stop_iwram2 = (LOADADDR (.iwram2) + SIZEOF (.iwram2)))
 
-.iwram3         0x03003434        0x0
+.iwram3         0x03003c84        0x0
  *(.iwram3)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram3 = LOADADDR (.iwram3))
                 [!provide]                        PROVIDE (__load_stop_iwram3 = (LOADADDR (.iwram3) + SIZEOF (.iwram3)))
 
-.iwram4         0x03003434        0x0
+.iwram4         0x03003c84        0x0
  *(.iwram4)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram4 = LOADADDR (.iwram4))
                 [!provide]                        PROVIDE (__load_stop_iwram4 = (LOADADDR (.iwram4) + SIZEOF (.iwram4)))
 
-.iwram5         0x03003434        0x0
+.iwram5         0x03003c84        0x0
  *(.iwram5)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram5 = LOADADDR (.iwram5))
                 [!provide]                        PROVIDE (__load_stop_iwram5 = (LOADADDR (.iwram5) + SIZEOF (.iwram5)))
 
-.iwram6         0x03003434        0x0
+.iwram6         0x03003c84        0x0
  *(.iwram6)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram6 = LOADADDR (.iwram6))
                 [!provide]                        PROVIDE (__load_stop_iwram6 = (LOADADDR (.iwram6) + SIZEOF (.iwram6)))
 
-.iwram7         0x03003434        0x0
+.iwram7         0x03003c84        0x0
  *(.iwram7)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram7 = LOADADDR (.iwram7))
                 [!provide]                        PROVIDE (__load_stop_iwram7 = (LOADADDR (.iwram7) + SIZEOF (.iwram7)))
 
-.iwram8         0x03003434        0x0
+.iwram8         0x03003c84        0x0
  *(.iwram8)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram8 = LOADADDR (.iwram8))
                 [!provide]                        PROVIDE (__load_stop_iwram8 = (LOADADDR (.iwram8) + SIZEOF (.iwram8)))
 
-.iwram9         0x03003434        0x0
+.iwram9         0x03003c84        0x0
  *(.iwram9)
-                0x03003434                        . = ALIGN (0x4)
+                0x03003c84                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__load_start_iwram9 = LOADADDR (.iwram9))
                 [!provide]                        PROVIDE (__load_stop_iwram9 = (LOADADDR (.iwram9) + SIZEOF (.iwram9)))
-                0x03003434                        __iwram_overlay_end = .
-                0x08002008                        __ewram_lma = (__iwram_overlay_lma + (__iwram_overlay_end - __iwram_overlay_start))
-                0x03003434                        __iheap_start = .
+                0x03003c84                        __iwram_overlay_end = .
+                0x08001fe4                        __ewram_lma = (__iwram_overlay_lma + (__iwram_overlay_end - __iwram_overlay_start))
+                0x03003c84                        __iheap_start = .
                 0x02000000                        __ewram_start = ORIGIN (ewram)
 
-.ewram          0x02000000      0x5d8 load address 0x08002008
+.ewram          0x02000000      0x5b0 load address 0x08001fe4
  *(.ewram*)
  .ewram         0x02000000      0x178 obj/common.o
                 0x02000000                _Strlen
@@ -358,29 +357,28 @@ Linker script and memory map
  .ewram         0x02000430       0x94 obj/rnd.arm.o
                 0x02000430                RndInit
                 0x02000480                RndInit2
- .ewram         0x020004c4      0x114 obj/spr.arm.o
+ .ewram         0x020004c4       0xec obj/spr.arm.o
                 0x020004c4                SprInit
-                0x020005ac                SprInitItem
-                0x020005d8                        . = ALIGN (0x4)
-                0x020005d8                        __ewram_end = ABSOLUTE (.)
-                0x080025e0                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
+                0x020005b0                        . = ALIGN (0x4)
+                0x020005b0                        __ewram_end = ABSOLUTE (.)
+                0x08002594                        __pad_lma = (__ewram_lma + SIZEOF (.ewram))
 
-.sbss           0x020005d8        0x0
-                0x020005d8                        __sbss_start__ = ABSOLUTE (.)
+.sbss           0x020005b0        0x0
+                0x020005b0                        __sbss_start__ = ABSOLUTE (.)
  *(.sbss*)
-                0x020005d8                        . = ALIGN (0x4)
-                0x020005d8                        __sbss_end__ = ABSOLUTE (.)
-                0x020005d8                        __end__ = ABSOLUTE (.)
-                0x020005d8                        __eheap_start = ABSOLUTE (.)
+                0x020005b0                        . = ALIGN (0x4)
+                0x020005b0                        __sbss_end__ = ABSOLUTE (.)
+                0x020005b0                        __end__ = ABSOLUTE (.)
+                0x020005b0                        __eheap_start = ABSOLUTE (.)
 
-.pad            0x020005d8        0x8 load address 0x080025e0
-                0x020005d8        0x4 LONG 0x52416b64
-                0x020005dc        0x4 LONG 0x4d
-                0x020005e0                        . = ALIGN (0x4)
-                0x080025e8                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
+.pad            0x020005b0        0x8 load address 0x08002594
+                0x020005b0        0x4 LONG 0x52416b64
+                0x020005b4        0x4 LONG 0x4d
+                0x020005b8                        . = ALIGN (0x4)
+                0x0800259c                        __rom_end__ = (__pad_lma + SIZEOF (.pad))
 
-.rel.dyn        0x020005e0        0x0 load address 0x080025e8
- .rel.iplt      0x020005e0        0x0 obj/crt0.o
+.rel.dyn        0x020005b8        0x0 load address 0x0800259c
+ .rel.iplt      0x020005b8        0x0 obj/crt0.o
 
 .stab
  *(.stab)
