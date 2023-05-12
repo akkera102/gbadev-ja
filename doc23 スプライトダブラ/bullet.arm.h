@@ -8,7 +8,7 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 #define BULLET_MAX_CHR_CNT			512
-#define BULLET_MAX_IDX_CNT			21			// (縦画面160+非表示8) / 8
+#define BULLET_MAX_IDX_CNT			41			// (縦画面160+非表示4) / 4
 
 #define INT2FIX(A)					((A)<<7)
 #define FIX2INT(A)					((A)>>7)
@@ -26,7 +26,7 @@ typedef struct {
 
 typedef struct {
 	s16  maxCnt;								// 最大数
-	s16  idxCnt[BULLET_MAX_IDX_CNT];			// yラインを21分割したカウント数
+	s16  idxCnt[BULLET_MAX_IDX_CNT];			// yラインを41分割したカウント数
 
 	ST_BULLET_CHR chr[BULLET_MAX_CHR_CNT];		// 弾情報
 

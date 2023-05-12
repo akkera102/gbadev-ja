@@ -30,7 +30,7 @@ IWRAM_CODE void BulletExec(void)
 		s32 xx = FIX2INT(Bullet.chr[i].x);
 		s32 yy = FIX2INT(Bullet.chr[i].y);
 
-		if(xx <= -8 || xx >= 240 || yy <= -8 || yy >= 160)
+		if(xx <= -4 || xx >= 240 || yy <= -4 || yy >= 160)
 		{
 			Bullet.chr[i].is = FALSE;
 			Bullet.maxCnt--;
@@ -38,7 +38,7 @@ IWRAM_CODE void BulletExec(void)
 			continue;
 		}
 
-		s32 idx = (yy + 8) / 8;
+		s32 idx = (yy + 4) / 4;
 		Bullet.idxCnt[idx]++;
 	}
 }

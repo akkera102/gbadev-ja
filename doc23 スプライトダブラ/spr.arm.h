@@ -28,10 +28,10 @@ typedef struct {
 
 	u16 chrNo;						// キャラクターナンバー
 
-	s16 idx[SPR_MAX_IDX_CNT];		// 8ライン毎のitemバッファ開始位置インデックス
-	s16 idxCnt[SPR_MAX_IDX_CNT];	// 8ライン毎の弾数
+	s16 idx[SPR_MAX_IDX_CNT];		// 4ライン毎のitemバッファ開始位置インデックス
+	s16 idxCnt[SPR_MAX_IDX_CNT];	// 4ライン毎の弾数
 
-	u32 zero ALIGN(4);				// ゼロクリア用
+	u32 zero ALIGN(4);				// DMAゼロクリア用
 
 	ST_SPR_ITEM item[SPR_MAX_ITEM_CNT] ALIGN(4);
 
