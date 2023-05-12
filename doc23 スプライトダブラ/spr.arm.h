@@ -24,11 +24,11 @@ typedef struct {
 
 typedef struct {
 	s16 vCnt;						// VCOUNT用インデックス
-	s16 oamCnt;						// VCOUNT用OAMの転送開始位置
+	s16 oamCnt;						// VCOUNT用OAMの転送開始インデックス
 
 	u16 chrNo;						// スプライトキャラクタ
 
-	s16 idx[SPR_MAX_IDX_CNT];		// 4ライン毎のitemバッファ開始位置インデックス
+	s16 idx[SPR_MAX_IDX_CNT];		// 8ライン毎のitemバッファ開始位置インデックス
 
 	u32 zero ALIGN(4);				// DMAゼロクリア用
 
