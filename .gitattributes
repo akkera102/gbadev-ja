@@ -1,4 +1,0 @@
-*.c diff=sjis
-*.h diff=sjis
-*.arm.c diff=sjis
-*.arm.h diff=sjis
