@@ -22,11 +22,12 @@ int main(void)
 		VBlankIntrWait();
 
 
-		for(s32 i=0; i<BULLET_MAX_IDX_CNT-1; i++)
+		for(s32 i=0; i<20; i++)
 		{
-			BgAsciiDrawPrintf(26, i, "%3d", BulletGetIdxCnt(i+1));
+			BgAsciiDrawPrintf(23, i, "%3d", BulletGetIdxCnt(i));
+			BgAsciiDrawPrintf(26, i, "%3d", BulletGetIdxCnt(20+i));
 		}
-		BgAsciiDrawPrintf(23, 0, "%3d", BulletGetMaxCnt());
+		BgAsciiDrawPrintf(20, 0, "%3d", BulletGetMaxCnt());
 
 
 		BulletExec();
