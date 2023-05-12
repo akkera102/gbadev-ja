@@ -1,1 +1,2 @@
-*.txt diff=sjis
+*.c diff=sjis
+*.h diff=sjis
