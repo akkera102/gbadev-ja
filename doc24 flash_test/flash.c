@@ -139,9 +139,9 @@ EWRAM_CODE void FlashWait2(u32 cnt)
 	}
 }
 //---------------------------------------------------------------------------
-// SST39VF010 : BF D5
-// SST39VF020 : BF D6
-// SST39VF040 : BF D7
+// SST39VF010 : 0xD5BF
+// SST39VF020 : 0xD6BF
+// SST39VF040 : 0xD7BF
 EWRAM_CODE u16 FlashGetId(void)
 {
 	// ID Entry
