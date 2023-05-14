@@ -31,6 +31,10 @@ int main()
 		{
 			hw = 0x1000;
 		}
+		if(i == 384)
+		{
+			hw = 0xF000;
+		}
 
 		fprintf(fp, "0x%04X, ", hw);
 	}
