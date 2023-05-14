@@ -1,6 +1,9 @@
 #include "flash.h"
 #include "bg.h"
 
+// cardridge 256Mbit + Flash SST39VF040
+// https://cubic-style.jp/
+
 //---------------------------------------------------------------------------
 EWRAM_CODE void FlashInit(void)
 {
