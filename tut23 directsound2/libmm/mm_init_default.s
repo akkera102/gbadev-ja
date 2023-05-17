@@ -68,8 +68,9 @@ mmInitDefault:
 	mul	r0, r6
 	ldr	r4,=mixlen
 	add	r0, r4
-	bl	malloc
-	
+//	bl	malloc		patched 2023/05/18
+	bl	MallocPatch
+
 	mov	r7, r0				// wavemem = beginning of buffer
 	add	r3, r0, r4			// split up buffer into addresses [r3,r4,r5]
 	mov	r0, #MM_SIZEOF_MODCH		//
