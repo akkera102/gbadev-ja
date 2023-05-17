@@ -17,7 +17,7 @@ SFILES	= \
 all: $(SFILES);
 
 clean:
-	rm -f $(SFILES) $(HFILES)
+	rm -f $(SFILES) $(HFILES) soundbank.bin
 
 .SUFFIXES: .S .s .c .o .a .d .bmp .png .txt .bin .wav .mod
 

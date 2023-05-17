@@ -44,10 +44,10 @@ IWRAM_CODE int main(void)
 	{
 		VBlankIntrWait();
 
-		// vcount 0ラインの位置から処理をさせます
-		while(*(vu16*)0x4000006 !=  0) {};
+		// start vcount 0
+		while(*(vu16*)0x4000006 != 0) {};
 
-		// パレットを変更してcpu使用率の可視化をします
+		// パレット0を変更してcpu使用率の可視化をします
 		// mmVBlank関数は本来、vblank割り込み中に処理を行います
 
 		*(vu16*)0x5000000 = RGB5(31, 0, 0);
@@ -55,36 +55,6 @@ IWRAM_CODE int main(void)
 		*(vu16*)0x5000000 = RGB5(0, 0, 31);
 		mmFrame();
 		*(vu16*)0x5000000 = RGB5( 0, 0, 0);
-
-		KeyExec();
-		u32 off = KeyGetOff();
-		u32 trg = KeyGetTrg();
-
-		if(trg & KEY_A)
-		{
-			amb = mmEffectEx(&ambulance);
-		}
-
-		if(trg & KEY_B)
-		{
-			mmEffectEx(&boom);
-		}
-
-		if(trg & KEY_L)
-		{
-			mmStop();
-		}
-
-		if(trg & KEY_R)
-		{
-			mmStart(MOD_FLATOUTLIES, MM_PLAY_LOOP);
-		}
-
-
-		if(off & KEY_A)
-		{
-			mmEffectCancel(amb);
-		}
 
 
 		vu32 i, ch = 0;
@@ -96,5 +66,17 @@ IWRAM_CODE int main(void)
 			}
 		}
 		BgDrawPrintf(1, 12, "Channel Active:%d", ch);
+
+
+		KeyExec();
+		u32 off = KeyGetOff();
+		u32 trg = KeyGetTrg();
+
+		if(trg & KEY_A) amb = mmEffectEx(&ambulance);
+		if(off & KEY_A) mmEffectCancel(amb);
+
+		if(trg & KEY_B) mmEffectEx(&boom);
+		if(trg & KEY_L) mmStop();
+		if(trg & KEY_R) mmStart(MOD_FLATOUTLIES, MM_PLAY_LOOP);
 	}
 }
