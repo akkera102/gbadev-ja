@@ -1,4 +1,4 @@
-#include <maxmod.h>
+#include "libmm/maxmod.h"
 #include "lib/gba.h"
 #include "irq.arm.h"
 #include "bg.h"

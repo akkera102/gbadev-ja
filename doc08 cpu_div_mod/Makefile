@@ -1,57 +1,48 @@
 MAKEFLAGS	+=--no-print-directory
 
-SHELL	= sh
-NAME	= test
-GAMECODE= TEST
-PREFIX	= arm-none-eabi-
+SHELL		= sh
+NAME		= test
+GAMECODE	= TEST
+PREFIX		= arm-none-eabi-
 
-AS		= $(PREFIX)as
-CC 		= $(PREFIX)gcc
-CPP		= $(PREFIX)g++
-LD 		= $(PREFIX)g++
-AR 		= $(PREFIX)ar
-OBJCOPY	= $(PREFIX)objcopy
-NM		= $(PREFIX)nm
+AS			= $(PREFIX)as
+CC 			= $(PREFIX)gcc
+CPP			= $(PREFIX)g++
+LD 			= $(PREFIX)g++
+AR 			= $(PREFIX)ar
+OBJCOPY		= $(PREFIX)objcopy
+NM			= $(PREFIX)nm
+
+OBJDIR		= obj
+MAPFILE		= $(NAME).map
+NMFILE		= $(NAME).nm
+TARGET_ELF	= $(NAME).elf
+TARGET_BIN	= $(NAME).gba
 
 INCDIR	= . ./lib
-
-AFILES	= 
 
 SFILES	= \
 	$(wildcard res/*.s) \
 	$(wildcard snd/*.s) \
-	$(wildcard lib/*.S) \
-	$(wildcard lib/*.s)
+	$(wildcard lib/*.s) \
+	$(wildcard *.s) \
 
 CFILES	= \
 	$(wildcard res/*.c) \
 	$(wildcard snd/*.c) \
 	$(wildcard lib/*.c) \
-	$(wildcard lib/*.cpp) \
 	$(wildcard *.c) \
-	$(wildcard *.cpp)
 
-VPATH =  $(dir $(CFILES) $(SFILES) $(AFILES))
+VPATH = $(dir $(CFILES) $(SFILES))
 
 #=============================================================================
 
-ASFLAGS	= -mthumb-interwork --fatal-warnings
-CFLAGS	= -mthumb-interwork -MMD -nostdlib -fverbose-asm -fpeephole -mtune=arm7tdmi -mcpu=arm7tdmi $(foreach incdir,$(INCDIR),-I$(incdir) ) -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing
-
-OBJDIR  = obj
-CFLAGS_THUMB= $(CFLAGS) -mthumb -O3
-CFLAGS_ARM	= $(CFLAGS) -marm -O3
-
-OFILES      = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES) $(AFILES)))))
-DFILES      = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(CFILES)))))
-
-MAPFILE		= $(NAME).map
-NMFILE      = $(NAME).nm
-TARGET_ELF	= $(NAME).elf
-TARGET_BIN	= $(NAME).gba
-
-#LDFLAGS		= -Map $(MAPFILE) -Wall -mthumb-interwork -specs=gba.specs -nostartfiles -nostdlib
-LDFLAGS		= -Map $(MAPFILE) -Wall -mthumb-interwork -specs=gba.specs -nostartfiles
+ASFLAGS = 
+LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles
+#LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles -nostdlib
+CFLAGS  = -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing $(foreach incdir,$(INCDIR),-I$(incdir))
+OFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES)))))
+DFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(SFILES) $(CFILES)))))
 
 #=============================================================================
 
@@ -64,16 +55,15 @@ clean:
 	@make clean -C res
 	rm -f $(OFILES) $(DFILES) $(MAPFILE) $(NMFILE) $(TARGET_ELF) $(TARGET_BIN)
 
-
 $(TARGET_BIN): $(TARGET_ELF)
 	@$(PREFIX)objcopy -v -O binary $< $@
 	@gbafix $@ -t$(NAME) -c$(GAMECODE)
 	@padbin 256 $@
 
-$(TARGET_ELF): $(OBJDIR) $(OFILES) $(AFILES) Makefile
+$(TARGET_ELF): $(OBJDIR) $(OFILES)  Makefile
 	@echo \# Linking $@
 	@echo > $(MAPFILE)
-	@$(LD) -o $@ $(OFILES) $(AFILES) -Wl,$(LDFLAGS)
+	@$(LD) -o $@ $(OFILES) -Wl,$(LDFLAGS)
 	@$(NM) -n $@ > $(NMFILE)
 
 $(OBJDIR):
@@ -81,30 +71,18 @@ $(OBJDIR):
 
 #=============================================================================
 
-.SUFFIXES: .S .s .cpp .c .o .a .d
+.SUFFIXES: .s .c .o .d
 
 $(OBJDIR)/%.arm.o: %.arm.c
 	@echo \# compiling $<
-	@$(CC) $(CFLAGS_ARM) -c $< -o $@
+	@$(CC) -MMD -MP -MF $(OBJDIR)/$*.arm.d $(CFLAGS) -marm -c $< -o $@
 
 $(OBJDIR)/%.o: %.c
 	@echo \# compiling $<
-	@$(CC) $(CFLAGS_THUMB) -c $< -o $@
-
-$(OBJDIR)/%.arm.o: %.arm.cpp
-	@echo \# compiling $<
-	@$(CPP) $(CFLAGS_ARM) -c $< -o $@
-
-$(OBJDIR)/%.o: %.cpp
-	@echo \# compiling $<
-	@$(CPP) $(CFLAGS_THUMB) -c $< -o $@
+	@$(CC) -MMD -MP -MF $(OBJDIR)/$*.d $(CFLAGS) -mthumb -c $< -o $@
 
 $(OBJDIR)/%.o: %.s
 	@echo \# assembling $<
-	@$(AS) $(ASFLAGS) $< -o $@
-
-$(OBJDIR)/%.o: %.S
-	@echo \# assembling $<
-	@$(AS) $(ASFLAGS) $< -o $@
+	@$(CC) -MMD -MP -MF $(OBJDIR)/$*.d -x assembler-with-cpp $(ASFLAGS) -c $< -o $@
 
 -include $(DFILES)

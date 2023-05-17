@@ -20,11 +20,12 @@ TARGET_ELF	= $(NAME).elf
 TARGET_BIN	= $(NAME).gba
 
 INCDIR	= . ./lib
-AFILES	= 
+
 SFILES	= \
 	$(wildcard res/*.s) \
 	$(wildcard snd/*.s) \
 	$(wildcard lib/*.s) \
+	$(wildcard libmm/*.s) \
 	$(wildcard *.s) \
 
 CFILES	= \
@@ -33,24 +34,15 @@ CFILES	= \
 	$(wildcard lib/*.c) \
 	$(wildcard *.c) \
 
-VPATH =  $(dir $(CFILES) $(SFILES) $(AFILES))
-
-#=============================================================================
-# maxmodƒ‰ƒCƒuƒ‰ƒŠ’Ç‰Á
-
-LIBGBA	:=	$(DEVKITPRO)/libgba
-LIBDIRS	:=	$(LIBGBA)
-export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
-LIBS	:= -lmm
-INCDIR2 := $(foreach dir,$(LIBDIRS),-I$(dir)/include)
+VPATH =  $(dir $(CFILES) $(SFILES))
 
 #=============================================================================
 
-ASFLAGS = -mthumb -mthumb-interwork
-LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles $(LIBPATHS) $(LIBS)
-CFLAGS  = -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing $(foreach incdir,$(INCDIR),-I$(incdir)) $(INCDIR2)
-OFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES) $(AFILES)))))
-DFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(CFILES)))))
+ASFLAGS = -DSYS_GBA
+LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles 
+CFLAGS  = -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing $(foreach incdir,$(INCDIR),-I$(incdir))
+OFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES)))))
+DFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(SFILES) $(CFILES)))))
 
 #=============================================================================
 
@@ -61,17 +53,17 @@ all:
 
 clean:
 	@make clean -C res
-	@rm -f $(OFILES) $(DFILES) $(MAPFILE) $(NMFILE) $(TARGET_ELF) $(TARGET_BIN)
+	rm -f $(OFILES) $(DFILES) $(MAPFILE) $(NMFILE) $(TARGET_ELF) $(TARGET_BIN)
 
 $(TARGET_BIN): $(TARGET_ELF)
 	@$(PREFIX)objcopy -v -O binary $< $@
 	@gbafix $@ -t$(NAME) -c$(GAMECODE)
 	@padbin 256 $@
 
-$(TARGET_ELF): $(OBJDIR) $(OFILES) $(AFILES) Makefile
+$(TARGET_ELF): $(OBJDIR) $(OFILES)  Makefile
 	@echo \# Linking $@
 	@echo > $(MAPFILE)
-	@$(LD) -o $@ $(OFILES) $(AFILES) -Wl,$(LDFLAGS)
+	@$(LD) -o $@ $(OFILES) -Wl,$(LDFLAGS)
 	@$(NM) -n $@ > $(NMFILE)
 
 $(OBJDIR):
@@ -83,7 +75,7 @@ $(OBJDIR):
 
 $(OBJDIR)/%.arm.o: %.arm.c
 	@echo \# compiling $<
-	@$(CC) -MMD -MP -MF $(OBJDIR)/$*.d $(CFLAGS) -marm -c $< -o $@
+	@$(CC) -MMD -MP -MF $(OBJDIR)/$*.arm.d $(CFLAGS) -marm -c $< -o $@
 
 $(OBJDIR)/%.o: %.c
 	@echo \# compiling $<
