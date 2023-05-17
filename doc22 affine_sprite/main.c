@@ -99,7 +99,18 @@ int main(void)
 		// START: Double-size flag
 		if(trg & KEY_START)
 		{
-			isDouble = (isDouble == TRUE) ? FALSE : TRUE;
+			if(isDouble == FALSE)
+			{
+				x -= 64/2;
+				y -= 64/2;
+				isDouble = TRUE;
+			}
+			else
+			{
+				x += 64/2;
+				y += 64/2;
+				isDouble = FALSE;
+			}
 			continue;
 		}
 
