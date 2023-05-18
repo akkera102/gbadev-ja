@@ -13,4 +13,4 @@ GBA開発Wikiは、GameBoy Advanceについての技術資料を個人的に収集しているページです
 
 ## How to Compile
 
-リポジトリをダウンロードした後、make_all.batします。各フォルダ内にサンプルROMが生成されます。
+- リポジトリをダウンロードした後、make_all.batします。各フォルダ内にサンプルROMが生成されます。
