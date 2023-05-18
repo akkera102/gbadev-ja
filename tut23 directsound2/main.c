@@ -73,7 +73,7 @@ IWRAM_CODE int main(void)
 		u32 trg = KeyGetTrg();
 
 		if(trg & KEY_A) amb = mmEffectEx(&ambulance);
-		if(off & KEY_A) mmEffectCancel(amb);
+		if(off & KEY_A)       mmEffectCancel(amb);
 
 		if(trg & KEY_B) mmEffectEx(&boom);
 		if(trg & KEY_L) mmStop();
