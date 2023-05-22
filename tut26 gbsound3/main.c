@@ -14,7 +14,7 @@ typedef struct {
 
 //---------------------------------------------------------------------------
 
-const u32 voice[8*12] = { 
+const u32 wave[8*12] = { 
 	// 0 ?
 	0x02468ace,0xfdb97531,0x02468ace,0xfdb97531,
 	0x2064a8ec,0xdf9b5713,0x2064a8ec,0xdf9b5713,
@@ -53,7 +53,7 @@ const u32 voice[8*12] = {
 	0x2064a8ec,0xffffffff,0xce8a4602,0x00448844,
 };
 
-const u8 tone[32*3] = {
+const u8 score[32*3] = {
 	// 0
 	19,8,15,8,19,15,8,15,19,15,8,15,19,8,15,19,5,12,17,12,5,17,12,17,5,17,12,17,5,12,17,5,
 	// 1
@@ -138,52 +138,68 @@ const u16 freq[12*6] = {
 }; 
 
 //---------------------------------------------------------------------------
-void LoadWav(s32 inst)
+void LoadWave(ST_PARAM* p, u32 select)
 {
-	DMA_Copy(3, (u32)&voice[inst * 4], (u32)WAVE_RAM, DMA_SRC_INC | DMA_DST_INC | DMA32 | 4);
+	u32 inst = p[0].cur * 8 + select * 4;
 
+	DMA_Copy(3, (u32)&wave[inst], (u32)WAVE_RAM, DMA_SRC_INC | DMA_DST_INC | DMA32 | 4);
+
+	// bank number
+	if(p[1].cur == 0)
+	{
+		p[7].cur = inst;
+	}
+	else
+	{
+		p[8].cur = inst;
+	}
+
+	p[1].cur = (p[1].cur == 0) ? 1 : 0;
 	REG_SOUND3CNT_L^= SOUND3_SETBANK(1);
 }
 //---------------------------------------------------------------------------
 void DrawParam(ST_PARAM* p)
 {
-	// voice
-	// bank playing
+	// wave, bank number
 	Mode3DrawPrintf(1,  6, "%02X", p[0].cur);
 	Mode3DrawPrintf(1,  7, "%02X", p[1].cur);
 
 	// bank mode
-	if(p[2].cur == 0) Mode3DrawPrintf(1,  8, "Sing");
-	else              Mode3DrawPrintf(1,  8, "Dual");
+	if(p[2].cur == 0) Mode3DrawPrintf(1,  8, "1x32");
+	else              Mode3DrawPrintf(1,  8, "1x64");
 
-	// sound length
-	// pattern
-	// pan
-	// note
-	Mode3DrawPrintf(1, 10, "%02X", p[3].cur);
-	Mode3DrawPrintf(1, 11, "%02X", p[4].cur);
-	Mode3DrawPrintf(1, 12, "%02X", p[5].cur);
-	Mode3DrawPrintf(1, 13, "%02X", p[6].cur);
-
-	// bank
-	u32 inst = p[0].cur * 4;
+	// sound length, score, pan, note
+	Mode3DrawPrintf(1,  9, "%02X", p[3].cur);
+	Mode3DrawPrintf(1, 10, "%02X", p[4].cur);
+	Mode3DrawPrintf(1, 11, "%02X", p[5].cur);
+	Mode3DrawPrintf(1, 12, "%02X", p[6].cur);
 
 	if(REG_SOUND3CNT_L & SOUND3_SETBANK(1))
 	{
-		// bank1
-		Mode3DrawPrintf(29, 1, "%08X", voice[inst+0]);
-		Mode3DrawPrintf(29, 2, "%08X", voice[inst+1]);
-		Mode3DrawPrintf(29, 3, "%08X", voice[inst+2]);
-		Mode3DrawPrintf(29, 4, "%08X", voice[inst+3]);
+		Mode3DrawPrintf(1, 13, "1");
 	}
 	else
 	{
-		// bank0
-		Mode3DrawPrintf(10, 1, "%08X", voice[inst+0]);
-		Mode3DrawPrintf(10, 2, "%08X", voice[inst+1]);
-		Mode3DrawPrintf(10, 3, "%08X", voice[inst+2]);
-		Mode3DrawPrintf(10, 4, "%08X", voice[inst+3]);
+		Mode3DrawPrintf(1, 13, "0");
 	}
+}
+//---------------------------------------------------------------------------
+void DrawWave(ST_PARAM* p)
+{
+	u32 inst1 = p[7].cur;
+	u32 inst2 = p[8].cur;
+
+	// bank0 wave
+	Mode3DrawPrintf(10, 1, "%08X", wave[inst1+0]);
+	Mode3DrawPrintf(10, 2, "%08X", wave[inst1+1]);
+	Mode3DrawPrintf(10, 3, "%08X", wave[inst1+2]);
+	Mode3DrawPrintf(10, 4, "%08X", wave[inst1+3]);
+
+	// bank1 wave
+	Mode3DrawPrintf(29, 1, "%08X", wave[inst2+0]);
+	Mode3DrawPrintf(29, 2, "%08X", wave[inst2+1]);
+	Mode3DrawPrintf(29, 3, "%08X", wave[inst2+2]);
+	Mode3DrawPrintf(29, 4, "%08X", wave[inst2+3]);
 }
 //---------------------------------------------------------------------------
 int main(void)
@@ -195,17 +211,19 @@ int main(void)
 	KeyInit();
 
 
-	ST_PARAM param[8];
+	ST_PARAM param[9];
 
 	_Memset(&param, 0x00, sizeof(param));
 
-	param[0].cur = 0x3;		// voice
-	param[1].cur = 0x0;		// bank playing
-	param[2].cur = 0x0;		// bank mode
+	param[0].cur = 0x1;		// wave
+	param[1].cur = 0x0;		// bank number
+	param[2].cur = 0x0;		// dimension
 	param[3].cur = 0xeb;	// sound length
-	param[4].cur = 0x0;		// pattern
+	param[4].cur = 0x0;		// score
 	param[5].cur = 0x0;		// pan
 	param[6].cur = 0x0;		// tone
+	param[7].cur = 0x0;		// bank0 wave
+	param[8].cur = 0x0;		// bank1 wave
 
 	param[0].min = 0x0;
 	param[1].min = 0x0;
@@ -215,7 +233,7 @@ int main(void)
 	param[5].min = 0x0;
 	param[6].min = 0x0;
 
-	param[0].max = 0x17;
+	param[0].max = 0x11;
 	param[1].max = 0x1;
 	param[2].max = 0x1;
 	param[3].max = 0xff;
@@ -232,19 +250,20 @@ int main(void)
 	param[6].adj = 0x1;
 
 	Mode3DrawStr(1,  0, "-----Bank 0------  -----Bank 1------");
-	Mode3DrawStr(1,  1, "WAVERAM0:          WAVERAM0: NoUse  ");
+	Mode3DrawStr(1,  1, "WAVERAM0:          WAVERAM0:        ");
 	Mode3DrawStr(1,  2, "WAVERAM1:          WAVERAM1:        ");
 	Mode3DrawStr(1,  3, "WAVERAM2:          WAVERAM2:        ");
 	Mode3DrawStr(1,  4, "WAVERAM3:          WAVERAM3:        ");
 
-	Mode3DrawStr(8,  6, "L/R : Change Voice");
-	Mode3DrawStr(8,  7, "A   : Swap playing bank");
-	Mode3DrawStr(8,  8, "B   : Change bank mode");
-	Mode3DrawStr(8,  9, "       (2x32or1x64samples)");
-	Mode3DrawStr(8, 10, "U/D : Change sound length");
-	Mode3DrawStr(8, 11, "L/R : Change sound Pattern");
-	Mode3DrawStr(8, 12, "STA : Toggle stereo auto-pan");
-	Mode3DrawStr(8, 13, "    : Tone");
+	Mode3DrawStr(8,  6, "L/R : Change Wave");
+	Mode3DrawStr(8,  7, "A   : Wave RAM Bank Number");
+	Mode3DrawStr(8,  8, "B   : Wave RAM Dimension");
+	Mode3DrawStr(8,  9, "U/D : Change Sound Length");
+	Mode3DrawStr(8, 10, "L/R : Change Sound Pattern");
+	Mode3DrawStr(8, 11, "STA : Toggle Stereo Auto-Pan");
+	Mode3DrawStr(8, 12, "    : Note");
+	Mode3DrawStr(8, 13, "    : Playback Bank Number");
+	Mode3DrawStr(8, 14, "      (SOUND3CNT_L Wave Select)");
 
 	REG_SOUNDCNT_L = 0x4477;	// full volume, enable sound 3 to left and right
 	REG_SOUNDCNT_H = 2;			// Overall output ratio - Full
@@ -254,48 +273,66 @@ int main(void)
 	REG_SOUND3CNT_H = TRILENVOL_100;
 	REG_SOUND3CNT_X = TRIFREQ_RESET;
 
-	LoadWav(param[0].cur);
+	LoadWave(param, 0);
+	LoadWave(param, 0);
+
+	DrawWave(param);
 	DrawParam(param);
 
-	u32 f, s;
 	u32 PanMask = 0x4000;
-	u32 wait = 0;
+	u32 waitVblank = 0;
 
-	bool isVoice = FALSE;
-	bool isSwap  = FALSE;
-	bool isDual  = FALSE;
+	bool isWave = FALSE;
+	bool isBank = FALSE;
+	bool isDimension = FALSE;
 
 	for(;;)
 	{
 	    VBlankIntrWait();
 
+		DrawWave(param);
 		DrawParam(param);
-
 
 		KeyExec();
 		u16 rep = KeyGetRep();
 		u16 trg = KeyGetTrg();
 
-		if(trg & KEY_L && param[0].cur >  param[0].min)
+		if(trg & KEY_L)
 		{
-			param[0].cur--;
-			isVoice = TRUE;
+			if(param[0].cur >  param[0].min)
+			{
+				param[0].cur--;
+			}
+			else
+			{
+				param[0].cur = param[0].max;
+			}
+
+			isWave = TRUE;
 		}
 
-		if(trg & KEY_R && param[0].cur <  param[0].max)
+		if(trg & KEY_R)
 		{
-			param[0].cur++;
-			isVoice = TRUE;
+			if(param[0].cur <  param[0].max)
+			{
+				param[0].cur++;
+			}
+			else
+			{
+				param[0].cur = param[0].min;
+			}
+
+			isWave = TRUE;
 		}
 
 		if(trg & KEY_A)
 		{
-			isSwap = TRUE;
+			isBank = TRUE;
 		}
 
 		if(trg & KEY_B)
 		{
-			isDual = TRUE;
+			isDimension = TRUE;
 		}
 
 		if(rep & KEY_UP  && param[3].cur <  param[3].max)
@@ -323,81 +360,72 @@ int main(void)
 			param[5].cur = (param[5].cur == 0) ? 1 : 0;
 		}
 
-		// wait
-		if(wait++ < 6)
+
+		// wait vblank
+		if(++waitVblank < 7)
 		{
 			continue;
 		}
-		wait = 0;
+		waitVblank = 0;
+
 
 		// length
 		REG_SOUND3CNT_H = TRILENVOL_100 | param[3].cur;
 
-		// pattern + note
-		s = (param[4].cur << 5) + param[6].cur;
-		f = tone[s];
-		_ASSERT(s < 32*3 && f < 72);
-
-		REG_SOUND3CNT_X = freq[f] | TRIFREQ_TIMED | TRIFREQ_RESET;
+		// score + note
+		u32 t = param[4].cur * 32 + param[6].cur;
+		u32 s = score[t];
+		_ASSERT(t < 32*3 && s < 12*6);
+		REG_SOUND3CNT_X = freq[s] | TRIFREQ_TIMED | TRIFREQ_RESET;
 
 		// pan
-		if(param[5].cur == 1)
-		{
-			REG_SOUNDCNT_L = (REG_SOUNDCNT_L & 0xBBFF) | PanMask;
-		}
-		else
-		{
-			REG_SOUNDCNT_L |= 0x4400;
-		}
+		if(param[5].cur == 1) REG_SOUNDCNT_L  = (REG_SOUNDCNT_L & 0xBBFF) | PanMask;
+		else                  REG_SOUNDCNT_L |= 0x4400;
 		PanMask^=0x4400;
 
-		// voice
-		if(isVoice == TRUE)
+		// bank number
+		if(isBank == TRUE)
 		{
-			if(REG_SOUND3CNT_L & SOUND3_SETBANK(1))
+			REG_SOUND3CNT_L ^= SOUND3_SETBANK(1);
+
+			param[1].cur = (param[1].cur == 0) ? 1 : 0;
+			isBank = FALSE;
+		}
+
+		// dimension
+		if(isDimension == TRUE)
+		{
+			REG_SOUND3CNT_L^= SOUND3_STEP64;
+
+			param[2].cur = (param[2].cur == 0) ? 1 : 0;
+			isDimension = FALSE;
+		}
+
+		// wave
+		if(isWave == TRUE)
+		{
+			REG_SOUND3CNT_L &= ~SOUND3_PLAY;
+
+			if(param[2].cur == 0)
 			{
-				// load sound in single bank mode
-				// it uses to normal instrument so it sounds a bit crappy
-				// but you get the idea...
-				// you have to stop the sound before reloading
-				// wave ram when using the single bank mode or
-				// no reloading will take place
-				// Sound init is required when restarting sound
-				REG_SOUND3CNT_L &= ~SOUND3_PLAY; //stop sound
-
-				LoadWav(param[0].cur);
-				LoadWav(param[0].cur+2);
-
-				REG_SOUND3CNT_L |= SOUND3_PLAY;
-				REG_SOUND3CNT_X |= TRIFREQ_RESET; 
+				// 0 = One bank/32 digits
+				LoadWave(param, 0);
 			}
 			else
 			{
-				LoadWav(param[0].cur);	//load new instrument in dual-bank mode
+				// 1 = Two banks/64 digits
+				LoadWave(param, 0);
+				LoadWave(param, 1);
 			}
 
-			isVoice = FALSE;
+			REG_SOUND3CNT_L |= SOUND3_PLAY;
+			REG_SOUND3CNT_X |= TRIFREQ_RESET;
+
+			isWave = FALSE;
 		}
 
-		// swap play bank
-		if(isSwap == TRUE)
-		{
-			param[1].cur = (param[1].cur == 0) ? 1 : 0;
 
-			REG_SOUND3CNT_L ^= SOUND3_SETBANK(1);
-			isSwap = FALSE;
-		}
-
-		// switch dual/single bank
-		if(isDual == TRUE)
-		{
-			param[2].cur = (param[2].cur == 0) ? 1 : 0;
-
-			REG_SOUND3CNT_L^= SOUND3_STEP64;
-			isDual = FALSE;
-		}
-
-		// tone++
+		// note++
 		if(param[6].cur++ >= param[6].max)
 		{
 			param[6].cur = 0;
