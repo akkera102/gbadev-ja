@@ -53,13 +53,16 @@ const u32 voice[8*12] = {
 	0x2064a8ec,0xffffffff,0xce8a4602,0x00448844,
 };
 
-const u8 song[32*3] = {
+const u8 tone[32*3] = {
+	// 0
 	19,8,15,8,19,15,8,15,19,15,8,15,19,8,15,19,5,12,17,12,5,17,12,17,5,17,12,17,5,12,17,5,
+	// 1
 	19,19,24,19,24,24,19,27,19,24,19,26,24,19,24,24,17,17,24,17,24,24,17,12,24,12,19,24,12,19,24,24,
+	// 2
 	31,31,36,31,36,36,31,39,31,36,31,38,36,31,36,36,29,29,36,29,36,36,29,24,36,24,31,36,24,31,36,36,
 };
 
-const u16 freq[72] = {
+const u16 freq[12*6] = {
 	44,		// C3
 	156,
 	262,
@@ -175,7 +178,7 @@ void DrawParam(ST_PARAM* p)
 	}
 	else
 	{
-		//bank0
+		// bank0
 		Mode3DrawPrintf(10, 1, "%08X", voice[inst+0]);
 		Mode3DrawPrintf(10, 2, "%08X", voice[inst+1]);
 		Mode3DrawPrintf(10, 3, "%08X", voice[inst+2]);
@@ -257,6 +260,7 @@ int main(void)
 	u32 f, s;
 	u32 PanMask = 0x4000;
 	u32 wait = 0;
+
 	bool isVoice = FALSE;
 	bool isSwap  = FALSE;
 	bool isDual  = FALSE;
@@ -331,7 +335,7 @@ int main(void)
 
 		// pattern + note
 		s = (param[4].cur << 5) + param[6].cur;
-		f = song[s];
+		f = tone[s];
 		_ASSERT(s < 32*3 && f < 72);
 
 		REG_SOUND3CNT_X = freq[f] | TRIFREQ_TIMED | TRIFREQ_RESET;

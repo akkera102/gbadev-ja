@@ -164,7 +164,7 @@ IWRAM_CODE void SndIntrBgmStart(void)
 //---------------------------------------------------------------------------
 IWRAM_CODE void SndIntrBgmStop(void)
 {
-	REG_SOUNDCNT_H &= ~(SNDA_R_ENABLE | SNDA_L_ENABLE);
+	REG_SOUNDCNT_H &= ~(SNDA_R_ENABLE | SNDA_L_ENABLE | SNDA_RESET_FIFO);
 	REG_TM1CNT_H    = 0;
 	REG_DMA1CNT     = 0;
 
@@ -185,7 +185,7 @@ IWRAM_CODE void SndIntrSeStart(void)
 //---------------------------------------------------------------------------
 IWRAM_CODE void SndIntrSeStop(void)
 {
-	REG_SOUNDCNT_H &= ~(SNDB_R_ENABLE | SNDB_L_ENABLE);
+	REG_SOUNDCNT_H &= ~(SNDB_R_ENABLE | SNDB_L_ENABLE | SNDB_RESET_FIFO);
 	REG_TM1CNT_H    = 0;
 	REG_DMA2CNT     = 0;
 
