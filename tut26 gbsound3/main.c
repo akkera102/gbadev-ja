@@ -14,7 +14,7 @@ typedef struct {
 
 //---------------------------------------------------------------------------
 
-const u32 wave[8*12] = { 
+const u32 wave[8*13] = { 
 	// 0 ?
 	0x02468ace,0xfdb97531,0x02468ace,0xfdb97531,
 	0x2064a8ec,0xdf9b5713,0x2064a8ec,0xdf9b5713,
@@ -51,6 +51,9 @@ const u32 wave[8*12] = {
 	// 11 ?
 	0x02468ace,0xffffffff,0xeca86420,0x00448844,
 	0x2064a8ec,0xffffffff,0xce8a4602,0x00448844,
+	// 12 ?
+	0xFFFFFFFF,0xFFFFFFFF,0x00000000,0x00000000,
+	0x00000000,0x00000000,0xFFFFFFFF,0xFFFFFFFF,
 };
 
 const u8 score[32*3] = {
@@ -233,7 +236,7 @@ int main(void)
 	param[5].min = 0x0;
 	param[6].min = 0x0;
 
-	param[0].max = 0x11;
+	param[0].max = 0xc;
 	param[1].max = 0x1;
 	param[2].max = 0x1;
 	param[3].max = 0xff;

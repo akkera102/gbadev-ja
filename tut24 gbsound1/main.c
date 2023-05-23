@@ -16,7 +16,7 @@ typedef struct {
 //---------------------------------------------------------------------------
 void DrawParam(ST_PARAM* p)
 {
-	for(s32 i=0; i<9; i++)
+	for(s32 i=0; i<10; i++)
 	{
 		Mode3DrawPrintf(20,  4+i, "%04X", p[i].cur);
 	}
@@ -34,9 +34,6 @@ void DrawParam(ST_PARAM* p)
 
 	if(p[6].cur == 0) Mode3DrawStr(25, 4+6, "(Dec)");
 	else              Mode3DrawStr(25, 4+6, "(Inc)");
-
-	if(p[9].cur == 0) Mode3DrawStr(20, 13, "Loop");
-	else              Mode3DrawStr(20, 13, "Time");
 
 	switch(p[10].cur)
 	{
@@ -83,7 +80,7 @@ int main(void)
 	param[ 7].cur = 0xf;
 	param[ 8].cur = 0x60a;
 	param[ 9].cur = 0x0;
-	param[10].cur = 0x1;
+	param[10].cur = 0x3;
 
 	param[ 0].min = 0x0;
 	param[ 1].min = 0x0;
@@ -134,7 +131,7 @@ int main(void)
 	Mode3DrawStr(2, 10, "Envlp Step Dir  :");
 	Mode3DrawStr(2, 11, "Envlp Init Vol  :");
 	Mode3DrawStr(2, 12, "Frequency       :");
-	Mode3DrawStr(2, 13, "Loop Mode       :");
+	Mode3DrawStr(2, 13, "Length Flag     :");
 	Mode3DrawStr(2, 14, "Resampling Freq :");
 
 	Mode3DrawStr(0, 4+sel, ">");
