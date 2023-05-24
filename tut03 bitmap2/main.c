@@ -23,12 +23,15 @@ int main(void)
 	{
 		WaitForVsync();
 
-		if(y != 0 || x != 0)
+		if(y > 0 && x > 0)
 		{
 			Mode3PutPixel(x-1, y-1, RGB5(0, 0, 0));
 		}
 
-		Mode3PutPixel(x++, y++, RGB5(31, 31, 31));
+		Mode3PutPixel(x, y, RGB5(31, 31, 31));
+
+		x++;
+		y++;
 
 		if(y > 160)
 		{	
