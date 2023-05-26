@@ -171,7 +171,7 @@ void DrawParam(ST_PARAM* p)
 	if(p[2].cur == 0) Mode3DrawPrintf(1,  8, "1x32");
 	else              Mode3DrawPrintf(1,  8, "1x64");
 
-	// sound length, score, pan, note
+	// length, pattern, pan, note
 	Mode3DrawPrintf(1,  9, "%02X", p[3].cur);
 	Mode3DrawPrintf(1, 10, "%02X", p[4].cur);
 	Mode3DrawPrintf(1, 11, "%02X", p[5].cur);
@@ -222,7 +222,7 @@ int main(void)
 	param[1].cur = 0x0;		// bank number
 	param[2].cur = 0x0;		// dimension
 	param[3].cur = 0xeb;	// sound length
-	param[4].cur = 0x0;		// score
+	param[4].cur = 0x0;		// sound pattern
 	param[5].cur = 0x0;		// pan
 	param[6].cur = 0x0;		// tone
 	param[7].cur = 0x0;		// bank0 wave
@@ -375,7 +375,7 @@ int main(void)
 		// length
 		REG_SOUND3CNT_H = TRILENVOL_100 | param[3].cur;
 
-		// score + note
+		// pattern + note
 		u32 t = param[4].cur * 32 + param[6].cur;
 		u32 s = score[t];
 		_ASSERT(t < 32*3 && s < 12*6);
