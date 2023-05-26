@@ -873,7 +873,7 @@ typedef enum { FALSE, TRUE } bool;
 
 #include "common.h"
 #include "div.h"
-#include "sys_arm.h"
+#include "sys.arm.h"
 #include "gbfs.h"
 
 //---------------------------------------------------------------------------------

@@ -5,14 +5,11 @@
 #include "key.h"
 #include "res.h"
 
-//---------------------------------------------------------------------------
-// maxmodライブラリ内の非公開関数
-u32 mmMixerChannelActive(mm_word channel);
 
 //---------------------------------------------------------------------------
 // 効果音の登録（id, rate, handle, volume, panning)
-mm_sound_effect ambulance = { {SFX_AMBULANCE}, (int)(1.0f * (1<<10)), 0, 255, 0 };
-mm_sound_effect boom = { {SFX_BOOM}, (int)(1.0f * (1<<10)), 0, 255, 255 };
+mm_sound_effect ambulance = { {SFX_AMBULANCE}, 1024, 0, 255, 0 };
+mm_sound_effect boom = { {SFX_BOOM}, 1024, 0, 255, 255 };
 
 // sound effect handle (for cancelling it later)
 mm_sfxhand amb = 0;
@@ -57,17 +54,6 @@ IWRAM_CODE int main(void)
 		*(vu16*)0x5000000 = RGB5( 0, 0, 0);
 
 
-		vu32 i, ch = 0;
-		for(i=0; i<8; i++)
-		{
-			if(mmMixerChannelActive(i) != 0)
-			{
-				ch++;
-			}
-		}
-		BgDrawPrintf(1, 12, "Channel Active:%d", ch);
-
-
 		KeyExec();
 		u32 off = KeyGetOff();
 		u32 trg = KeyGetTrg();
@@ -76,7 +62,7 @@ IWRAM_CODE int main(void)
 		if(off & KEY_A)       mmEffectCancel(amb);
 
 		if(trg & KEY_B) mmEffectEx(&boom);
-		if(trg & KEY_L) mmStop();
 		if(trg & KEY_R) mmStart(MOD_FLATOUTLIES, MM_PLAY_LOOP);
+		if(trg & KEY_L) mmStop();
 	}
 }

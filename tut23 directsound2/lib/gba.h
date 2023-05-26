@@ -748,8 +748,7 @@ fedcba9876543210
 #define TRIWAVERAM ((volatile u32 *)0x04000090)
 
 
-
-
+// èCê≥ï™ÅAí«â¡ï™
 //---------------------------------------------------------------------------
 // Reg
 #define REG_IRQ_WAITFLAGS		*(volatile u16*)0x3007FF8
@@ -832,14 +831,6 @@ fedcba9876543210
 
 #define BLEND_DEPTH(n)			((n)<<0)		// REG_BLDY
 
-
-// èCê≥ï™ÅAí«â¡ï™
-//---------------------------------------------------------------------------
-
-// A, B
-#define SNDA_TIMER0				(0 << 10)
-#define SNDB_TIMER1				(1 << 14)
-
 //---------------------------------------------------------------------------
 // Sprite
 #define SP_PAL(pal)				((pal) << 12)
@@ -882,7 +873,7 @@ typedef enum { FALSE, TRUE } bool;
 
 #include "common.h"
 #include "div.h"
-#include "sys_arm.h"
+#include "sys.arm.h"
 #include "gbfs.h"
 
 //---------------------------------------------------------------------------------

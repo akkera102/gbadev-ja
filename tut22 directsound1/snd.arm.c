@@ -18,7 +18,7 @@ EWRAM_CODE void SndInit()
 
 	REG_SOUNDCNT_X = SNDSTAT_ENABLE;
 	REG_SOUNDCNT_L = 0;
-	REG_SOUNDCNT_H = SNDA_RESET_FIFO | SNDB_RESET_FIFO | SNDA_VOL_100 | SNDB_VOL_100 | SNDA_TIMER0 | SNDB_TIMER1;
+	REG_SOUNDCNT_H = SNDA_RESET_FIFO | SNDB_RESET_FIFO | SNDA_VOL_100 | SNDB_VOL_100 | DSOUNDCTRL_ATIMER(0) | DSOUNDCTRL_BTIMER(1);
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE void SndPlay(u32 id, u8* data, u32 size, s32 adjust, bool isLoop)
