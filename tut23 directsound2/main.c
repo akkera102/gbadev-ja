@@ -15,7 +15,7 @@ mm_sound_effect boom = { {SFX_BOOM}, 1024, 0, 255, 255 };
 mm_sfxhand amb = 0;
 
 //---------------------------------------------------------------------------
-IWRAM_CODE int main(void)
+int main(void)
 {
 	REG_WSCNT = 0x4317;
 
