@@ -1,10 +1,7 @@
 # gbadev-ja
 
 GBA開発Wikiは、GameBoy Advanceについての技術資料を個人的に収集しているページです。
-
->**Warning**  
-> Wikiは現在改装工事中です。その為、旧Wikiの内容とかなり異なっています。
-> 2023年5月末頃に公開予定でいます。
+http://akkera102.sakura.ne.jp/gbadev/
 
 
 ## How to Use
