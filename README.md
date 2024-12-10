@@ -11,3 +11,7 @@ http://akkera102.sakura.ne.jp/gbadev/
 ## How to Compile
 
 - リポジトリをダウンロードした後、make_all.batを実行します。各フォルダ内にサンプルROMが生成されます。
+
+## 簡単な履歴
+
+- 2024/12/10 「undefined symbol __sync_synchronize_none」コンパイルエラーの対応
