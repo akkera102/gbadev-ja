@@ -25,6 +25,7 @@ SFILES	= \
 	$(wildcard res/*.s) \
 	$(wildcard snd/*.s) \
 	$(wildcard lib/*.s) \
+	$(wildcard libgpt/*.s) \
 	$(wildcard *.s) \
 
 CFILES	= \
@@ -34,12 +35,12 @@ CFILES	= \
 	$(wildcard libgpt/*.c) \
 	$(wildcard *.c) \
 
-VPATH =  $(dir $(CFILES) $(SFILES))
+VPATH = $(dir $(CFILES) $(SFILES))
 
 #=============================================================================
 
-ASFLAGS = -DSYS_GBA
-LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles -nostdlib
+ASFLAGS = 
+LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles
 CFLAGS  = -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing $(foreach incdir,$(INCDIR),-I$(incdir))
 OFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES)))))
 DFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(SFILES) $(CFILES)))))

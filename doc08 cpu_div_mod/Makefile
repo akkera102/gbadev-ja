@@ -39,7 +39,6 @@ VPATH = $(dir $(CFILES) $(SFILES))
 
 ASFLAGS = 
 LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles
-#LDFLAGS = -Map $(MAPFILE) -Wall -specs=gba.specs -nostartfiles -nostdlib
 CFLAGS  = -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -Wall -W -Wshadow -Wno-unused-parameter -Wno-strict-aliasing $(foreach incdir,$(INCDIR),-I$(incdir))
 OFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SFILES) $(CFILES)))))
 DFILES  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(notdir $(SFILES) $(CFILES)))))
