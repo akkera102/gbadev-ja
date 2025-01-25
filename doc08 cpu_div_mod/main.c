@@ -22,10 +22,12 @@ u32 GetVCount(void)
 int main(void)
 {
 	volatile s32 i, r1, r2, c1, c2;
-	volatile s32 m = 1234567;
+	volatile s32 m;
 
 
 	// libc --------------------------------
+	m = 1234567;
+
 	c1 = 0;
 	WaitForVCount(0);
 
@@ -36,6 +38,8 @@ int main(void)
 	c1 = GetVCount();
 
 	// bios --------------------------------
+	m = 1234567;
+
 	c2 = 0;
 	WaitForVCount(0);
 

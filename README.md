@@ -14,4 +14,5 @@ http://akkera102.sakura.ne.jp/gbadev/
 
 ## 簡単な履歴
 
-- 2024/12/10 「undefined symbol __sync_synchronize_none」コンパイルエラーの対応
+- 2024/12/10 undefined symbol __sync_synchronize_noneコンパイルエラーの対応
+- 2025/01/25 ROMファイルをgithubに統合。Doc08を微修正
