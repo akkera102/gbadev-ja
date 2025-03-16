@@ -163,18 +163,17 @@ EWRAM_CODE u16 FlashGetId(void)
 //---------------------------------------------------------------------------
 EWRAM_CODE bool FlashIsExist(void)
 {
-	// 読み込み、書き込みテスト
-	u8 t1 = FlashRead(0x7FFF);
+	u8 t1 = FlashRead(0);
 	u8 t2 = ~t1;
 
-	FlashWrite(0x7FFF, t2);
+	FlashWrite(0, t2);
 
-	if(FlashRead(0x7FFF) != t2)
+	if(FlashRead(0) == t2)
 	{
-		FlashWrite(0x7FFF, t1);
-
-		return TRUE;
+		// SRAM
+		FlashWrite(0, t1);
+		return FALSE;
 	}
 
-	return FALSE;
+	return TRUE;
 }

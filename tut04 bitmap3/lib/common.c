@@ -1,9 +1,13 @@
 #include "common.h"
 
 //---------------------------------------------------------------------------
-EWRAM_CODE u16 _Strlen(char* s1)
+char sprintfBuf[COMMON_SPRINT_BUF_CNT] ALIGN(4);
+
+
+//---------------------------------------------------------------------------
+EWRAM_CODE s32 _Strlen(char* s1)
 {
-	u16 i = 0;
+	volatile s32 i = 0;
 
 	while(s1[i] != '\0')
 	{
@@ -13,7 +17,7 @@ EWRAM_CODE u16 _Strlen(char* s1)
 	return i;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* _Strncpy(char* ret, char* s2, u16 size)
+IWRAM_CODE char* _Strncpy(char* ret, char* s2, s32 size)
 {
 	volatile char* s1 = ret;
 
@@ -40,7 +44,7 @@ End:
 	return ret;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE s16 _Strncmp(char* s1, char* s2, u16 size)
+IWRAM_CODE s32 _Strncmp(char* s1, char* s2, s32 size)
 {
 	if(size == 0)
 	{
@@ -72,7 +76,7 @@ End:
 	return 0;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* _Strcat(char* ret, char* s2)
+IWRAM_CODE char* _Strcat(char* ret, char* s2)
 {
 	char* s1 = ret;
 
@@ -103,7 +107,7 @@ EWRAM_CODE char* _Strchr(char* str, char chr)
 	return str;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* _Memcpy(void* s1, void* s2, u32 size)
+IWRAM_CODE char* _Memcpy(void* s1, void* s2, s32 size)
 {
 	char* p1 = (char*)s1;
 	char* p2 = (char*)s2;
@@ -123,7 +127,7 @@ End:
 	return s1;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE s16 _Memcmp(void* s1, void* s2, u32 size)
+IWRAM_CODE s32 _Memcmp(void* s1, void* s2, s32 size)
 {
 	char* p1 = (char*)s1;
 	char* p2 = (char*)s2;
@@ -138,14 +142,14 @@ EWRAM_CODE s16 _Memcmp(void* s1, void* s2, u32 size)
 				continue;
 			}
 
-			return (s16)*--p1 - (s16)*--p2;
+			return (s32)*--p1 - (s32)*--p2;
 		}
 	}
 
 	return 0;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* _Memset(void* s, u8 c, u32 size)
+IWRAM_CODE char* _Memset(void* s, u8 c, s32 size)
 {
 	volatile char* s1 = (char*)s;
 
@@ -166,14 +170,13 @@ End:
 //---------------------------------------------------------------------------
 IWRAM_CODE void _Printf(char* format, ...)
 {
-	char sprintfBuf[100] ALIGN(4);
-
 	char* ap;
 	va_start(ap, format);
 	_DoSprintf(sprintfBuf, format, ap);
 	va_end(ap);
 
-	mappylog(sprintfBuf);
+//	MgbaLog(sprintfBuf);
+	MappyLog(sprintfBuf);
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE char* _Sprintf(char* buf, char* format, ...)
@@ -188,14 +191,15 @@ IWRAM_CODE char* _Sprintf(char* buf, char* format, ...)
 //---------------------------------------------------------------------------
 IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
 {
-	s32 val;
+	s32   val;
 	char* val2;
-	char val3;
+	char  val3;
 
-	char c;
-	s32 col = 0;
-	char colChr = ' ';
-	bool isCol;
+	char* src = str;
+	char  c;
+	s32   col = 0;
+	char  colChr = ' ';
+	bool  isCol;
 
 	for(;;)
 	{
@@ -204,6 +208,8 @@ IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
 		if(c == '\0')
 		{
 			*str++ = '\0';
+			_ASSERT(str - src < COMMON_SPRINT_BUF_CNT);
+
 			return;
 		}
 
@@ -355,24 +361,41 @@ IWRAM_CODE char* _SprintfString(char* val, char* s)
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void SystemError(char* format, ...)
+IWRAM_CODE void MgbaLog(char* buf)
 {
-	char buf[100] ALIGN(4);
+	REG_DEBUG_ENABLE = 0xC0DE;
 
+	u32 len = _Strlen(buf);
+
+	while(len)
+	{
+		u32 write = _Min(len, 256);
+
+		_Memcpy(REG_DEBUG_STR, buf, write);
+		REG_DEBUG_FLAGS = 0x102;				// mGBA Warning
+
+		buf += write;
+		len -= write;
+	}
+}
+//---------------------------------------------------------------------------
+IWRAM_CODE void MappyLog(char* buf)
+{
+	__asm volatile("mov r2, %0; ldr r0,=0xc0ded00d; and r0,r0" :: "r"(buf) : "r2", "r0");
+}
+//---------------------------------------------------------------------------
+EWRAM_CODE void SystemError(char* format, ...)
+{
 	char* ap;
 	va_start(ap, format);
-	_DoSprintf(buf, format, ap);
+	_DoSprintf(sprintfBuf, format, ap);
 	va_end(ap);
 
-	mappylog(buf);
+//	MgbaLog(sprintfBuf);
+	MappyLog(sprintfBuf);
 
 	for(;;)
 	{
 		SystemCall(5);
 	}
-}
-//---------------------------------------------------------------------------
-IWRAM_CODE void mappylog(char* buf)
-{
-	asm("mov r2, %0; ldr r0,=0xc0ded00d; and r0,r0" :: "r"(buf) : "r2", "r0");
 }
