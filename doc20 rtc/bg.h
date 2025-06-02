@@ -20,12 +20,12 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit(void);
-EWRAM_CODE void BgInitLcd(void);
-EWRAM_CODE void Bg0Init(void);
+void BgInit(void);
+void BgInitLcd(void);
+void Bg0Init(void);
 
-IWRAM_CODE void BgDrawStr(s32 x, s32 y, char* s);
-IWRAM_CODE void BgDrawPrintf(s32 x, s32 y, char* format, ...);
+void BgDrawStr(s32 x, s32 y, char* s);
+void BgDrawPrintf(s32 x, s32 y, char* format, ...);
 
 
 #ifdef __cplusplus

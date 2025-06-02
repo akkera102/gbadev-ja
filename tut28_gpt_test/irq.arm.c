@@ -2,7 +2,7 @@
 #include "libgpt/gbt_player.h"
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void IrqInit(void)
+void IrqInit(void)
 {
 	REG_IME = 0;
 

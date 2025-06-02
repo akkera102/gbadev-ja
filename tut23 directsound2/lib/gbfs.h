@@ -36,17 +36,17 @@ typedef struct {
 } ST_GBFS;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void  GbfsInit(void);
+void  GbfsInit(void);
 
-IWRAM_CODE void* GbfsGetPointer(char* fname);
-IWRAM_CODE void* GbfsGetPointer2(u32 cnt);
-IWRAM_CODE void* GbfsGetSafePointer(char* fname);
-IWRAM_CODE void* GbfsGetSafePointer2(u32 cnt);
+void* GbfsGetPointer(char* fname);
+void* GbfsGetPointer2(u32 cnt);
+void* GbfsGetSafePointer(char* fname);
+void* GbfsGetSafePointer2(u32 cnt);
 
-EWRAM_CODE char* GbfsGetFileName(void);
-EWRAM_CODE u32   GbfsGetFileSize(void);
-EWRAM_CODE u32   GbfsGetArcSize(void);
-EWRAM_CODE u32   GbfsGetArcCnt(void);
+char* GbfsGetFileName(void);
+u32   GbfsGetFileSize(void);
+u32   GbfsGetArcSize(void);
+u32   GbfsGetArcCnt(void);
 
 
 #ifdef __cplusplus

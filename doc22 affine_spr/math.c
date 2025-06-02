@@ -73,12 +73,12 @@ const short MathSinLut[512] =
 	0xFE6F, 0xFEA1, 0xFED3, 0xFF05, 0xFF38, 0xFF6A, 0xFF9C, 0xFFCE,
 };
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathSin(u32 theta)
+s32 MathSin(u32 theta)
 {
 	return MathSinLut[(theta >> 7) & 0x1FF]  >> 4;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathCos(u32 theta)
+s32 MathCos(u32 theta)
 {
 	return MathSinLut[((theta >> 7) + 128) & 0x1FF]  >> 4;
 }

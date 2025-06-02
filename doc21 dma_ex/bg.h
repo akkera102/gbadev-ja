@@ -20,17 +20,17 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit(void);
-EWRAM_CODE void BgInitLcd(void);
-EWRAM_CODE void Bg0Init(void);
-EWRAM_CODE void Bg1Init(void);
-EWRAM_CODE void Bg2Init(void);
-EWRAM_CODE void Bg3Init(void);
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s);
+void BgInit(void);
+void BgInitLcd(void);
+void Bg0Init(void);
+void Bg1Init(void);
+void Bg2Init(void);
+void Bg3Init(void);
+void BgAsciiDrawStr(s32 x, s32 y, char* s);
 
-IWRAM_CODE void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr);
-IWRAM_CODE s32  BgClamp(s32 val, s32 min, s32 max);
-IWRAM_CODE bool BgInRange(s32 x, s32 min, s32 max);
+void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr);
+s32  BgClamp(s32 val, s32 min, s32 max);
+bool BgInRange(s32 x, s32 min, s32 max);
 
 
 #ifdef __cplusplus

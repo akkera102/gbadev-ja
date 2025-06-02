@@ -5,7 +5,7 @@ ST_KEY Key;
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void KeyInit(void)
+void KeyInit(void)
 {
 	_Memset(&Key, 0x00, sizeof(ST_KEY));
 }

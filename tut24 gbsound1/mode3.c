@@ -6,7 +6,7 @@
 ST_MODE3 Mode3;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void Mode3Init(void)
+void Mode3Init(void)
 {
 	SetMode(MODE_3 | BG2_ENABLE);
 

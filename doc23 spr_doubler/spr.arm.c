@@ -58,7 +58,7 @@ s32 SprVmap[SPR_MAX_IDX_CNT+1] =
 extern ST_BULLET Bullet;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprInit(void)
+void SprInit(void)
 {
 	u16* oam = OBJ_BASE_ADR;
 	u16* pal = OBJ_COLORS;
@@ -107,7 +107,7 @@ IWRAM_CODE void SprExec(void)
 	ST_BULLET_CHR* pS = (ST_BULLET_CHR*)&Bullet.chr;
 
 	// 最初の弾情報を取得
-	while(pS->is == FALSE)
+	while(pS->is == false)
 	{
 		pS++;
 	}
@@ -130,7 +130,7 @@ IWRAM_CODE void SprExec(void)
 		do {
 			pS++;
 
-		} while(pS->is == FALSE);
+		} while(pS->is == false);
 	}
 
 	// スプライトアニメーション

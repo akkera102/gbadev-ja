@@ -10,7 +10,7 @@ ST_BG Bg[BG_MAX_CNT];
 ST_BG_FONT BgFont;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit()
+void BgInit(void)
 {
 	BgInitLcd();
 
@@ -26,7 +26,7 @@ EWRAM_CODE void BgInit()
 //	REG_BG3CNT  = (BG_SIZE_0 | BG_16_COLOR | Bg[3].tileBase | Bg[3].mapBase | 3 | BG_WRAP);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInitLcd()
+void BgInitLcd(void)
 {
 	const u32 mapBase[]  = { 29, 30, 31,  0 };
 	const u32 tileBase[] = {  0,  1,  3,  0 };
@@ -58,7 +58,7 @@ EWRAM_CODE void BgInitLcd()
 }
 //---------------------------------------------------------------------------
 // ASCIIフォントを設定します
-EWRAM_CODE void Bg0Init()
+void Bg0Init(void)
 {
 	volatile s32 i;
 
@@ -74,7 +74,7 @@ EWRAM_CODE void Bg0Init()
 }
 //---------------------------------------------------------------------------
 // みかちゃんフォントを設定します
-EWRAM_CODE void Bg1Init()
+void Bg1Init(void)
 {
 	volatile s32 i;
 
@@ -89,17 +89,17 @@ EWRAM_CODE void Bg1Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg2Init()
+void Bg2Init(void)
 {
 	// EMPTY
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg3Init()
+void Bg3Init(void)
 {
 	// EMPTY
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
+void BgAsciiDrawStr(s32 x, s32 y, char* s)
 {
 	u16* map = &Bg[0].mapBaseAdr[x + y * 32];
 
@@ -109,7 +109,7 @@ EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgFontInit()
+void BgFontInit(void)
 {
 	_Memset((u8*)&BgFont, 0x00, sizeof(ST_BG_FONT));
 
@@ -117,7 +117,7 @@ EWRAM_CODE void BgFontInit()
 	BgFont.pCct = (u8*)&cct_mika_bin + sizeof(ST_CCT_HEAD);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgFontDrawStr(s32 x, s32 y, char* str)
+void BgFontDrawStr(s32 x, s32 y, char* str)
 {
 	s32 i = 0;
 	u16 chr;
@@ -131,7 +131,7 @@ EWRAM_CODE void BgFontDrawStr(s32 x, s32 y, char* str)
 			return;
 		}
 
-		if(_IsSJIS(chr) == FALSE)
+		if(_IsSJIS(chr) == false)
 		{
 			continue;
 		}
@@ -154,7 +154,7 @@ EWRAM_CODE void BgFontDrawStr(s32 x, s32 y, char* str)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgFontDrawChr(s32 x, s32 y, u16 chr)
+void BgFontDrawChr(s32 x, s32 y, u16 chr)
 {
 	u16 idx = BgFontGetIdx(chr);
 	s32 i;
@@ -220,9 +220,9 @@ EWRAM_CODE void BgFontDrawChr(s32 x, s32 y, u16 chr)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u16 BgFontGetIdx(u16 code)
+u16 BgFontGetIdx(u16 code)
 {
-	if(_IsSJIS(HIBYTE(code)) == FALSE)
+	if(_IsSJIS(HIBYTE(code)) == false)
 	{
 		return BG_FONT_INVALID_INDEX;
 	}

@@ -6,7 +6,7 @@ ST_BG Bg[BG_MAX_CNT];
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit(void)
+void BgInit(void)
 {
 	BgInitLcd();
 
@@ -22,7 +22,7 @@ EWRAM_CODE void BgInit(void)
 //	REG_BG3CNT  = (BG_SIZE_0 | BG_16_COLOR | Bg[3].tileBase | Bg[3].mapBase | 3 | BG_WRAP);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInitLcd(void)
+void BgInitLcd(void)
 {
 	const u32 mapBase[]  = { 29, 30, 31,  0 };
 	const u32 tileBase[] = {  0,  1,  3,  0 };
@@ -37,7 +37,7 @@ EWRAM_CODE void BgInitLcd(void)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg0Init(void)
+void Bg0Init(void)
 {
 	volatile s32 i;
 
@@ -52,7 +52,7 @@ EWRAM_CODE void Bg0Init(void)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void BgDrawStr(s32 x, s32 y, char* s)
+void BgDrawStr(s32 x, s32 y, char* s)
 {
 	u16* map = &Bg[0].mapBaseAdr[x + y * 32];
 
@@ -62,7 +62,7 @@ IWRAM_CODE void BgDrawStr(s32 x, s32 y, char* s)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void BgDrawPrintf(s32 x, s32 y, char* format, ...)
+void BgDrawPrintf(s32 x, s32 y, char* format, ...)
 {
 	char s[100] ALIGN(4);
 

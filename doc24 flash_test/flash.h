@@ -13,21 +13,21 @@ extern "C" {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashInit(void);
-EWRAM_CODE void FlashExec(void);
+void FlashInit(void);
+void FlashExec(void);
 
-EWRAM_CODE void FlashByte(u16 adr, u8 dat);
-EWRAM_CODE u8   FlashRead(u16 adr);
-EWRAM_CODE void FlashWrite(u16 adr, u8 cmd);
+void FlashByte(u16 adr, u8 dat);
+u8   FlashRead(u16 adr);
+void FlashWrite(u16 adr, u8 cmd);
 
-EWRAM_CODE void FlashEraseChip(void);
-EWRAM_CODE void FlashEraseSector(u16 sec);
+void FlashEraseChip(void);
+void FlashEraseSector(u16 sec);
 
-EWRAM_CODE void FlashWait(u32 cnt);
-EWRAM_CODE void FlashWait2(u32 cnt);
+void FlashWait(u32 cnt);
+void FlashWait2(u32 cnt);
 
-EWRAM_CODE u16  FlashGetId(void);
-EWRAM_CODE bool FlashIsExist(void);
+u16  FlashGetId(void);
+bool FlashIsExist(void);
 
 
 

@@ -14,7 +14,7 @@ extern "C" {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void IrqInit(void);
+void IrqInit(void);
 IWRAM_CODE void IrqHandler(void);
 
 

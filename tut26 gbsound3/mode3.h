@@ -20,7 +20,7 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void Mode3Init(void);
+void Mode3Init(void);
 
 IWRAM_CODE void Mode3DrawChr(s32 sx, s32 sy, u16 chr);
 IWRAM_CODE void Mode3DrawStr(s32 sx, s32 sy, char* str);

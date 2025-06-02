@@ -3,7 +3,7 @@
 #include "res.h"
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprInit(void)
+void SprInit(void)
 {
 	REG_DISPCNT = (OBJ_ENABLE | OBJ_1D_MAP);
 
@@ -28,7 +28,7 @@ EWRAM_CODE void SprInit(void)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetSize(u32 num, u32 size, u32 form, u32 col)
+void SprSetSize(u32 num, u32 size, u32 form, u32 col)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -38,7 +38,7 @@ EWRAM_CODE void SprSetSize(u32 num, u32 size, u32 form, u32 col)
 	sp->attr1 |= size;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetXy(u32 num, s32 x, s32 y)
+void SprSetXy(u32 num, s32 x, s32 y)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -51,7 +51,7 @@ EWRAM_CODE void SprSetXy(u32 num, s32 x, s32 y)
 	sp->attr0 |= (y & 0x00ff);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetChr(u32 num, u32 ch)
+void SprSetChr(u32 num, u32 ch)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -59,7 +59,7 @@ EWRAM_CODE void SprSetChr(u32 num, u32 ch)
 	sp->attr2 |= ch;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetScaleRot(u32 num, s16 pa, s16 pb, s16 pc, s16 pd)
+void SprSetScaleRot(u32 num, s16 pa, s16 pb, s16 pc, s16 pd)
 {
 	OBJAFFINE* rot = (OBJAFFINE*)OAM + num;
 
@@ -69,7 +69,7 @@ EWRAM_CODE void SprSetScaleRot(u32 num, s16 pa, s16 pb, s16 pc, s16 pd)
 	rot->pd = pd;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetPal(u32 num, u32 pal)
+void SprSetPal(u32 num, u32 pal)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -77,14 +77,14 @@ EWRAM_CODE void SprSetPal(u32 num, u32 pal)
 	sp->attr2 |= (pal << 12);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetRotScale(u32 num, u32 no, u32 isFlag)
+void SprSetRotScale(u32 num, u32 no, u32 isFlag)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
 	sp->attr0 &= 0xfeff;
 	sp->attr1 &= 0xC1ff;
 
-	if(isFlag == FALSE)
+	if(isFlag == false)
 	{
 		return;
 	}
@@ -93,13 +93,13 @@ EWRAM_CODE void SprSetRotScale(u32 num, u32 no, u32 isFlag)
 	sp->attr1 |= OBJ_ROT_SCALE(no);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetDubleFlag(u32 num, u32 no, u32 isFlag)
+void SprSetDubleFlag(u32 num, u32 no, u32 isFlag)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
 	sp->attr0 &= 0xfdff;
 
-	if(isFlag == FALSE)
+	if(isFlag == false)
 	{
 		return;
 	}
@@ -107,7 +107,7 @@ EWRAM_CODE void SprSetDubleFlag(u32 num, u32 no, u32 isFlag)
 	sp->attr0 |= OBJ_DOUBLE;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetRotate(u32 num, s32 angle)
+void SprSetRotate(u32 num, s32 angle)
 {
 	OBJAFFINE* rot = (OBJAFFINE*)OAM + num;
 

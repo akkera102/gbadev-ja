@@ -5,14 +5,14 @@
 // https://cubic-style.jp/
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashInit(void)
+void FlashInit(void)
 {
 	BgDrawPrintf(0, 0, "MemoryBackup Cubic Test");
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashExec(void)
+void FlashExec(void)
 {
-	if(FlashIsExist() == FALSE)
+	if(FlashIsExist() == false)
 	{
 		BgDrawPrintf(0, 2, "Flash not found");
 		for(;;){}
@@ -59,7 +59,7 @@ EWRAM_CODE void FlashExec(void)
 	BgDrawPrintf(2, 16, "Done");
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashByte(u16 adr, u8 dat)
+void FlashByte(u16 adr, u8 dat)
 {
 	// Byte-Program
 	FlashWrite(0x5555, 0xAA);
@@ -71,7 +71,7 @@ EWRAM_CODE void FlashByte(u16 adr, u8 dat)
 	FlashWait(400);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u8 FlashRead(u16 adr)
+u8 FlashRead(u16 adr)
 {
 	u8* p = (u8*)SRAM + adr;
 
@@ -80,7 +80,7 @@ EWRAM_CODE u8 FlashRead(u16 adr)
 	return ret;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashWrite(u16 adr, u8 cmd)
+void FlashWrite(u16 adr, u8 cmd)
 {
 	u8* p = (u8*)SRAM + adr;
 
@@ -89,7 +89,7 @@ EWRAM_CODE void FlashWrite(u16 adr, u8 cmd)
 	__asm("NOP");
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashEraseChip(void)
+void FlashEraseChip(void)
 {
 	// Chip-Erase
 	FlashWrite(0x5555, 0xAA);
@@ -103,7 +103,7 @@ EWRAM_CODE void FlashEraseChip(void)
 	FlashWait2(10);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashEraseSector(u16 sec)
+void FlashEraseSector(u16 sec)
 {
 	_ASSERT(sec < 0x10);
 
@@ -120,7 +120,7 @@ EWRAM_CODE void FlashEraseSector(u16 sec)
 	FlashWait2(3);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashWait(u32 cnt)
+void FlashWait(u32 cnt)
 {
 	for(vu32 i=0; i<cnt; i++)
 	{
@@ -129,7 +129,7 @@ EWRAM_CODE void FlashWait(u32 cnt)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void FlashWait2(u32 cnt)
+void FlashWait2(u32 cnt)
 {
 	for(vu32 i=0; i<cnt; i++)
 	{
@@ -142,7 +142,7 @@ EWRAM_CODE void FlashWait2(u32 cnt)
 // SST39VF010 : 0xD5BF
 // SST39VF020 : 0xD6BF
 // SST39VF040 : 0xD7BF
-EWRAM_CODE u16 FlashGetId(void)
+u16 FlashGetId(void)
 {
 	// ID Entry
 	FlashWrite(0x5555, 0xAA);
@@ -161,7 +161,7 @@ EWRAM_CODE u16 FlashGetId(void)
 	return id0 | (id1 << 8);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE bool FlashIsExist(void)
+bool FlashIsExist(void)
 {
 	u8 t1 = FlashRead(0);
 	u8 t2 = ~t1;
@@ -172,8 +172,8 @@ EWRAM_CODE bool FlashIsExist(void)
 	{
 		// SRAM
 		FlashWrite(0, t1);
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }

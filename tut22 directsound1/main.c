@@ -43,13 +43,13 @@ int main(void)
 		KeyExec();
 		u16 trg = KeyGetTrg();
 
-		if(trg & KEY_L)     SndPlaySe((u8*)&_1_c3_bin, 16384, 0, FALSE);
-		if(trg & KEY_R)     SndPlaySe((u8*)&_2_d3_bin, 16384, 0, FALSE);
-		if(trg & KEY_A)     SndPlaySe((u8*)&_3_e3_bin, 16384, 0, FALSE);
-		if(trg & KEY_B)     SndPlaySe((u8*)&_4_f3_bin, 16384, 0, FALSE);
-		if(trg & KEY_LEFT)  SndPlaySe((u8*)&_5_g3_bin, 16384, 0, FALSE);
-		if(trg & KEY_UP)    SndPlaySe((u8*)&_6_a3_bin, 16384, 0, FALSE);
-		if(trg & KEY_DOWN)  SndPlaySe((u8*)&_7_b3_bin, 16384, 0, FALSE);
-		if(trg & KEY_RIGHT) SndPlaySe((u8*)&_8_c4_bin, 16384, 0, FALSE);
+		if(trg & KEY_L)     SndPlaySe((u8*)&_1_c3_bin, 16384, 0, false);
+		if(trg & KEY_R)     SndPlaySe((u8*)&_2_d3_bin, 16384, 0, false);
+		if(trg & KEY_A)     SndPlaySe((u8*)&_3_e3_bin, 16384, 0, false);
+		if(trg & KEY_B)     SndPlaySe((u8*)&_4_f3_bin, 16384, 0, false);
+		if(trg & KEY_LEFT)  SndPlaySe((u8*)&_5_g3_bin, 16384, 0, false);
+		if(trg & KEY_UP)    SndPlaySe((u8*)&_6_a3_bin, 16384, 0, false);
+		if(trg & KEY_DOWN)  SndPlaySe((u8*)&_7_b3_bin, 16384, 0, false);
+		if(trg & KEY_RIGHT) SndPlaySe((u8*)&_8_c4_bin, 16384, 0, false);
 	}
 }

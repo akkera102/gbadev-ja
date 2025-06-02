@@ -17,7 +17,7 @@ typedef struct {
 } ST_FONT;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void FontInit(void);
+void FontInit(void);
 IWRAM_CODE void FontDrawChr(s32 sx, s32 sy, u16 col, u16 chr);
 IWRAM_CODE void FontDrawStr(s32 sx, s32 sy, u16 col, char* str);
 IWRAM_CODE void FontDrawPrintf(s32 sx, s32 sy, u16 col, char* format, ...);

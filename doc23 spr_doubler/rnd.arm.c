@@ -55,13 +55,13 @@ static unsigned long mt[N]; /* the array for the state vector  */
 static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void RndInit(void)
+void RndInit(void)
 {
 	RndInit2(5489UL);
 }
 //---------------------------------------------------------------------------
 /* initializes mt[N] with a seed */
-EWRAM_CODE void RndInit2(u32 s)
+void RndInit2(u32 s)
 {
     mt[0]= s & 0xffffffffUL;
     for (mti=1; mti<N; mti++) {

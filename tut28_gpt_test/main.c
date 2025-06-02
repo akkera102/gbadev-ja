@@ -10,7 +10,7 @@
 #include "key.h"
 
 //---------------------------------------------------------------------------
-IWRAM_CODE int main(void)
+int main(void)
 {
 	REG_WSCNT = 0x4317;
 

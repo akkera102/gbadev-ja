@@ -13,7 +13,7 @@ extern "C" {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE u32* MallocPatch(u32 size);
+u32* MallocPatch(u32 size);
 
 
 #ifdef __cplusplus

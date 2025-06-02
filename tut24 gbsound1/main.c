@@ -79,7 +79,7 @@ int main(void)
 
 	ST_PARAM param[8];
 
-	bool isSnd = FALSE;
+	bool isSnd = false;
 	s16 sel = 0;
 
 	_Memset(&param, 0x00, sizeof(param));
@@ -166,7 +166,7 @@ int main(void)
 				param[sel].cur += param[sel].adj;
 				DrawParam(param);
 
-				isSnd = TRUE;
+				isSnd = true;
 		}
 
 		if((rep & KEY_LEFT) && (param[sel].cur > param[sel].min))
@@ -174,10 +174,10 @@ int main(void)
 				param[sel].cur -= param[sel].adj;
 				DrawParam(param);
 
-				isSnd = TRUE;
+				isSnd = true;
 		}
 
-		if(isSnd == TRUE || trg & KEY_A)
+		if(isSnd == true || trg & KEY_A)
 		{
 			u16 B, L, H;
 
@@ -189,7 +189,7 @@ int main(void)
 			REG_SOUND2CNT_L = L;
 			REG_SOUND2CNT_H = H + TRIFREQ_RESET;
 
-			isSnd = FALSE;
+			isSnd = false;
 		}
 	}
 }

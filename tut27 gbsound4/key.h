@@ -21,7 +21,7 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void KeyInit(void);
+void KeyInit(void);
 IWRAM_CODE void KeyExec(void);
 
 IWRAM_CODE u32  KeyGetCnt(void);

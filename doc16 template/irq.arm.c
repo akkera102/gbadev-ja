@@ -5,7 +5,7 @@
 extern ST_MAIN Main;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void IrqInit(void)
+void IrqInit(void)
 {
 	REG_IME = 0;
 

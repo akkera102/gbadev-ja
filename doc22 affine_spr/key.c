@@ -5,13 +5,13 @@ ST_KEY Key;
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void KeyInit(void)
+void KeyInit(void)
 {
 	_Memset(&Key, 0x00, sizeof(ST_KEY));
 }
 //---------------------------------------------------------------------------
 // vblank中に1回だけ呼び出します（チャタリング防止）
-IWRAM_CODE void KeyExec(void)
+void KeyExec(void)
 {
 	u16 cnt = REG_KEYINPUT;
 
@@ -43,25 +43,25 @@ IWRAM_CODE void KeyExec(void)
 }
 //---------------------------------------------------------------------------
 // 現在押されているボタン
-IWRAM_CODE u32 KeyGetCnt(void)
+u32 KeyGetCnt(void)
 {
 	return Key.cnt;
 }
 //---------------------------------------------------------------------------
 // 押された時のボタン
-IWRAM_CODE u32 KeyGetTrg(void)
+u32 KeyGetTrg(void)
 {
 	return Key.trg;
 }
 //---------------------------------------------------------------------------
 // 離された時のボタン
-IWRAM_CODE u32 KeyGetOff(void)
+u32 KeyGetOff(void)
 {
 	return Key.off;
 }
 //---------------------------------------------------------------------------
 // キーリピートのボタン。十字キーのみ対応
-IWRAM_CODE u32 KeyGetRep(void)
+u32 KeyGetRep(void)
 {
 	return Key.rep;
 }

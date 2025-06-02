@@ -11,8 +11,8 @@ extern "C" {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathSin(u32 theta);
-EWRAM_CODE s32 MathCos(u32 theta);
+s32 MathSin(u32 theta);
+s32 MathCos(u32 theta);
 
 
 #ifdef __cplusplus

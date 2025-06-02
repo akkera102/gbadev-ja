@@ -19,17 +19,17 @@ int main(void)
 	LZ77UnCompVram(pImg1, (void*)VRAM);
 
  	u32 c = 0;
- 	bool is = FALSE;
+ 	bool is = false;
  
  	for(;;)
  	{
  		WaitForVsync();
  
  		// –ñ3•bŒã‚ÉpImg2‚ð•\Ž¦
- 		if(c++ == 60*3 && is == FALSE)
+ 		if(c++ == 60*3 && is == false)
  		{
  				LZ77UnCompVram(pImg2, (void*)VRAM);
- 				is = TRUE;
+ 				is = true;
  		}
  	}
  }

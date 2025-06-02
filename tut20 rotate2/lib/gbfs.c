@@ -11,7 +11,7 @@ ST_GBFS Gbfs;
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void GbfsInit(void)
+void GbfsInit(void)
 {
 	_Memset(&Gbfs, 0x00, sizeof(ST_GBFS));
 
@@ -29,7 +29,7 @@ EWRAM_CODE void GbfsInit(void)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void* GbfsGetPointer(char* fname)
+void* GbfsGetPointer(char* fname)
 {
 	s32 left  = 0;
 	s32 right = Gbfs.pHeader->fileCnt;
@@ -60,7 +60,7 @@ IWRAM_CODE void* GbfsGetPointer(char* fname)
 	return NULL;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void* GbfsGetPointer2(u32 cnt)
+void* GbfsGetPointer2(u32 cnt)
 {
 	if(cnt >= Gbfs.pHeader->fileCnt)
 	{
@@ -71,7 +71,7 @@ IWRAM_CODE void* GbfsGetPointer2(u32 cnt)
 	return (u8*)Gbfs.pHeader + Gbfs.pList[cnt].dataOff;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void* GbfsGetSafePointer(char* fname)
+void* GbfsGetSafePointer(char* fname)
 {
 	void* p = GbfsGetPointer(fname);
 
@@ -83,7 +83,7 @@ IWRAM_CODE void* GbfsGetSafePointer(char* fname)
 	return p;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void* GbfsGetSafePointer2(u32 cnt)
+void* GbfsGetSafePointer2(u32 cnt)
 {
 	void* p = GbfsGetPointer2(cnt);
 
@@ -95,22 +95,22 @@ IWRAM_CODE void* GbfsGetSafePointer2(u32 cnt)
 	return p;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* GbfsGetFileName(void)
+char* GbfsGetFileName(void)
 {
 	return Gbfs.pList[Gbfs.pos].fname;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u32 GbfsGetFileSize(void)
+u32 GbfsGetFileSize(void)
 {
 	return Gbfs.pList[Gbfs.pos].size;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u32 GbfsGetArcSize(void)
+u32 GbfsGetArcSize(void)
 {
 	return Gbfs.pHeader->size;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u32 GbfsGetArcCnt(void)
+u32 GbfsGetArcCnt(void)
 {
 	return Gbfs.pHeader->fileCnt;
 }

@@ -37,7 +37,7 @@ typedef struct {
 } ST_SPR;
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprInit(void);
+void SprInit(void);
 IWRAM_CODE void SprInitItem(void);
 IWRAM_CODE void SprExec(void);
 

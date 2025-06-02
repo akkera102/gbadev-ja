@@ -10,7 +10,7 @@
 ST_BG Bg[BG_MAX_CNT];
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit()
+void BgInit()
 {
 	BgInitLcd();
 
@@ -34,7 +34,7 @@ EWRAM_CODE void BgInit()
 	REG_WINOUT = WIN_0_BG0 | WIN_0_BG1;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInitLcd()
+void BgInitLcd()
 {
 	const u32 mapBase[]  = { 23, 26, 29,  0 };
 	const u32 tileBase[] = {  0,  1,  2,  0 };
@@ -65,7 +65,7 @@ EWRAM_CODE void BgInitLcd()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg0Init()
+void Bg0Init()
 {
 	vs32 i;
 
@@ -80,7 +80,7 @@ EWRAM_CODE void Bg0Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg1Init()
+void Bg1Init()
 {
 	const u16 tiles[] = {
 		0xF2F3, 0xF2F3, 0x3F2F, 0x3F2F, 0xF3F2, 0xF3F2, 0x2F3F, 0x2F3F,
@@ -103,7 +103,7 @@ EWRAM_CODE void Bg1Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg2Init()
+void Bg2Init()
 {
 	vs32 i;
 
@@ -123,12 +123,12 @@ EWRAM_CODE void Bg2Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg3Init()
+void Bg3Init()
 {
 	// EMPTY
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
+void BgAsciiDrawStr(s32 x, s32 y, char* s)
 {
 	u16* map = &Bg[0].mapBaseAdr[x + y * 32];
 
@@ -151,7 +151,7 @@ EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s)
 
 u16 BgWinh[SCREEN_HEIGHT+1] ALIGN(4);
 
-IWRAM_CODE void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr)
+void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr)
 {
 	// Zero clear
 	for(vs32 i=0; i<SCREEN_HEIGHT+1; i++)
@@ -219,7 +219,7 @@ IWRAM_CODE void BgCreateWindowCircleDma(s32 x0, s32 y0, s32 rr)
 	REG_DMA3CNT = 1 | (DMA_DST_RELOAD | DMA_REPEAT | DMA_HBLANK | DMA_ENABLE);
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s32 BgClamp(s32 val, s32 min, s32 max)
+s32 BgClamp(s32 val, s32 min, s32 max)
 {
 	if(val < min)
 	{
@@ -234,7 +234,7 @@ IWRAM_CODE s32 BgClamp(s32 val, s32 min, s32 max)
 	return val;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE bool BgInRange(s32 x, s32 min, s32 max)
+bool BgInRange(s32 x, s32 min, s32 max)
 {
-	return ((x)>=(min)) && ((x)<(max)) ? TRUE : FALSE;
+	return ((x)>=(min)) && ((x)<(max)) ? true : false;
 }

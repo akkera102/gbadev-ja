@@ -6,7 +6,7 @@ ST_FONT Font;
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void FontInit(void)
+void FontInit(void)
 {
 	_Memset(&Font, 0x00, sizeof(ST_FONT));
 

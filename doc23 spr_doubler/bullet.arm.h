@@ -34,7 +34,7 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BulletInit(void);
+void BulletInit(void);
 IWRAM_CODE void BulletExec(void);
 IWRAM_CODE void BulletReg(s32 x, s32 y);
 IWRAM_CODE s16  BulletRnd(void);

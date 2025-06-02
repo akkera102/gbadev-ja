@@ -9,7 +9,7 @@ const char week[7][4] = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcInit(void)
+void RtcInit(void)
 {
 	_Memset(&Rtc, 0x00, sizeof(ST_RTC));
 
@@ -19,12 +19,12 @@ EWRAM_CODE void RtcInit(void)
 	REG_RTC_ENABLE = 0x1;
 
 	RtcOutCmd(0x63);
-	Rtc.isEnable = (RtcIn() & 0x40) ? TRUE : FALSE;
+	Rtc.isEnable = (RtcIn() & 0x40) ? true : false;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcExec(void)
+void RtcExec(void)
 {
-	if(Rtc.isEnable == FALSE)
+	if(Rtc.isEnable == false)
 	{
 		BgDrawPrintf(0, 0, "RTC NOT FOUND");
 		return;
@@ -42,7 +42,7 @@ EWRAM_CODE void RtcExec(void)
 	BgDrawPrintf(0, 2, "%02x/%02x/%02x %s %02x:%02x:%02x", Rtc.reg[0], Rtc.reg[1], Rtc.reg[2], week[Rtc.reg[3]], Rtc.reg[4] & 0x7f, Rtc.reg[5], Rtc.reg[6]);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcGetTime(void)
+void RtcGetTime(void)
 {
 	RtcOutCmd(0x65);
 
@@ -54,7 +54,7 @@ EWRAM_CODE void RtcGetTime(void)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcSetTime(void)
+void RtcSetTime(void)
 {
 	RtcOutCmd(0x64);
 
@@ -78,7 +78,7 @@ EWRAM_CODE void RtcSetTime(void)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE u32 RtcIn(void)
+u32 RtcIn(void)
 {
 	REG_RTC_RW = 0x5;
 
@@ -96,7 +96,7 @@ EWRAM_CODE u32 RtcIn(void)
 	return ret;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcOutCmd(u32 cmd)
+void RtcOutCmd(u32 cmd)
 {
 	REG_RTC_RW   = 0x7;
 	REG_RTC_DATA = 0x1;
@@ -112,7 +112,7 @@ EWRAM_CODE void RtcOutCmd(u32 cmd)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcOutReg(u32 reg)
+void RtcOutReg(u32 reg)
 {
 	REG_RTC_RW = 0x7;
 

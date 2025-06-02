@@ -9,7 +9,7 @@ ST_SND Snd[2];
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void SndInit()
+void SndInit()
 {
 	_Memset(&Snd, 0x00, sizeof(ST_SND) * 2);
 
@@ -56,12 +56,12 @@ IWRAM_CODE void SndStopSe(void)
 //---------------------------------------------------------------------------
 IWRAM_CODE bool SndIsPlayBgm(void)
 {
-	return (Snd[SND_ID_BGM].act == SND_ACT_PLAY) ? TRUE : FALSE;
+	return (Snd[SND_ID_BGM].act == SND_ACT_PLAY) ? true : false;
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE bool SndIsPlaySe(void)
 {
-	return (Snd[SND_ID_SE].act == SND_ACT_PLAY) ? TRUE : FALSE;
+	return (Snd[SND_ID_SE].act == SND_ACT_PLAY) ? true : false;
 }
 //---------------------------------------------------------------------------
 IWRAM_CODE void SndIntrBgm(void)
@@ -90,7 +90,7 @@ stop:
 
 		if(p->cnt <= 0)
 		{
-			if(p->isLoop == TRUE)
+			if(p->isLoop == true)
 			{
 				goto start;
 			}
@@ -133,7 +133,7 @@ stop:
 
 		if(p->cnt <= 0)
 		{
-			if(p->isLoop == TRUE)
+			if(p->isLoop == true)
 			{
 				goto start;
 			}

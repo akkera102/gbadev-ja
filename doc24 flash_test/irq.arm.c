@@ -1,7 +1,7 @@
 #include "irq.arm.h"
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void IrqInit(void)
+void IrqInit(void)
 {
 	REG_IME = 0;
 

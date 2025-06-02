@@ -29,20 +29,20 @@ int main(void)
 	s32 td = pd;
 
 	s32 angle = 0;
-	bool isDouble = FALSE;
+	bool isDouble = false;
 
 	// metro
 	SprSetSize(0, OBJ_SIZE(3), OBJ_SQUARE, OBJ_16_COLOR);
 	SprSetChr (0, 0);
 	SprSetPal (0, 0);
-	SprSetRotScale(0, 0, TRUE);
+	SprSetRotScale(0, 0, true);
 
 	// Shadow
 	SprSetSize(1, OBJ_SIZE(3), OBJ_SQUARE, OBJ_16_COLOR);
 	SprSetChr (1, 0);
 	SprSetPal (1, 1);
 	SprSetScaleRot(1, 0x0100, 0, 0, 0x0100);
-	SprSetRotScale(1, 1, TRUE);
+	SprSetRotScale(1, 1, true);
 
 	for(;;)
 	{
@@ -92,24 +92,24 @@ int main(void)
 			td = pd;
 
 			angle = 0;
-			isDouble = FALSE;
+			isDouble = false;
 			continue;
 		}
 
 		// START: Double-size flag
 		if(trg & KEY_START)
 		{
-			if(isDouble == FALSE)
+			if(isDouble == false)
 			{
 				x -= 64/2;
 				y -= 64/2;
-				isDouble = TRUE;
+				isDouble = true;
 			}
 			else
 			{
 				x += 64/2;
 				y += 64/2;
-				isDouble = FALSE;
+				isDouble = false;
 			}
 			continue;
 		}

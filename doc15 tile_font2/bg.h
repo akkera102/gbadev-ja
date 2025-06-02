@@ -53,19 +53,19 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit(void);
-EWRAM_CODE void BgInitLcd(void);
-EWRAM_CODE void Bg0Init(void);
-EWRAM_CODE void Bg1Init(void);
-EWRAM_CODE void Bg2Init(void);
-EWRAM_CODE void Bg3Init(void);
+void BgInit(void);
+void BgInitLcd(void);
+void Bg0Init(void);
+void Bg1Init(void);
+void Bg2Init(void);
+void Bg3Init(void);
 
-EWRAM_CODE void BgAsciiDrawStr(s32 x, s32 y, char* s);
+void BgAsciiDrawStr(s32 x, s32 y, char* s);
 
-EWRAM_CODE void BgFontInit(void);
-EWRAM_CODE void BgFontDrawStr(s32 x, s32 y, char* str);
-EWRAM_CODE void BgFontDrawChr(s32 x, s32 y, u16 chr);
-EWRAM_CODE u16  BgFontGetIdx(u16 chr);
+void BgFontInit(void);
+void BgFontDrawStr(s32 x, s32 y, char* str);
+void BgFontDrawChr(s32 x, s32 y, u16 chr);
+u16  BgFontGetIdx(u16 chr);
 
 
 #ifdef __cplusplus

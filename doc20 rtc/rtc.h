@@ -35,14 +35,14 @@ typedef struct {
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void RtcInit(void);
-EWRAM_CODE void RtcExec(void);
+void RtcInit(void);
+void RtcExec(void);
 
-EWRAM_CODE void RtcGetTime(void);
-EWRAM_CODE void RtcSetTime(void);
-EWRAM_CODE u32  RtcIn(void);
-EWRAM_CODE void RtcOutCmd(u32 cmd);
-EWRAM_CODE void RtcOutReg(u32 reg);
+void RtcGetTime(void);
+void RtcSetTime(void);
+u32  RtcIn(void);
+void RtcOutCmd(u32 cmd);
+void RtcOutReg(u32 reg);
 
 
 #ifdef __cplusplus

@@ -220,9 +220,9 @@ int main(void)
 	u32 PanMask = 0x4000;
 	u32 waitVblank = 0;
 
-	bool isWave = FALSE;
-	bool isBank = FALSE;
-	bool isDimension = FALSE;
+	bool isWave = false;
+	bool isBank = false;
+	bool isDimension = false;
 
 	for(;;)
 	{
@@ -246,7 +246,7 @@ int main(void)
 				param[0].cur = param[0].max;
 			}
 
-			isWave = TRUE;
+			isWave = true;
 		}
 
 		if(trg & KEY_R)
@@ -260,17 +260,17 @@ int main(void)
 				param[0].cur = param[0].min;
 			}
 
-			isWave = TRUE;
+			isWave = true;
 		}
 
 		if(trg & KEY_A)
 		{
-			isBank = TRUE;
+			isBank = true;
 		}
 
 		if(trg & KEY_B)
 		{
-			isDimension = TRUE;
+			isDimension = true;
 		}
 
 		if(rep & KEY_UP  && param[3].cur <  param[3].max)
@@ -322,25 +322,25 @@ int main(void)
 		PanMask^=0x4400;
 
 		// bank number
-		if(isBank == TRUE)
+		if(isBank == true)
 		{
 			REG_SOUND3CNT_L ^= SOUND3_SETBANK(1);
 
 			param[1].cur = (param[1].cur == 0) ? 1 : 0;
-			isBank = FALSE;
+			isBank = false;
 		}
 
 		// dimension
-		if(isDimension == TRUE)
+		if(isDimension == true)
 		{
 			REG_SOUND3CNT_L^= SOUND3_STEP64;
 
 			param[2].cur = (param[2].cur == 0) ? 1 : 0;
-			isDimension = FALSE;
+			isDimension = false;
 		}
 
 		// wave
-		if(isWave == TRUE)
+		if(isWave == true)
 		{
 			REG_SOUND3CNT_L &= ~SOUND3_PLAY;
 
@@ -359,7 +359,7 @@ int main(void)
 			REG_SOUND3CNT_L |= SOUND3_PLAY;
 			REG_SOUND3CNT_X |= TRIFREQ_RESET;
 
-			isWave = FALSE;
+			isWave = false;
 		}
 
 

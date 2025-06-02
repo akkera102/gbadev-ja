@@ -5,7 +5,7 @@ char sprintfBuf[COMMON_SPRINT_BUF_CNT] ALIGN(4);
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 _Strlen(char* s1)
+s32 _Strlen(char* s1)
 {
 	volatile s32 i = 0;
 
@@ -17,7 +17,7 @@ EWRAM_CODE s32 _Strlen(char* s1)
 	return i;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _Strncpy(char* ret, char* s2, s32 size)
+char* _Strncpy(char* ret, char* s2, s32 size)
 {
 	volatile char* s1 = ret;
 
@@ -44,7 +44,7 @@ End:
 	return ret;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s32 _Strncmp(char* s1, char* s2, s32 size)
+s32 _Strncmp(char* s1, char* s2, s32 size)
 {
 	if(size == 0)
 	{
@@ -76,7 +76,7 @@ End:
 	return 0;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _Strcat(char* ret, char* s2)
+char* _Strcat(char* ret, char* s2)
 {
 	char* s1 = ret;
 
@@ -94,7 +94,7 @@ IWRAM_CODE char* _Strcat(char* ret, char* s2)
 	return ret;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE char* _Strchr(char* str, char chr)
+char* _Strchr(char* str, char chr)
 {
 	while(chr != *str)
 	{
@@ -107,7 +107,7 @@ EWRAM_CODE char* _Strchr(char* str, char chr)
 	return str;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _Memcpy(void* s1, void* s2, s32 size)
+char* _Memcpy(void* s1, void* s2, s32 size)
 {
 	char* p1 = (char*)s1;
 	char* p2 = (char*)s2;
@@ -127,7 +127,7 @@ End:
 	return s1;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s32 _Memcmp(void* s1, void* s2, s32 size)
+s32 _Memcmp(void* s1, void* s2, s32 size)
 {
 	char* p1 = (char*)s1;
 	char* p2 = (char*)s2;
@@ -149,7 +149,7 @@ IWRAM_CODE s32 _Memcmp(void* s1, void* s2, s32 size)
 	return 0;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _Memset(void* s, u8 c, s32 size)
+char* _Memset(void* s, u8 c, s32 size)
 {
 	volatile char* s1 = (char*)s;
 
@@ -168,7 +168,7 @@ End:
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void _Printf(char* format, ...)
+void _Printf(char* format, ...)
 {
 	char* ap;
 	va_start(ap, format);
@@ -179,7 +179,7 @@ IWRAM_CODE void _Printf(char* format, ...)
 	MappyLog(sprintfBuf);
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _Sprintf(char* buf, char* format, ...)
+char* _Sprintf(char* buf, char* format, ...)
 {
 	char* ap;
 	va_start(ap, format);
@@ -189,7 +189,7 @@ IWRAM_CODE char* _Sprintf(char* buf, char* format, ...)
 	return buf;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
+void _DoSprintf(char* str, char* fmt, char* ap)
 {
 	s32   val;
 	char* val2;
@@ -226,15 +226,15 @@ IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
 			c = *fmt++;
 		}
 
-		if(_IsDigit(c) == TRUE)
+		if(_IsDigit(c) == true)
 		{
 			col   = c - '0';
-			isCol = TRUE;
+			isCol = true;
 			c = *fmt++;
 		}
 		else
 		{
-			isCol = FALSE;
+			isCol = false;
 		}
 
 		switch(c)
@@ -248,17 +248,17 @@ IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
 				*str++ = '-';
 			}
 
-			str = (isCol == TRUE) ? _SprintfNumCol(val, 10, str, col, colChr, TRUE) : _SprintfNum(val, 10, str); 
+			str = (isCol == true) ? _SprintfNumCol(val, 10, str, col, colChr, true) : _SprintfNum(val, 10, str); 
 			break;
 
 		case 'x':
 			val = va_arg(ap, int);
-			str = (isCol == TRUE) ? _SprintfHexCol((u32)val, str, col, colChr, TRUE, 'a') : _SprintfHex((u32)val, str, 'a'); 
+			str = (isCol == true) ? _SprintfHexCol((u32)val, str, col, colChr, true, 'a') : _SprintfHex((u32)val, str, 'a'); 
 			break;
 
 		case 'X':
 			val = va_arg(ap, int);
-			str = (isCol == TRUE) ? _SprintfHexCol((u32)val, str, col, colChr, TRUE, 'A') : _SprintfHex((u32)val, str, 'A'); 
+			str = (isCol == true) ? _SprintfHexCol((u32)val, str, col, colChr, true, 'A') : _SprintfHex((u32)val, str, 'A'); 
 			break;
 
 		case 's':
@@ -279,7 +279,7 @@ IWRAM_CODE void _DoSprintf(char* str, char* fmt, char* ap)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _SprintfNum(s32 val, s32 base, char* s)
+char* _SprintfNum(s32 val, s32 base, char* s)
 {
 	s32 c = Mod(val, base);
 	val = Div(val, base);
@@ -294,17 +294,17 @@ IWRAM_CODE char* _SprintfNum(s32 val, s32 base, char* s)
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _SprintfNumCol(s32 val, s32 base, char* s, s32 col, char colChr, bool isTop)
+char* _SprintfNumCol(s32 val, s32 base, char* s, s32 col, char colChr, bool isTop)
 {
 	s32 c = Mod(val, base);
 	val = Div(val, base);
 
 	if(col > 1)
 	{
-		s = _SprintfNumCol(val, base, s, col-1, colChr, FALSE);
+		s = _SprintfNumCol(val, base, s, col-1, colChr, false);
 	}
 
-	if(c != 0 || val != 0 || isTop == TRUE)
+	if(c != 0 || val != 0 || isTop == true)
 	{
 		*s++ = c+'0';
 	}
@@ -316,17 +316,17 @@ IWRAM_CODE char* _SprintfNumCol(s32 val, s32 base, char* s, s32 col, char colChr
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _SprintfHexCol(u32 val, char* s, s32 col, char colChr, bool isTop, char hex)
+char* _SprintfHexCol(u32 val, char* s, s32 col, char colChr, bool isTop, char hex)
 {
 	u32 c = val & 0xf;
 	val = val >> 4;
 
 	if(col > 1)
 	{
-		s = _SprintfHexCol(val, s, col-1, colChr, FALSE, hex);
+		s = _SprintfHexCol(val, s, col-1, colChr, false, hex);
 	}
 
-	if(c != 0 || val != 0 || isTop == TRUE)
+	if(c != 0 || val != 0 || isTop == true)
 	{
 		*s++ = (c>9) ? c-10+hex : c+'0';
 	}
@@ -338,7 +338,7 @@ IWRAM_CODE char* _SprintfHexCol(u32 val, char* s, s32 col, char colChr, bool isT
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _SprintfHex(u32 val, char* s, char hex)
+char* _SprintfHex(u32 val, char* s, char hex)
 {
 	if(val >= 0x10)
 	{
@@ -351,7 +351,7 @@ IWRAM_CODE char* _SprintfHex(u32 val, char* s, char hex)
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE char* _SprintfString(char* val, char* s)
+char* _SprintfString(char* val, char* s)
 {
 	while(*val != '\0')
 	{
@@ -361,7 +361,7 @@ IWRAM_CODE char* _SprintfString(char* val, char* s)
 	return s;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void MgbaLog(char* buf)
+void MgbaLog(char* buf)
 {
 	REG_DEBUG_ENABLE = 0xC0DE;
 
@@ -379,12 +379,12 @@ IWRAM_CODE void MgbaLog(char* buf)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE void MappyLog(char* buf)
+void MappyLog(char* buf)
 {
 	__asm volatile("mov r2, %0; ldr r0,=0xc0ded00d; and r0,r0" :: "r"(buf) : "r2", "r0");
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SystemError(char* format, ...)
+void SystemError(char* format, ...)
 {
 	char* ap;
 	va_start(ap, format);

@@ -9,7 +9,7 @@ extern vs32 shakeCx;		// â°êUÇÍÇÃïù
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void IrqInit(void)
+void IrqInit(void)
 {
 	REG_IME = 0;
 

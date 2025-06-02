@@ -2,7 +2,7 @@
 #include "res.h"
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprInit(void)
+void SprInit(void)
 {
 	u32 i;
 
@@ -26,7 +26,7 @@ EWRAM_CODE void SprInit(void)
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetSize(u32 num, u32 size, u32 form, u32 col)
+void SprSetSize(u32 num, u32 size, u32 form, u32 col)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -36,7 +36,7 @@ EWRAM_CODE void SprSetSize(u32 num, u32 size, u32 form, u32 col)
 	sp->attr1 |= size;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetXy(u32 num, s32 x, s32 y)
+void SprSetXy(u32 num, s32 x, s32 y)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -49,7 +49,7 @@ EWRAM_CODE void SprSetXy(u32 num, s32 x, s32 y)
 	sp->attr0 |= (y & 0x00ff);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetChr(u32 num, u32 ch)
+void SprSetChr(u32 num, u32 ch)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -57,7 +57,7 @@ EWRAM_CODE void SprSetChr(u32 num, u32 ch)
 	sp->attr2 |= ch;
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetScale(u32 num, u32 xsc, u32 ysc)
+void SprSetScale(u32 num, u32 xsc, u32 ysc)
 {
 	OBJAFFINE* rot = (OBJAFFINE*)OAM + num;
 
@@ -67,7 +67,7 @@ EWRAM_CODE void SprSetScale(u32 num, u32 xsc, u32 ysc)
 	rot->pd = Div(256 * 100, ysc);
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void SprSetPalNo(u32 num, u32 palNo)
+void SprSetPalNo(u32 num, u32 palNo)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 
@@ -82,7 +82,7 @@ EWRAM_CODE void SprSetPalNo(u32 num, u32 palNo)
 	double_flag　・・・　描画領域を２倍使用できるようにするか
 	                     0なら通常の描画領域、SP_SIZE_DOUBLEなら２倍
 */
-EWRAM_CODE void SprSetRotateFlag(u32 num, u32 no, u32 double_flag)
+void SprSetRotateFlag(u32 num, u32 no, u32 double_flag)
 {
 	OBJATTR* sp = (OBJATTR*)OAM + num;
 

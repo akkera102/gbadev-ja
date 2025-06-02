@@ -10,7 +10,7 @@
 ST_BG Bg[BG_MAX_CNT];
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInit()
+void BgInit(void)
 {
 	BgInitLcd();
 
@@ -27,7 +27,7 @@ EWRAM_CODE void BgInit()
 
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void BgInitLcd()
+void BgInitLcd(void)
 {
 	const u32 mapBase[]  = { 11, 12,  0,  0 };
 	const u32 tileBase[] = {  0,  2,  0,  0 };
@@ -58,7 +58,7 @@ EWRAM_CODE void BgInitLcd()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg0Init()
+void Bg0Init(void)
 {
 	vu32 i;
 
@@ -78,7 +78,7 @@ EWRAM_CODE void Bg0Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg1Init()
+void Bg1Init(void)
 {
 	vu32 i;
 
@@ -98,12 +98,12 @@ EWRAM_CODE void Bg1Init()
 	}
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg2Init()
+void Bg2Init(void)
 {
 	// EMPTY
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE void Bg3Init()
+void Bg3Init(void)
 {
 	// EMPTY
 }

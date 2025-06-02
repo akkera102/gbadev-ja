@@ -103,17 +103,17 @@ const short MathCosTab[360] =
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathSin(u32 theta)
+s32 MathSin(u32 theta)
 {
 	return MathSinTab[Mod(360 + theta, 360)];
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathCos(u32 theta)
+s32 MathCos(u32 theta)
 {
 	return MathCosTab[Mod(360 + theta, 360)];
 }
 //---------------------------------------------------------------------------
-EWRAM_CODE s32 MathAbs(s32 num)
+s32 MathAbs(s32 num)
 {
 	return (num < 0) ? num * -1 : num;
 }

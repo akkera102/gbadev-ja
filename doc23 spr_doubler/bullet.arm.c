@@ -6,7 +6,7 @@ ST_BULLET Bullet;
 
 
 //---------------------------------------------------------------------------
-EWRAM_CODE void BulletInit(void)
+void BulletInit(void)
 {
 	_Memset(&Bullet, 0x00, sizeof(ST_BULLET));
 }
@@ -19,7 +19,7 @@ IWRAM_CODE void BulletExec(void)
 
 	for(i=0; i<BULLET_MAX_CHR_CNT; i++)
 	{
-		if(Bullet.chr[i].is == FALSE)
+		if(Bullet.chr[i].is == false)
 		{
 			continue;
 		}
@@ -32,7 +32,7 @@ IWRAM_CODE void BulletExec(void)
 
 		if(xx <= -8 || xx >= 240 || yy <= -8 || yy >= 160)
 		{
-			Bullet.chr[i].is = FALSE;
+			Bullet.chr[i].is = false;
 			Bullet.maxCnt--;
 
 			continue;
@@ -49,12 +49,12 @@ IWRAM_CODE void BulletReg(s32 x, s32 y)
 
 	for(i=0; i<BULLET_MAX_CHR_CNT; i++)
 	{
-		if(Bullet.chr[i].is == TRUE)
+		if(Bullet.chr[i].is == true)
 		{
 			continue;
 		}
 
-		Bullet.chr[i].is = TRUE;
+		Bullet.chr[i].is = true;
 		Bullet.chr[i].x  = INT2FIX(x - (8/2));
 		Bullet.chr[i].y  = INT2FIX(y - (8/2));
 		Bullet.chr[i].mx = BulletRnd();

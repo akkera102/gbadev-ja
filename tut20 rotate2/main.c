@@ -20,7 +20,7 @@ int main(void)
 	SprSetChr  (0, 0);
 	SprSetPal  (0, 0);
 	SprSetXy(0, x, y);
-	SprSetRotScale(0, 0, TRUE);
+	SprSetRotScale(0, 0, true);
 
 	for(;;)
 	{
