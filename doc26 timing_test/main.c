@@ -10,8 +10,9 @@ int main(void)
 	IrqInit();
 
 	s32 r, e, i;
+	u16 ws;
 
-	REG_WSCNT = 0x0000;
+	ws = *(volatile u16*)0x4000204;
 
 	VBlankIntrWait();
 	r = CodeRom();
@@ -22,13 +23,14 @@ int main(void)
 	VBlankIntrWait();
 	i = CodeIwram();
 
-	BgDrawPrintf(1, 1, "REG_WSCNT=0x0000");
+	BgDrawPrintf(1, 1, "REG_WSCNT=0x%04X", ws);
 	BgDrawPrintf(1, 2, "  ROM:%d", r);
 	BgDrawPrintf(1, 3, "EWRAM:%d", e);
 	BgDrawPrintf(1, 4, "IWRAM:%d", i);
 
 
-	REG_WSCNT = 0x4317;
+	*(volatile u16*)0x4000204 = 0x4317;
+	ws = *(volatile u16*)0x4000204;
 
 	VBlankIntrWait();
 	r = CodeRom();
@@ -39,13 +41,14 @@ int main(void)
 	VBlankIntrWait();
 	i = CodeIwram();
 
-	BgDrawPrintf(1,  6, "REG_WSCNT=0x4317");
+	BgDrawPrintf(1,  6, "REG_WSCNT=0x%04X", ws);
 	BgDrawPrintf(1,  7, "  ROM:%d", r);
 	BgDrawPrintf(1,  8, "EWRAM:%d", e);
 	BgDrawPrintf(1,  9, "IWRAM:%d", i);
 
 
-	REG_WSCNT = 0x0317;
+	*(volatile u16*)0x4000204 = 0x0317;
+	ws = *(volatile u16*)0x4000204;
 
 	VBlankIntrWait();
 	r = CodeRom();
@@ -56,7 +59,7 @@ int main(void)
 	VBlankIntrWait();
 	i = CodeIwram();
 
-	BgDrawPrintf(1, 11, "REG_WSCNT=0x0317(no prefetch)");
+	BgDrawPrintf(1, 11, "REG_WSCNT=0x%04X(no prefetch)", ws);
 	BgDrawPrintf(1, 12, "  ROM:%d", r);
 	BgDrawPrintf(1, 13, "EWRAM:%d", e);
 	BgDrawPrintf(1, 14, "IWRAM:%d", i);
