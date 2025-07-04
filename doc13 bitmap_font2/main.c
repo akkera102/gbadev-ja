@@ -4,19 +4,19 @@
 //---------------------------------------------------------------------------
 typedef struct {
 	u8*  pDat;
-	u32  imgCx;
-	u16  cx;
-	u16  cy;
+	s32  imgCx;
+	s32  cx;
+	s32  cy;
 
 	u16* pSheet;
-	u16  cnt;
+	s32  cnt;
 } ST_FONT;
 
 //---------------------------------------------------------------------------
 void WaitForVsync(void)
 {
-	while (*(volatile u16*)0x4000006 >= 160) {};
-	while (*(volatile u16*)0x4000006 <  160) {};
+	while(*(volatile u16*)0x4000006 >= 160) {};
+	while(*(volatile u16*)0x4000006 <  160) {};
 }
 //---------------------------------------------------------------------------
 void Mode3DrawSJISChr(ST_FONT* p, s32 sx, s32 sy, u16 chr, u16 col)

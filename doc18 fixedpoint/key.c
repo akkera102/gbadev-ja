@@ -13,7 +13,7 @@ void KeyInit(void)
 // vblank中に1回だけ呼び出します（チャタリング防止）
 void KeyExec(void)
 {
-	u16 cnt = REG_KEYINPUT;
+	u32 cnt = REG_KEYINPUT;
 
 	cnt     = ~cnt & 0x3ff;
 	Key.trg = (Key.trg ^ cnt) & ~Key.cnt;

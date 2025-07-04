@@ -37,10 +37,10 @@ typedef struct {
 void BulletInit(void);
 IWRAM_CODE void BulletExec(void);
 IWRAM_CODE void BulletReg(s32 x, s32 y);
-IWRAM_CODE s16  BulletRnd(void);
+IWRAM_CODE s32  BulletRnd(void);
 
-IWRAM_CODE s16  BulletGetMaxCnt(void);
-IWRAM_CODE s16  BulletGetIdxCnt(s32 i);
+IWRAM_CODE s32  BulletGetMaxCnt(void);
+IWRAM_CODE s32  BulletGetIdxCnt(s32 i);
 
 
 #ifdef __cplusplus

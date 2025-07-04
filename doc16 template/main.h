@@ -11,16 +11,16 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u16  fps;
-	s16  fpsTimer;
-	s16  fpsCount;
+	u32  fps;
+	s32  fpsTimer;
+	s32  fpsCount;
 
-	s16  gameTime;
-	s16  gameFrame;
-	s16  frameCount;
+	s32  gameTime;
+	s32  gameFrame;
+	s32  frameCount;
 
-	u16  deg;
-	u16  delay;
+	u32  deg;
+	u32  delay;
 } ST_MAIN;
 
 //---------------------------------------------------------------------------

@@ -12,22 +12,22 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u16 cnt;					// 現在のキー
-	u16 trg;					// 押されたキー
-	u16 off;					// 離されたキー
-	u16 rep;					// リピートキー
-	s16 repCnt;					// リピートカウント
+	u32 cnt;					// 現在のキー
+	u32 trg;					// 押されたキー
+	u32 off;					// 離されたキー
+	u32 rep;					// リピートキー
+	s32 repCnt;					// リピートカウント
 } ST_KEY;
 
 
 //---------------------------------------------------------------------------
 void KeyInit(void);
-IWRAM_CODE void KeyExec(void);
+void KeyExec(void);
 
-IWRAM_CODE u32  KeyGetCnt(void);
-IWRAM_CODE u32  KeyGetTrg(void);
-IWRAM_CODE u32  KeyGetOff(void);
-IWRAM_CODE u32  KeyGetRep(void);
+u32  KeyGetCnt(void);
+u32  KeyGetTrg(void);
+u32  KeyGetOff(void);
+u32  KeyGetRep(void);
 
 
 #ifdef __cplusplus

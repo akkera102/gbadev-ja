@@ -65,9 +65,9 @@ IWRAM_CODE void BulletReg(s32 x, s32 y)
 	}
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s16 BulletRnd(void)
+IWRAM_CODE s32 BulletRnd(void)
 {
-	s16 r = (s16)RndU32();
+	s32 r = (s16)RndU32();
 
 	// ç≈í·å¿ÇÃà⁄ìÆó Çí≤êÆ
 	if(r < 0)
@@ -82,12 +82,12 @@ IWRAM_CODE s16 BulletRnd(void)
 	return FIX2INT(r);
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s16 BulletGetMaxCnt(void)
+IWRAM_CODE s32 BulletGetMaxCnt(void)
 {
 	return Bullet.maxCnt;
 }
 //---------------------------------------------------------------------------
-IWRAM_CODE s16 BulletGetIdxCnt(s32 i)
+IWRAM_CODE s32 BulletGetIdxCnt(s32 i)
 {
 	return Bullet.idxCnt[i];
 }

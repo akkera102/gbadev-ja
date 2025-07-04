@@ -265,7 +265,7 @@ u16 BgFontGetIdx(u16 code)
 
 	// level 3 ---------------------------------
 	u16 c3 = LOBYTE(code) & 0x3f;
-	u16 i;
+	u32 i;
 
 	for(i=0; i<pXccTent->count; i++)
 	{

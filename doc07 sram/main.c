@@ -6,6 +6,7 @@
 u8 SRAMRead8(u32 offset)
 {
 	u8* sram = (u8*)ADR_SRAM + offset;
+
 	return (u8)sram[0];
 }
 //---------------------------------------------------------------------------
@@ -34,6 +35,7 @@ u32 SRAMRead32(u32 offset)
 void SRAMWrite8(u32 offset, u8 data)
 {
 	u8* sram = (u8*)ADR_SRAM + offset;
+
 	*sram = (u8)(data & 0xff);
 }
 //---------------------------------------------------------------------------
@@ -58,8 +60,8 @@ u8* SRAMGetPointer()
 //---------------------------------------------------------------------------
 void WaitForVsync(void)
 {
-	while (*(volatile u16*)0x4000006 >= 160) {};
-	while (*(volatile u16*)0x4000006 <  160) {};
+	while(*(volatile u16*)0x4000006 >= 160) {};
+	while(*(volatile u16*)0x4000006 <  160) {};
 }
 //---------------------------------------------------------------------------
 int main(void)

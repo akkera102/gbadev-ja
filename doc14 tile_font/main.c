@@ -3,17 +3,17 @@
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u8 chr;
-	u8 map;
-	u8 pal;
+	u32 chr;
+	u32 map;
+	u32 pal;
 } ST_BG;
 
 ST_BG BG3;
 //---------------------------------------------------------------------------
 void WaitForVsync(void)
 {
-	while (*(volatile u16*)0x4000006 >= 160) {};
-	while (*(volatile u16*)0x4000006 <  160) {};
+	while(*(volatile u16*)0x4000006 >= 160) {};
+	while(*(volatile u16*)0x4000006 <  160) {};
 }
 //---------------------------------------------------------------------------
 void BGDrawChr(u32 mapNo, s32 x, s32 y, u16 chr)
@@ -62,8 +62,8 @@ void BGDrawStr(u32 mapNo, s32 x, s32 y, char* str)
 void BGSetPalData16(u16* palData, u32 palNo)
 {
 	u16* BGPal = BG_PALETTE + (16 * palNo);
-
 	s32 i;
+
 	for(i=0; i<16; i++)
 	{
 		*BGPal++ = *palData++;
@@ -74,8 +74,8 @@ void BGSetChrData(u16* chrData, s32 chrSize, u32 chrNo)
 {
 	u16* BGChr = CHAR_BASE_ADR(chrNo);
 	s32  size  = chrSize / 2;
+	s32  i;
 
-	s32 i;
 	for(i=0; i<size; i++)
 	{
 		*BGChr++ = *chrData++;
