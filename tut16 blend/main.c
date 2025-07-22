@@ -13,7 +13,7 @@ int main(void)
 	KeyInit();
 
  	s32 bld = 10;
-	u16 cnt;
+	u32 cnt;
 
 	for(;;)
 	{

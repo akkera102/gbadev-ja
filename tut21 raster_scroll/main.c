@@ -23,7 +23,7 @@ int main(void)
 	KeyInit();
 	BgInit();
 
-	u16 cnt, trg;
+	u32 cnt, trg;
 
 	for(;;)
 	{

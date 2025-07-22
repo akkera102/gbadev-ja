@@ -39,6 +39,7 @@ void SpriteSetChr(u32 num, u32 ch)
 void SpriteInit(void)
 {
 	u32 i;
+
 	for(i=0; i<128; i++)
 	{
 		SpriteMove(i, 240, 160);
@@ -65,9 +66,9 @@ int main(void)
 
 	SpriteInit();
 
-	s16 x = 0;
-	s16 y = 0;
-	u16 s = 0;
+	s32 x = 0;
+	s32 y = 0;
+	u32 s = 0;
 
 	SpriteSetSize(0, OBJ_SIZE(s), OBJ_SQUARE, OBJ_16_COLOR);
 	SpriteSetChr (0, 1);
@@ -79,7 +80,7 @@ int main(void)
 
 		SpriteMove(0, x, y);
 
-		u16 key = ~(REG_KEYINPUT);
+		u32 key = ~(REG_KEYINPUT);
 
 		if(key & KEY_UP)    y--;
 		if(key & KEY_DOWN)  y++;

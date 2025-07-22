@@ -66,7 +66,7 @@ int main(void)
 	ST_PARAM param[11];
 
 	bool isSnd = false;
-	s16 sel = 0;
+	s32 sel = 0;
 
 	_Memset(&param, 0x00, sizeof(param));
 
@@ -146,8 +146,8 @@ int main(void)
 	    VBlankIntrWait();
 
 		KeyExec();
-		u16 rep = KeyGetRep();
-		u16 trg = KeyGetTrg();
+		u32 rep = KeyGetRep();
+		u32 trg = KeyGetTrg();
 
 		if(rep & KEY_UP && sel >  0)
 		{

@@ -12,10 +12,10 @@ extern "C" {
 //---------------------------------------------------------------------------
 
 typedef struct {
-	u8*  pDat;
-	u16  imgCx;
-	u16  cx;
-	u16  cy;
+	u8* pDat;
+	s32 imgCx;
+	s32 cx;
+	s32 cy;
 } ST_MODE3;
 
 

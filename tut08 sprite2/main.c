@@ -47,6 +47,7 @@ void SpriteSetChr(u32 num, u32 ch)
 void SpriteInit(void)
 {
 	u32 i;
+
 	for(i=0; i<128; i++)
 	{
 		SpriteMove(i, 240, 160);
@@ -60,7 +61,6 @@ int main(void)
 	u16* oam = OBJ_BASE_ADR;	// キャラクタデータ
 	u16* pal = OBJ_COLORS;		// パレットデータ
 	u32 i;
-
 
 	// キャラクタの格納
 	for(i=0; i<sprTilesLen/2; i++)

@@ -20,7 +20,7 @@ int main(void)
 
 	s32 cx = 5;
 	s32 cy = 5;
-	u16 cnt;
+	u32 cnt;
 
 	for(;;)
 	{

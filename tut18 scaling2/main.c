@@ -18,7 +18,7 @@ int main(void)
 
 	s32 x = 40;
 	s32 y = 40;
-	u16 cnt;
+	u32 cnt;
 
 	SprSetSize (0, OBJ_SIZE(1), OBJ_SQUARE, OBJ_16_COLOR);
 	SprSetChr  (0, 512);

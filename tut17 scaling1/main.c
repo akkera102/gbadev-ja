@@ -25,7 +25,7 @@ int main(void)
 
 	s32 x = 150;
 	s32 y = 150;
-	u16 cnt;
+	u32 cnt;
 
 	REG_DMA3SAD = (u32)&imageBitmap;
 	REG_DMA3DAD = (u32)VRAM;

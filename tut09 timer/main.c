@@ -47,6 +47,7 @@ void SpriteSetChr(u32 num, u32 ch)
 void SpriteInit(void)
 {
 	u32 i;
+
 	for(i=0; i<128; i++)
 	{
 		SpriteMove(i, 240, 160);

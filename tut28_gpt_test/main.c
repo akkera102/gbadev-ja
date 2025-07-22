@@ -68,7 +68,7 @@ int main(void)
 
 
 		KeyExec();
-		u16 trg = KeyGetTrg();
+		u32 trg = KeyGetTrg();
 
 		if(trg & KEY_A)
 		{

@@ -17,7 +17,7 @@ int main(void)
 
 	s32 ofx = 20;
 	s32 ofy = 20;
-	u16 cnt;
+	u32 cnt;
 
 	for(;;)
 	{

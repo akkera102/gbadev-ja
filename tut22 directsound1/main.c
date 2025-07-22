@@ -41,7 +41,7 @@ int main(void)
 		VBlankIntrWait();
 
 		KeyExec();
-		u16 trg = KeyGetTrg();
+		u32 trg = KeyGetTrg();
 
 		if(trg & KEY_L)     SndPlaySe((u8*)&_1_c3_bin, 16384, 0, false);
 		if(trg & KEY_R)     SndPlaySe((u8*)&_2_d3_bin, 16384, 0, false);
