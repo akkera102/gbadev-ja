@@ -21,7 +21,7 @@ int main(void)
 
 	for(;;)
 	{
-//		WaitForVsync();
+		WaitForVsync();
 
 		Mode3PutPixel(x, y, RGB5(0, 0, 0));
 
