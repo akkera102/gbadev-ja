@@ -21,14 +21,9 @@ int main(void)
 
 	for(;;)
 	{
-		WaitForVsync();
+//		WaitForVsync();
 
-		if(y > 0 && x > 0)
-		{
-			Mode3PutPixel(x-1, y-1, RGB5(0, 0, 0));
-		}
-
-		Mode3PutPixel(x, y, RGB5(31, 31, 31));
+		Mode3PutPixel(x, y, RGB5(0, 0, 0));
 
 		x++;
 		y++;
@@ -38,5 +33,7 @@ int main(void)
 			x = 0;
 			y = 0;
 		}
+
+		Mode3PutPixel(x, y, RGB5(31, 31, 31));
 	}
 }
