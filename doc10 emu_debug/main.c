@@ -9,13 +9,14 @@ void WaitForVsync(void)
 //---------------------------------------------------------------------------
 int main(void)
 {
-	// Tools->Loggingで確認してください。
+	// mGBA or VBA1.8.0-beta3
+	// Tools->Loggingで確認してください
 
 	TRACE("あいうえお\nかきくけこ\nさしすせそ\n\n");
 
-	TRACE("10進数：%d\n", 123456);
-	TRACE("16進数：%x\n", 0xbeef);
-	TRACE("32進数：%x\n", 0xdeadbeef);
+	TRACE("%d\n", 123456);
+	TRACE("%x\n", 0xbeef);
+	TRACE("%x\n", 0xdeadbeef);
 
 	for(;;)
 	{

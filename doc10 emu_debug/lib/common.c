@@ -175,7 +175,7 @@ void _Printf(char* format, ...)
 	_DoSprintf(sprintfBuf, format, ap);
 	va_end(ap);
 
-//	MgbaLog(sprintfBuf);
+	MgbaLog(sprintfBuf);
 	MappyLog(sprintfBuf);
 }
 //---------------------------------------------------------------------------
@@ -391,7 +391,7 @@ void SystemError(char* format, ...)
 	_DoSprintf(sprintfBuf, format, ap);
 	va_end(ap);
 
-//	MgbaLog(sprintfBuf);
+	MgbaLog(sprintfBuf);
 	MappyLog(sprintfBuf);
 
 	for(;;)
