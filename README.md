@@ -12,9 +12,4 @@ https://akkera102.sakura.ne.jp/gbadev/
 
 - リポジトリをダウンロードした後、make_all.batを実行します。各フォルダ内にサンプルROMが生成されます。
 
-## 簡単な履歴
 
-- 2025/06/02 EWRAM領域のコードを全てROM領域に移動
-- 2025/03/16 ライブラリのprintfバグ修正、doc24 flash_testのflash判定を修正
-- 2025/01/25 ROMファイルをgithubに統合。Doc08を微修正
-- 2024/12/10 undefined symbol __sync_synchronize_noneコンパイルエラーの対応
